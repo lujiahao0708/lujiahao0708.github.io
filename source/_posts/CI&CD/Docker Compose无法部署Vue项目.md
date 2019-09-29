@@ -5,7 +5,6 @@ categories: Docker
 tags:
 - CI&CD
 - Docker
-copyright: true
 
 ---
 
