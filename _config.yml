@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 路家豪技术博客
 subtitle:
-description:
-keywords:
-author: John Doe
-language: en
+description: 一个 Java 程序猿
+keywords: 博客,技术博客
+author: 路家豪
+language:
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://lujiahao0708.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -78,4 +78,6 @@ theme: landscape
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo:
+    github: git@github.com:lujiahao0708/lujiahao0708.github.io.git,master
