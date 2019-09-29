@@ -8,7 +8,7 @@ subtitle:
 description: 一个 Java 程序猿
 keywords: 博客,技术博客
 author: 路家豪
-language:
+language: zh-CN
 timezone:
 
 # URL
@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: pure
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -81,3 +81,13 @@ deploy:
   type: git
   repo: https://github.com/lujiahao0708/lujiahao0708.github.io.git
   branch: gh-pages
+
+# 自定义配置---start
+
+# 字数时长统计
+# https://github.com/theme-next/hexo-symbols-count-time
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
