@@ -80,7 +80,7 @@ theme: next
 deploy:
   type: git
   repo: https://github.com/lujiahao0708/lujiahao0708.github.io.git
-  branch: gh-pages
+  branch: master
 
 # 自定义配置---start
 
