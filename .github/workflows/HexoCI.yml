@@ -1,4 +1,5 @@
 name: CI
+
 on:
   push:
     branches:
@@ -24,8 +25,8 @@ jobs:
           echo "$ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-          git config --global user.email "lujiahao0708@gmail.com"
-          git config --global user.name "lujiahao0708"
+          git config --global user.email "liwei2633@163.com"
+          git config --global user.name "monkeyWie"
           npm install hexo-cli -g
           npm install
       - name: Hexo deploy
