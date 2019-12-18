@@ -1,6 +1,6 @@
 ---
 title: 01.Shiro简介
-date: 2019-10-12 11:42:34
+date: 2019-10-12 20:42:34
 categories: Shiro
 tags:
 - Shiro
@@ -64,6 +64,7 @@ Shiro基本工作流程：
 ## 参考资料
 - [https://www.infoq.cn/article/apache-shiro/](https://www.infoq.cn/article/apache-shiro/)
 - [http://shiro.apache.org/architecture.html](http://shiro.apache.org/architecture.html)
+- [https://mrbird.cc/tags/Shiro/](https://mrbird.cc/tags/Shiro/)
 
 ## Tips
 欢迎收藏和转发，感谢你的支持！(๑•̀ㅂ•́)و✧ 

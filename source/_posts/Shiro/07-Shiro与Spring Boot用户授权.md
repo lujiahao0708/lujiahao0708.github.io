@@ -1,13 +1,13 @@
 ---
-title: 06-Shiro与Spring Boot用户认证
-date: 2019-10-17 20:42:34
+title: 07-Shiro与Spring Boot用户授权.md
+date: 2019-10-18 20:42:34
 categories: Shiro
 tags:
 - Shiro
 - Spring Boot
 ---
 
-完整的Spring Boot与Shiro整合案例。
+Spring Boot与Shiro整合案例，用户授权部分。
 
 <!--more-->
 

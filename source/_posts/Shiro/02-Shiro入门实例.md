@@ -1,6 +1,6 @@
 ---
 title: 02.Shiro入门实例
-date: 2019-10-13 11:42:34
+date: 2019-10-13 20:42:34
 categories: Shiro
 tags:
 - Shiro
@@ -102,6 +102,7 @@ public class ShiroIniApplication {
 ## 参考资料
 - [http://shiro.apache.org/10-minute-tutorial.html](http://shiro.apache.org/10-minute-tutorial.html)
 - [https://juejin.im/post/5cff0cfc5188250d28510681](https://juejin.im/post/5cff0cfc5188250d28510681)
+- [https://mrbird.cc/tags/Shiro/](https://mrbird.cc/tags/Shiro/)
 
 ## 代码获取
 [https://github.com/lujiahao0708/LearnSpring](https://github.com/lujiahao0708/LearnSpring)
