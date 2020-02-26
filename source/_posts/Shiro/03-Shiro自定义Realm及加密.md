@@ -262,6 +262,6 @@ Caused by: java.lang.IllegalArgumentException: Odd number of characters.
 ## Tips
 欢迎收藏和转发，感谢你的支持！(๑•̀ㅂ•́)و✧ 
 
-欢迎关注我的公众号：后端小哥，专注后端开发，希望和你一起进步！！
+欢迎关注我的公众号：后端小哥，专注后端开发，希望和你一起进步！
 
 ![](https://github.com/lujiahao0708/PicRepo/raw/master/公众号二维码.jpg)
