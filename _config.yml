@@ -74,7 +74,9 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 # theme: next
-theme: pure
+# theme: pure
+# theme: maupassant
+theme: icarus
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
