@@ -1,13 +1,15 @@
 ---
 title: Redis学习笔记
-date: 2016-07-07 17:59:12
-categories: JavaEE
-tags:
-  - JavaEE
-  - 后台
-  - Redis
+date: 2020-04-11 17:28:08
+categories: Redis
+tags: Redis
+toc: true
 description: Redis初级学习笔记
+
 ---
+
+Redis（Remote Dictionary Server )，即远程字典服务，是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。从2010年3月15日起，Redis的开发工作由VMware主持。从2013年5月开始，Redis的开发由Pivotal赞助。
+<!-- more -->
 
 ## 1.简介
 ### 1.1 定义

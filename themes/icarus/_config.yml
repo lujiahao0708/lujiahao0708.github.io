@@ -74,6 +74,8 @@ navbar:
     # Naviagtion menu items
     menu:
         首页: /
+        Redis: /categories/Redis
+#        RocketMQ: /categories/RocketMQ
         归档: /archives
         分类: /categories
         标签: /tags

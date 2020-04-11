@@ -1,11 +1,16 @@
 ---
 title: GitHub Actions 自动部署 Hexo
 date: 2019-12-18 19:30:40
-categories: 服务器
+categories: Hexo
+toc: true
 tags:
 - GitHub Actions
 - Hexo
 ---
+
+之前都是使用 TravisCI 部署 Hexo，现在介绍下 GitHub Actions 实现自动部署 Hexo 博客。
+
+<!-- more -->
 
 # 1. 生成公钥私钥
 ```

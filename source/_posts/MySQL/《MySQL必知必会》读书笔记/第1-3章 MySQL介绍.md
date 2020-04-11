@@ -2,9 +2,10 @@
 title: 《MySQL必知必会》第1-3章 MySQL介绍
 date: 2019-12-19 19:54:41
 categories: MySQL必知必会
+toc: true
 tags:
 - MySQL
-- 读书笔记
+- MySQL必知必会
 ---
 
 # 1. 术语介绍
@@ -16,6 +17,8 @@ tags:
 - 行(row) : 表中的一个记录
 - 主键(primary key) : 一列(或一组列),其值能够唯一区分表中的每行,主键列不允许NULL值
 - 关键字(key word) : MySQL语言保留字,不可用关键字命名表或列
+
+<!-- more -->
 
 # 2. SQL / DBMS / MySQL
 ## 2.1 SQL优点:

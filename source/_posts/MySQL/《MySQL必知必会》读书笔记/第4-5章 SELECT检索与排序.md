@@ -2,14 +2,17 @@
 title: 《MySQL必知必会》第4-5章 SELECT检索与排序
 date: 2019-12-19 22:54:41
 categories: MySQL必知必会
+toc: true
 tags:
 - MySQL
-- 读书笔记
+- MySQL必知必会
 ---
 
 # 1. SELECT 语句
 ## 1.1 检索单个列
 关键字SELECT后写需要查询的列名
+
+<!-- more -->
 
 ```sql
 mysql> select prod_name from products;

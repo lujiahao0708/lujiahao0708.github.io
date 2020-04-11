@@ -1,13 +1,16 @@
 ---
 title: 'Redis安装&搭建本地环境&备份恢复'
-date: 2016-06-15 10:10:57
-categories: JavaEE
-tags:
-  - JavaEE
-  - 后台
-  - Redis
+date: 2020-04-11 17:25:40
+categories: Redis
+tags: Redis
+toc: true
 description: Redis安装&搭建本地环境&备份恢复
+
 ---
+
+搭建流程记录,方便日后查看。
+<!-- more -->
+
 
 [Windows下安装并设置Redis](http://blog.csdn.net/renfufei/article/details/38474435)
 
