@@ -8,7 +8,7 @@
   "dependencies": {
     "bulma-stylus": "^0.8.0",
     "hexo": "^4.2.0",
-    "hexo-component-inferno": "^0.2.2",
+    "hexo-component-inferno": "^0.2.3",
     "hexo-deployer-git": "^2.1.0",
     "hexo-generator-archive": "^0.1.5",
     "hexo-generator-baidu-sitemap": "^0.1.6",
