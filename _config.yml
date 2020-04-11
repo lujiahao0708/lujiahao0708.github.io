@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 路家豪技术博客
+title: 后端小哥博客
 subtitle:
 description: 一个 Java 程序猿
 keywords: 博客,技术博客
-author: 路家豪
+author: 后端小哥
 language: zh-CN
 timezone:
 
@@ -84,13 +84,3 @@ deploy:
   type: git
   repo: git@github.com:lujiahao0708/lujiahao0708.github.io.git
   branch: master
-
-# 自定义配置---start
-
-# 字数时长统计
-# https://github.com/theme-next/hexo-symbols-count-time
-symbols_count_time:
-  symbols: true
-  time: true
-  total_symbols: true
-  total_time: true

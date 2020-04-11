@@ -3,99 +3,94 @@ version: 3.0.0
 # Icarus theme variant, can be "default" or "cyberpunk"
 variant: default
 # Path or URL to the website's logo
-logo: /img/logo.svg
+logo:
+    text: '后端小哥'
 # Page metadata configurations
 head:
-    # URL or path to the website's icon
-    favicon: /img/favicon.svg
-    # Open Graph metadata
-    # https://hexo.io/docs/helpers.html#open-graph
-    open_graph:
-        # Page title (og:title) (optional)
-        # You should leave this blank for most of the time
-        title: 
-        # Page type (og:type) (optional)
-        # You should leave this blank for most of the time
-        type: blog
-        # Page URL (og:url) (optional)
-        # You should leave this blank for most of the time
-        url: 
-        # Page cover (og:image) (optional) Default to the Open Graph image or thumbnail of the page
-        # You should leave this blank for most of the time
-        image: 
-        # Site name (og:site_name) (optional)
-        # You should leave this blank for most of the time
-        site_name: 
-        # Page author (article:author) (optional)
-        # You should leave this blank for most of the time
-        author: 
-        # Page description (og:description) (optional)
-        # You should leave this blank for most of the time
-        description: 
-        # Twitter card type (twitter:card)
-        twitter_card: 
-        # Twitter ID (twitter:creator)
-        twitter_id: 
-        # Twitter ID (twitter:creator)
-        twitter_site: 
-        # Google+ profile link (deprecated)
-        google_plus: 
-        # Facebook admin ID
-        fb_admins: 
-        # Facebook App ID
-        fb_app_id: 
-    # Structured data of the page
-    # https://developers.google.com/search/docs/guides/intro-structured-data
-    structured_data:
-        # Page title (optional)
-        # You should leave this blank for most of the time
-        title: 
-        # Page description (optional)
-        # You should leave this blank for most of the time
-        description: 
-        # Page URL (optional)
-        # You should leave this blank for most of the time
-        url: 
-        # Page author (article:author) (optional)
-        # You should leave this blank for most of the time
-        author: 
-        # Page images (optional) Default to the Open Graph image or thumbnail of the page
-        # You should leave this blank for most of the time
-        image: 
-    # Additional HTML meta tags in an array
-    meta:
-        # Meta tag specified in <attribute>=<value> style
-        # E.g., name=theme-color;content=#123456 => <meta name="theme-color" content="#123456">
-        - ''
-    # URL or path to the website's RSS atom.xml
-    rss: 
+             # URL or path to the website's icon
+             favicon: /img/favicon.svg
+             # Open Graph metadata
+             # https://hexo.io/docs/helpers.html#open-graph
+             open_graph:
+                 # Page title (og:title) (optional)
+                 # You should leave this blank for most of the time
+                 title:
+                 # Page type (og:type) (optional)
+                 # You should leave this blank for most of the time
+                 type: blog
+                 # Page URL (og:url) (optional)
+                 # You should leave this blank for most of the time
+                 url:
+                 # Page cover (og:image) (optional) Default to the Open Graph image or thumbnail of the page
+                 # You should leave this blank for most of the time
+                 image:
+                 # Site name (og:site_name) (optional)
+                 # You should leave this blank for most of the time
+                 site_name:
+                 # Page author (article:author) (optional)
+                 # You should leave this blank for most of the time
+                 author:
+                 # Page description (og:description) (optional)
+                 # You should leave this blank for most of the time
+                 description:
+                 # Twitter card type (twitter:card)
+                 twitter_card:
+                 # Twitter ID (twitter:creator)
+                 twitter_id:
+                 # Twitter ID (twitter:creator)
+                 twitter_site:
+                 # Google+ profile link (deprecated)
+                 google_plus:
+                 # Facebook admin ID
+                 fb_admins:
+                 # Facebook App ID
+                 fb_app_id:
+             # Structured data of the page
+             # https://developers.google.com/search/docs/guides/intro-structured-data
+             structured_data:
+                 # Page title (optional)
+                 # You should leave this blank for most of the time
+                 title:
+                 # Page description (optional)
+                 # You should leave this blank for most of the time
+                 description:
+                 # Page URL (optional)
+                 # You should leave this blank for most of the time
+                 url:
+                 # Page author (article:author) (optional)
+                 # You should leave this blank for most of the time
+                 author:
+                 # Page images (optional) Default to the Open Graph image or thumbnail of the page
+                 # You should leave this blank for most of the time
+                 image:
+             # Additional HTML meta tags in an array
+             meta:
+                 # Meta tag specified in <attribute>=<value> style
+                 # E.g., name=theme-color;content=#123456 => <meta name="theme-color" content="#123456">
+                 - ''
+             # URL or path to the website's RSS atom.xml
+             rss:
 # Page top navigation bar configurations
 navbar:
     # Naviagtion menu items
     menu:
-        Home: /
-        Archives: /archives
-        Categories: /categories
-        Tags: /tags
-        About: /about
+        首页: /
+        归档: /archives
+        分类: /categories
+        标签: /tags
+        关于: /about
     # Links to be shown on the right of the navigation bar
     links:
         Download on GitHub:
             icon: fab fa-github
-            url: 'https://github.com/ppoffice/hexo-theme-icarus'
+            url: 'https://github.com/lujiahao0708'
 # Page footer configurations
 footer:
     # Links to be shown on the right of the footer section
     links:
-        Creative Commons:
-            icon: fab fa-creative-commons
-            url: 'https://creativecommons.org/'
-        Attribution 4.0 International:
-            icon: fab fa-creative-commons-by
-            url: 'https://creativecommons.org/licenses/by/4.0/'
         Download on GitHub:
             icon: fab fa-github
-            url: 'https://github.com/ppoffice/hexo-theme-icarus'
+            url: 'https://github.com/lujiahao0708'
 # Article related configurations
 article:
     # Code highlight settings
@@ -106,170 +101,90 @@ article:
         # Show copy code button
         clipboard: true
         # Default folding status of the code blocks. Can be "", "folded", "unfolded"
-        fold: unfolded
+        fold: ""
     # Whether to show thumbnail image for every article
     thumbnail: true
     # Whether to show estimated article reading time
     readtime: true
-# Search plugin configurations
-# https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Search/
+# 搜索
 search:
     type: insight
-# Comment plugin configurations
-# https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Comment/
-comment:
-    type: disqus
-    # Disqus shortname
-    shortname: ''
-# Donate plugin configurations
-# https://blog.zhangruipeng.me/hexo-theme-icarus/categories/Plugins/Donation/
+# 评论
+comment: null
+# 捐赠
 donates:
-    # Alipay donate button configurations
     -
         type: alipay
-        # Alipay qrcode image URL
-        qrcode: ''
-    # "Buy me a coffee" donate button configurations
-    -
-        type: buymeacoffee
-        # URL to the "Buy me a coffee" page
-        url: ''
-    # Patreon donate button configurations
-    -
-        type: patreon
-        # URL to the Patreon page
-        url: ''
-    # Paypal donate button configurations
-    -
-        type: paypal
-        # Paypal business ID or email address
-        business: ''
-        # Currency code
-        currency_code: USD
-    # Wechat donate button configurations
+        qrcode: '/img/alipay.jpeg'
     -
         type: wechat
-        # Wechat qrcode image URL
-        qrcode: ''
-# Share plugin configurations
-# https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Share/
-share:
-    type: sharethis
-    # URL to the ShareThis share plugin script
-    install_url: ''
-# Sidebar configurations.
-# Please be noted that a sidebar is only visible when it has at least one widget
+        qrcode: '/img/wechat_pay.jpeg'
+# 分享
+share: null
+
+# 侧边栏(整体控制)
 sidebar:
-    # Left sidebar configurations
     left:
-        # Whether the sidebar sticks to the top when page scrolls
         sticky: false
-    # Right sidebar configurations
     right:
-        # Whether the sidebar sticks to the top when page scrolls
         sticky: false
-# Sidebar widget configurations
-# http://ppoffice.github.io/hexo-theme-icarus/categories/Widgets/
 widgets:
-    # Profile widget configurations
+    # 目录 
     -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: left
-        type: profile
-        # Author name
-        author: Your name
-        # Author title
-        author_title: Your title
-        # Author's current location
-        location: Your location
-        # URL or path to the avatar image
-        avatar: 
-        # Whether show the rounded avatar image
-        avatar_rounded: false
-        # Email address for the Gravatar
-        gravatar: 
-        # URL or path for the follow button
-        follow_link: 'https://github.com/ppoffice'
-        # Links to be shown on the bottom of the profile widget
-        social_links:
-            Github:
-                icon: fab fa-github
-                url: 'https://github.com/ppoffice'
-            Facebook:
-                icon: fab fa-facebook
-                url: 'https://facebook.com'
-            Twitter:
-                icon: fab fa-twitter
-                url: 'https://twitter.com'
-            Dribbble:
-                icon: fab fa-dribbble
-                url: 'https://dribbble.com'
-            RSS:
-                icon: fas fa-rss
-                url: /
-    # Table of contents widget configurations
-    -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: left
+        position: right
         type: toc
-    # Recommendation links widget configurations
+    
+    # 个人信息
     -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: left
+        position: right
+        type: profile
+        author: 后端小哥
+        author_title: Coder
+        location: Shijiazhuang, China
+        avatar: '/img/logo.png'
+        avatar_rounded: true
+        gravatar: 
+        follow_link: 'https://github.com/lujiahao0708'
+        social_links: ''
+
+    # 链接信息
+    -
+        position: right
         type: links
-        # Names and URLs of the sites
         links:
-            Hexo: 'https://hexo.io'
-            Bulma: 'https://bulma.io'
-    # Categories widget configurations
+            掘金: 'https://juejin.im/user/59239002570c350069c5f0bb'
+            CSDN: 'https://blog.csdn.net/xinruodingshui'
+            B站: 'https://space.bilibili.com/302086424/'
+    
+    # 分类
     -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: left
+        position: right
         type: categories
-    # Recent posts widget configurations
+
+    # 最新文章
     -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: left
+        position: right
         type: recent_posts
-    # Archives widget configurations
-    -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: left
-        type: archives
-    # Tags widget configurations
-    -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: left
-        type: tags
-    # Google FeedBurner email subscription widget configurations
-    -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: left
-        type: subscribe_email
-        # Hint text under the email input
-        description: 
-        # Feedburner ID
-        feedburner_id: ''
-    # Google AdSense unit configurations
-    -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: left
-        type: adsense
-        # AdSense client ID
-        client_id: ''
-        # AdSense AD unit ID
-        slot_id: ''
-# Plugin configurations
+#    # 谷歌广告内容 
+#    -
+#        position: right
+#        type: adsense
+#        # AdSense client ID
+#        client_id: ''
+#        # AdSense AD unit ID
+#        slot_id: ''
+
+# 插件配置
 plugins:
     # Enable page startup animations
-    animejs: true
+    animejs: false
     # Show the "back to top" button
     back_to_top: true
     # Baidu Analytics plugin settings
     # https://tongji.baidu.com
     baidu_analytics:
         # Baidu Analytics tracking ID
-        tracking_id: 
+        tracking_id: f3b7efc8748063e32969cc0b8dedc
     # BuSuanZi site/page view counter
     # https://busuanzi.ibruce.info
     busuanzi: false
@@ -304,6 +219,7 @@ plugins:
     outdated_browser: false
     # Show a progress bar at top of the page on page loading
     progressbar: true
+
 # CDN provider settings
 # https://ppoffice.github.io/hexo-theme-icarus/Configuration/Theme/speed-up-your-site-with-custom-cdn/
 providers:

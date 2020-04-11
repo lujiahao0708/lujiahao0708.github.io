@@ -1,0 +1,201 @@
+# Version of the configuration file
+version: 3.0.0
+# Icarus theme variant, can be "default" or "cyberpunk"
+variant: default
+# Path or URL to the website's logo
+logo:
+  text: '后端小哥'
+# Page metadata configurations
+head:
+  # URL or path to the website's icon
+  favicon: /img/favicon.svg
+  # Open Graph metadata
+  # https://hexo.io/docs/helpers.html#open-graph
+  open_graph:
+    # Page title (og:title) (optional)
+    # You should leave this blank for most of the time
+    title:
+    # Page type (og:type) (optional)
+    # You should leave this blank for most of the time
+    type: blog
+    # Page URL (og:url) (optional)
+    # You should leave this blank for most of the time
+    url:
+    # Page cover (og:image) (optional) Default to the Open Graph image or thumbnail of the page
+    # You should leave this blank for most of the time
+    image:
+    # Site name (og:site_name) (optional)
+    # You should leave this blank for most of the time
+    site_name:
+    # Page author (article:author) (optional)
+    # You should leave this blank for most of the time
+    author:
+    # Page description (og:description) (optional)
+    # You should leave this blank for most of the time
+    description:
+    # Twitter card type (twitter:card)
+    twitter_card:
+    # Twitter ID (twitter:creator)
+    twitter_id:
+    # Twitter ID (twitter:creator)
+    twitter_site:
+    # Google+ profile link (deprecated)
+    google_plus:
+    # Facebook admin ID
+    fb_admins:
+    # Facebook App ID
+    fb_app_id:
+  # Structured data of the page
+  # https://developers.google.com/search/docs/guides/intro-structured-data
+  structured_data:
+    # Page title (optional)
+    # You should leave this blank for most of the time
+    title:
+    # Page description (optional)
+    # You should leave this blank for most of the time
+    description:
+    # Page URL (optional)
+    # You should leave this blank for most of the time
+    url:
+    # Page author (article:author) (optional)
+    # You should leave this blank for most of the time
+    author:
+    # Page images (optional) Default to the Open Graph image or thumbnail of the page
+    # You should leave this blank for most of the time
+    image:
+  # Additional HTML meta tags in an array
+  meta:
+    # Meta tag specified in <attribute>=<value> style
+    # E.g., name=theme-color;content=#123456 => <meta name="theme-color" content="#123456">
+    - ''
+  # URL or path to the website's RSS atom.xml
+  rss:
+# Page top navigation bar configurations
+navbar:
+  # Naviagtion menu items
+  menu:
+    首页: /
+    归档: /archives
+    分类: /categories
+    标签: /tags
+    关于: /about
+  # Links to be shown on the right of the navigation bar
+  links: null
+#        Download on GitHub:
+#            icon: fab fa-github
+#            url: 'https://github.com/ppoffice/hexo-theme-icarus'
+# Page footer configurations
+footer:
+  # Links to be shown on the right of the footer section
+  links:
+    Download on GitHub:
+      icon: fab fa-github
+      url: 'https://github.com/lujiahao0708'
+# Article related configurations
+article:
+  # Code highlight settings
+  highlight:
+    # Code highlight themes
+    # https://github.com/highlightjs/highlight.js/tree/master/src/styles
+    theme: atom-one-light
+    # Show copy code button
+    clipboard: true
+    # Default folding status of the code blocks. Can be "", "folded", "unfolded"
+    fold: ""
+  # Whether to show thumbnail image for every article
+  thumbnail: true
+  # Whether to show estimated article reading time
+  readtime: true
+# Search plugin configurations
+# https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Search/
+search:
+  type: insight
+
+comment: null
+
+# Donate plugin configurations
+# https://blog.zhangruipeng.me/hexo-theme-icarus/categories/Plugins/Donation/
+donates:
+  -
+    type: alipay
+    qrcode: '/img/alipay.jpeg'
+  -
+    type: wechat
+    qrcode: '/img/wechat_pay.jpeg'
+
+share: null
+# Sidebar configurations.
+# Please be noted that a sidebar is only visible when it has at least one widget
+sidebar:
+  # Left sidebar configurations
+  left:
+    # Whether the sidebar sticks to the top when page scrolls
+    sticky: false
+  # Right sidebar configurations
+  right:
+    # Whether the sidebar sticks to the top when page scrolls
+    sticky: true
+# Sidebar widget configurations
+# http://ppoffice.github.io/hexo-theme-icarus/categories/Widgets/
+widgets:
+  -
+    position: right
+    type: toc
+  -
+    position: right
+    type: recent_posts
+
+# Plugin configurations
+plugins:
+  # Enable page startup animations
+  animejs: false
+  # Show the "back to top" button
+  back_to_top: true
+  # Baidu Analytics plugin settings
+  # https://tongji.baidu.com
+  baidu_analytics:
+    # Baidu Analytics tracking ID
+    tracking_id:
+  # BuSuanZi site/page view counter
+  # https://busuanzi.ibruce.info
+  busuanzi: false
+  # CNZZ statistics
+  # https://www.umeng.com/web
+  cnzz:
+    # CNZZ tracker id
+    id:
+    # CNZZ website id
+    web_id:
+  # Enable the lightGallery and Justified Gallery plugins
+  # https://ppoffice.github.io/hexo-theme-icarus/Plugins/General/gallery-plugin/
+  gallery: true
+  # Google Analytics plugin settings
+  # https://analytics.google.com
+  google_analytics:
+    # Google Analytics tracking ID
+    tracking_id:
+  # Hotjar user feedback plugin
+  # https://www.hotjar.com/
+  hotjar:
+    # Hotjar site id
+    site_id:
+  # Enable the KaTeX math typesetting supprot
+  # https://katex.org/
+  katex: false
+  # Enable the MathJax math typesetting support
+  # https://www.mathjax.org/
+  mathjax: false
+  # Enable the Outdated Browser plugin
+  # http://outdatedbrowser.com/
+  outdated_browser: false
+  # Show a progress bar at top of the page on page loading
+  progressbar: true
+# CDN provider settings
+# https://ppoffice.github.io/hexo-theme-icarus/Configuration/Theme/speed-up-your-site-with-custom-cdn/
+providers:
+  # Name or URL template of the JavaScript and/or stylesheet CDN provider
+  cdn: jsdelivr
+  # Name or URL template of the webfont CDN provider
+  fontcdn: google
+  # Name or URL of the fontawesome icon font CDN provider
+  iconcdn: fontawesome
