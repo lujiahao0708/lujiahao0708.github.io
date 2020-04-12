@@ -22,28 +22,42 @@ tags:
 ---
 接下来介绍下操作步骤：
 
-# 1. 生成公钥私钥
+# 1.博客工程
+GitHub 博客创建步骤非本文重点，请自行搜索。
+推荐使用 `master` 分支作为最终部署分支，源码分支可以根据自己喜好创建，我这里创建的是 `hexo`。
+
+# 2.生成公私钥
+源码分支中通过下面命令生成公钥和私钥。
 ```
-ssh-keygen -t rsa -b 4096 -C "$(git config user.email)" -f github-deploy-key -N ""
+ ~ cd github/lujiahao0708.github.io 
+ ~ git checkout hexo
+ ~ ssh-keygen -t rsa -b 4096 -C "$(git config user.email)" -f github-deploy-key -N ""
 ```
-之后会生成两个文件 `github-deploy-key.pub` 和 `github-deploy-key` ,这两个文件分别是公钥和私钥（公钥和私钥切记添加 `.gitignore`，以防万一）。
+目录中生成两个文件：
+- `github-deploy-key.pub` --- 公钥文件
+- `github-deploy-key` --- 私钥文件
 
-# 2. 配置公钥私钥
-在 GitHub 中博客工程的 `Settings->Deploye keys->Add deploy key` 中添加`github-deploy-key.pub`中的内容
+> 公钥和私钥切记要添加到 `.gitignore` 中！！！
 
-![](https://raw.githubusercontent.com/lujiahao0708/PicRepo/master/blogPic/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/GitHub%20Actions%20%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%20Hexo/deploy_keys.png)
+# 3.GitHub 添加公钥
+在 GitHub 中博客工程中按照 `Settings->Deploye keys->Add deploy key` 找到对应的页面，然后进行公钥添加。该页面中 `Title` 自定义即可，`Key` 中添加 `github-deploy-key.pub` 文件中的内容。
 
-在 GitHub 中博客工程的 `Settings->Secrets->Add a new secrets` 中添加 `github-deploy-key` 中的内容
+![](https://raw.githubusercontent.com/lujiahao0708/PicRepo/master/blogPic/Hexo/GitHub%20Actions%20%E6%B7%BB%E5%8A%A0%E5%85%AC%E9%92%A5.png)
 
-![](https://raw.githubusercontent.com/lujiahao0708/PicRepo/master/blogPic/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/GitHub%20Actions%20%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%20Hexo/add_secret.png)
+> 注意：切记不要多复制空格!!!
+> 切记要勾选 `Allow write access`，否则会出现无法部署的情况。
+
+# 4.GitHub 添加私钥
+在 GitHub 中博客工程中按照 `Settings->Secrets->Add a new secrets` 找到对应的页面，然后进行私钥添加。该页面中 `Name` 自定义即可，`Value` 中添加 `github-deploy-key` 文件中的内容。
+
+![](https://raw.githubusercontent.com/lujiahao0708/PicRepo/master/blogPic/Hexo/GitHub%20Actions%20%E6%B7%BB%E5%8A%A0%E7%A7%81%E9%92%A5.png)
 
 > 注意：切记不要多复制空格!!!
 
-# 3. 创建编译脚本
-在博客源码分支(我这里是hexo分支)中创建`.github/workflows/HexoCI.yml`文件。
+# 5.创建编译脚本
+在博客源码分支(我这里是hexo分支)中创建 `.github/workflows/HexoCI.yml` 文件，内容如下：
 ```yml
 name: CI
-
 on:
   push:
     branches:
@@ -79,8 +93,8 @@ jobs:
           hexo d
 ```
 
-# 4. Hexo 配置
-在项目根目录中修改 `_config.yml` 配置文件
+# 6.Hexo 配置
+在项目根目录中修改 `_config.yml` ，增加部署相关内容：
 ```
 deploy:
   type: git
@@ -89,13 +103,12 @@ deploy:
 ```
 > 这里的repo要填写ssh的形式，使用http形式可能会有问题
 
-# 5. 验证
-现在 Hexo 已经和 GitHub Actions 已经集成了,接下来在博客源码分支上推送代码即可自动编译部署.
-执行过程可以在`Actions`中查看:
-![](https://raw.githubusercontent.com/lujiahao0708/PicRepo/master/blogPic/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/GitHub%20Actions%20%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%20Hexo/actions_result.png)
+# 7.验证
+现在 Hexo 已经和 GitHub Actions 已经集成了，接下来在博客源码分支上推送代码即可自动编译部署。具体
+执行过程可以在 `Actions` 中查看：
 
-# 6. 参考链接
-https://segmentfault.com/a/1190000020873860
+![](https://raw.githubusercontent.com/lujiahao0708/PicRepo/master/blogPic/Hexo/GitHub%20Actions%20%E9%83%A8%E7%BD%B2%E7%BB%93%E6%9E%9C.png)
+
 
 ## Tips
 欢迎收藏和转发，感谢你的支持！(๑•̀ㅂ•́)و✧ 
