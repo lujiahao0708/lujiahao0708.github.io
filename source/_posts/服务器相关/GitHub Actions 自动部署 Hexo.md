@@ -110,6 +110,8 @@ deploy:
 ![](https://raw.githubusercontent.com/lujiahao0708/PicRepo/master/blogPic/Hexo/GitHub%20Actions%20%E9%83%A8%E7%BD%B2%E7%BB%93%E6%9E%9C.png)
 
 
+> 欢迎访问我的博客：https://lujiahao0708.github.io/
+
 ## Tips
 欢迎收藏和转发，感谢你的支持！(๑•̀ㅂ•́)و✧ 
 
