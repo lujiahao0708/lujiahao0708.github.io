@@ -200,4 +200,4 @@ description: 《Elasticsearch技术解析与实战》Chapter 1.3 Elasticsearch�
 ## Tips
 本文同步发表在公众号，欢迎大家关注！😁 
 后续笔记欢迎关注获取第一时间更新！
-![](https://github.com/lujiahao0708/PicRepo/raw/master/公众号二维码.jpg)
+![](https://raw.githubusercontent.com/lujiahao0708/PicRepo/master/%E5%85%AC%E4%BC%97%E5%8F%B7%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg)

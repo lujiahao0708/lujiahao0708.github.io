@@ -113,4 +113,4 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.161-b12, mixed mode)
 
 ----
 欢迎大家关注😁
-![](https://github.com/lujiahao0708/PicRepo/raw/master/公众号二维码.jpg)
+![](https://raw.githubusercontent.com/lujiahao0708/PicRepo/master/%E5%85%AC%E4%BC%97%E5%8F%B7%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg)
