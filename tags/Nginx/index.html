@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>标签: Nginx - 后端小哥博客</title><meta description="一个 Java 程序猿"><meta property="og:type" content="blog"><meta property="og:title" content="后端小哥博客"><meta property="og:url" content="http://lujiahao0708.github.io/"><meta property="og:site_name" content="后端小哥博客"><meta property="og:description" content="一个 Java 程序猿"><meta property="og:locale" content="zh_CN"><meta property="article:author" content="后端小哥"><meta property="article:tag" content="博客"><meta property="article:tag" content="技术博客"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="http://lujiahao0708.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lujiahao0708.github.io"},"headline":"后端小哥博客","image":["http://lujiahao0708.github.io/img/og_image.png"],"author":{"@type":"Person","name":"后端小哥"},"description":"一个 Java 程序猿"}</script><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?cdef3b7efc8748063e32969cc0b8dedc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/categories/Redis">Redis</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags">标签</a></li><li class="is-active"><a href="#" aria-current="page">Nginx</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-11-02T04:16:07.000Z" title="2016-11-02T04:16:07.000Z">2016-11-02</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">3 分钟 读完 (大约 470 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/11/02/JavaWeb%E5%9F%BA%E7%A1%80/%E6%B7%98%E6%B7%98%E5%95%86%E5%9F%8E-Nginx+FTP%E6%90%AD%E5%BB%BA%E5%9B%BE%E7%89%87%E6%9C%8D%E5%8A%A1%E5%99%A8/">淘淘商城-Nginx+FTP搭建图片服务器</a></h1><div class="content"><h1 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h1><p>参看[<a href="http://chiahaolu.github.io/2016/11/02/%E6%B7%98%E6%B7%98%E5%95%86%E5%9F%8E-Nginx%E7%AC%94%E8%AE%B0/">淘淘商城-Nginx笔记</a>]</p>
+<h1 id="FTP配置"><a href="#FTP配置" class="headerlink" title="FTP配置"></a>FTP配置</h1><p><a href="http://blog.sina.com.cn/s/blog_a97c78020101o8fv.html">http://blog.sina.com.cn/s/blog_a97c78020101o8fv.html</a></p>
+<p>参看[<a href="http://chiahaolu.github.io/2016/11/02/%E6%B7%98%E6%B7%98%E5%95%86%E5%9F%8E-%E6%90%AD%E5%BB%BAFTP%E6%9C%8D%E5%8A%A1%E5%99%A8/">淘淘商城-搭建FTP服务器</a>]</p>
+<h1 id="整合Nginx和FTP"><a href="#整合Nginx和FTP" class="headerlink" title="整合Nginx和FTP"></a>整合Nginx和FTP</h1><h2 id="1-用户登录ftp的根目录"><a href="#1-用户登录ftp的根目录" class="headerlink" title="1.用户登录ftp的根目录"></a>1.用户登录ftp的根目录</h2><pre><code>vi /etc/vsftpd/vsftpd.conf</code></pre><p>添加如下内容</p>
+<pre><code># 用户登录路径
+local_root=/home/
+# 锁定用户到各自目录为其根目录
+chroot_local_user=YES
+# 用户配置目录
+user_config_dir=/etc/vsftpd/userconfig</code></pre><p>创建<code>/etc/vsftpd/userconfig</code></p>
+<pre><code>mkdir userconfig
+cd userconfig/</code></pre><p>配置各自用户访问根目录<br>    vim ftpuser<br>添加</p>
+<pre><code>local_root=/home/ftpuser/www/</code></pre><p>重启服务</p>
+<pre><code>/etc/init.d/vsftpd restart</code></pre><h2 id="2-配置nginx-root路径为ftp路径"><a href="#2-配置nginx-root路径为ftp路径" class="headerlink" title="2.配置nginx root路径为ftp路径"></a>2.配置nginx root路径为ftp路径</h2><p>配置Nginx主目录</p>
+<pre><code>vi /usr/local/nginx/conf/nginx.conf</code></pre><p>修改内容</p>
+<pre><code>server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   /home/ftpuser/www/;
+            index  index.html index.htm;
+        }</code></pre><p>此时:</p>
+<pre><code>Nginx主目录:/home/ftpuser/www/
+
+Vsftpd.config : local_root=/home/
+Userconfig/ftpuser : local_root=/home/ftpuser/www/</code></pre><p>由于我们使用的是自定义root路径，如果权限不够，在访问图片的时候可能会报403错误。所以我们需要在nginx.conf 里配置user root<br><img src="https://ooo.0o0.ooo/2016/09/05/57cd0f93542d7.png" alt="QQ截图20160905140758.png"></p>
+<p>添加如下内容</p>
+<p><img src="https://ooo.0o0.ooo/2016/09/05/57cd13bb80c3c.png" alt="QQ截图20160905144137.png"></p>
+<p>此时上传的根目录变成了 : <code>/images</code><br>资源的访问url : <code>http://192.168.2.11/images/a.jpg</code></p>
+<h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><h3 id="客户端连接FTP服务器"><a href="#客户端连接FTP服务器" class="headerlink" title="客户端连接FTP服务器:"></a>客户端连接FTP服务器:</h3><p><img src="https://ooo.0o0.ooo/2016/09/05/57cd0f681e0ef.png" alt="QQ截图20160905142301.png"></p>
+<h3 id="CentOS使用命令行启动"><a href="#CentOS使用命令行启动" class="headerlink" title="CentOS使用命令行启动"></a>CentOS使用命令行启动</h3><p>打开/etc/inittab 文件</p>
+<pre><code>vi /etc/inittab</code></pre><p>在默认的 run level 设置中,可以看到第一行书写如:<code>id:5:initdefault</code>:(默认的 run level 等级为 5,即图形界面)</p>
+<p>将第一行的 5 修改为 3 即可。保存文件后重启系统你就可以看见是启动的文本界面了。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-11-02T02:16:07.000Z" title="2016-11-02T02:16:07.000Z">2016-11-02</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">10 分钟 读完 (大约 1539 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/11/02/JavaWeb%E5%9F%BA%E7%A1%80/%E6%B7%98%E6%B7%98%E5%95%86%E5%9F%8E-Nginx%E7%AC%94%E8%AE%B0/">淘淘商城-Nginx笔记</a></h1><div class="content"><h1 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h1><h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h2><p>Nginx(“engine x”)是一款是由俄罗斯的程序设计师Igor Sysoev所开发高性能的 Web和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。<br>在高连接并发的情况下，Nginx是Apache服务器不错的替代品。</p>
+<h2 id="2-安装Nginx"><a href="#2-安装Nginx" class="headerlink" title="2.安装Nginx"></a>2.安装Nginx</h2><h3 id="2-1-安装环境"><a href="#2-1-安装环境" class="headerlink" title="2.1 安装环境"></a>2.1 安装环境</h3><p>配置Nginx的安装环境:</p>
+<pre><code>yum install gcc-c++
+yum install -y pcre pcre-devel
+yum install -y zlib zlib-devel
+yum install -y openssl openssl-devel</code></pre><h3 id="2-2-安装Nginx"><a href="#2-2-安装Nginx" class="headerlink" title="2.2 安装Nginx"></a>2.2 安装Nginx</h3><p>下载nginx</p>
+<pre><code>wget http://nginx.org/download/nginx-1.8.0.tar.gz</code></pre><p>解压</p>
+<pre><code>tar -zxvf nginx-1.8.0.tar.gz</code></pre><p>进入目录</p>
+<pre><code>cd nginx-1.8.0</code></pre><p>配置configure</p>
+<pre><code>./configure \
+--prefix=/usr/local/nginx \
+--pid-path=/var/run/nginx/nginx.pid \
+--lock-path=/var/lock/nginx.lock \
+--error-log-path=/var/log/nginx/error.log \
+--http-log-path=/var/log/nginx/access.log \
+--with-http_gzip_static_module \
+--http-client-body-temp-path=/var/temp/nginx/client \
+--http-proxy-temp-path=/var/temp/nginx/proxy \
+--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \
+--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \
+--http-scgi-temp-path=/var/temp/nginx/scgi</code></pre><p><font color='red'>注意：上边将临时文件目录指定为/var/temp/nginx，需要在/var下创建temp及nginx目录</font></p>
+<p>编译生成Makefile</p>
+<pre><code>make</code></pre><p>安装</p>
+<pre><code>make install</code></pre><p>nginx安装成功截图</p>
+<p><img src="https://ooo.0o0.ooo/2016/09/05/57cce40bca3b6.png" alt="nginx安装成功.png"></p>
+<h2 id="3-Nginx常用命令"><a href="#3-Nginx常用命令" class="headerlink" title="3.Nginx常用命令"></a>3.Nginx常用命令</h2><h3 id="3-1-启动Nginx"><a href="#3-1-启动Nginx" class="headerlink" title="3.1 启动Nginx"></a>3.1 启动Nginx</h3><pre><code>cd /usr/local/nginx/sbin/
+./nginx </code></pre><p>查询nginx进程：<br><img src="https://ooo.0o0.ooo/2016/09/05/57cce449293ab.png" alt="QQ截图20160905111916.png"></p>
+<p>4780是nginx主进程的进程id，4781是nginx工作进程的进程id</p>
+<p>注意：执行./nginx启动nginx，这里可以-c指定加载的nginx配置文件，如下：<br>./nginx -c /usr/local/nginx/conf/nginx.conf<br>如果不指定-c，nginx在启动时默认加载conf/nginx.conf文件，此文件的地址也可以在编译安装nginx时指定./configure的参数（–conf-path= 指向配置文件（nginx.conf））</p>
+<h3 id="3-2-停止nginx"><a href="#3-2-停止nginx" class="headerlink" title="3.2 停止nginx"></a>3.2 停止nginx</h3><p>方式1 : 快速停止</p>
+<pre><code>cd /usr/local/nginx/sbin
+./nginx -s stop</code></pre><p>此方式相当于先查出nginx进程id再使用kill命令强制杀掉进程。<br>方式2 : 完整停止(建议使用)：</p>
+<pre><code>cd /usr/local/nginx/sbin
+./nginx -s quit</code></pre><p>此方式停止步骤是待nginx进程处理任务完毕进行停止。</p>
+<h3 id="3-3-重启nginx"><a href="#3-3-重启nginx" class="headerlink" title="3.3 重启nginx"></a>3.3 重启nginx</h3><p>方式1 : 先停止再启动（建议使用）<br>对nginx进行重启相当于先停止nginx再启动nginx，即先执行停止命令再执行启动命令。</p>
+<pre><code>./nginx -s quit
+./nginx</code></pre><p>方式2 : 重新加载配置文件<br>当nginx的配置文件nginx.conf修改后，要想让配置生效需要重启nginx，使用-s reload不用先停止nginx再启动nginx即可将配置信息在nginx中生效</p>
+<pre><code>./nginx -s reload</code></pre><h2 id="Nginx无法站外访问？"><a href="#Nginx无法站外访问？" class="headerlink" title="Nginx无法站外访问？"></a>Nginx无法站外访问？</h2><p><img src="https://ooo.0o0.ooo/2016/09/05/57cce4fbe4006.png" alt="QQ截图20160905112152.png"></p>
+<p>这是一个很尴尬的场面,传智的教程里面没有提到这一部分内容.此部分内容来自互联网和我自己的实践.</p>
+<p>刚安装好nginx一个常见的问题是无法站外访问，本机wget、telnet都正常。而服务器之外，不管是局域网的其它主机还是互联网的主机都无法访问站点。如果用telnet的话，提示：<br>正在连接到192.168.0.xxx…不能打开到主机的连接， 在端口 80: 连接失败<br>CentOS防火墙在虚拟机的CENTOS装好APACHE不能用,郁闷,解决方法如下 </p>
+<pre><code>/sbin/iptables -I INPUT -p tcp --dport 80 -j ACCEPT 
+/sbin/iptables -I INPUT -p tcp --dport 22 -j ACCEPT </code></pre><p>如果还无法访问，则需配置一下Linux防火墙:</p>
+<pre><code>iptables -I INPUT 5 -i eth0 -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT</code></pre><p>然后保存： </p>
+<pre><code>/etc/rc.d/init.d/iptables save </code></pre><p>centos 5.3，5.4以上的版本需要用 </p>
+<pre><code>service iptables save 
+来实现保存到配置文件。 </code></pre><p>这样重启计算机后,CentOS防火墙默认已经开放了80和22端口。<br>这里应该也可以不重启计算机： </p>
+<pre><code>/etc/init.d/iptables restart </code></pre><p>CentOS防火墙的关闭，关闭其服务即可： </p>
+<pre><code>查看CentOS防火墙信息：/etc/init.d/iptables status 
+关闭CentOS防火墙服务：/etc/init.d/iptables stop </code></pre><p>永久关闭？不知道怎么个永久法： </p>
+<pre><code>chkconfig –level 35 iptables off。</code></pre><p><img src="https://ooo.0o0.ooo/2016/09/05/57cce58f078cf.png" alt="QQ截图20160905112441.png"></p>
+<p>再次访问即可使用<br><img src="https://ooo.0o0.ooo/2016/09/05/57cce5bc7e087.png" alt="QQ截图20160905112534.png"></p>
+<h2 id="4-开机自启动nginx"><a href="#4-开机自启动nginx" class="headerlink" title="4.开机自启动nginx"></a>4.开机自启动nginx</h2><h3 id="4-1-编写shell脚本"><a href="#4-1-编写shell脚本" class="headerlink" title="4.1 编写shell脚本"></a>4.1 编写shell脚本</h3><p>这里使用的是编写shell脚本的方式来处理</p>
+<pre><code>vi /etc/init.d/nginx</code></pre><p>输入下面的代码</p>
+<pre><code>#!/bin/bash
+# nginx Startup script for the Nginx HTTP Server
+# it is v.0.0.2 version.
+# chkconfig: - 85 15
+# description: Nginx is a high-performance web and proxy server.
+#              It has a lot of features, but it&apos;s not for everyone.
+# processname: nginx
+# pidfile: /var/run/nginx.pid
+# config: /usr/local/nginx/conf/nginx.conf
+nginxd=/usr/local/nginx/sbin/nginx
+nginx_config=/usr/local/nginx/conf/nginx.conf
+nginx_pid=/var/run/nginx.pid
+RETVAL=0
+prog=&quot;nginx&quot;
+# Source function library.
+. /etc/rc.d/init.d/functions
+# Source networking configuration.
+. /etc/sysconfig/network
+# Check that networking is up.
+[ ${NETWORKING} = &quot;no&quot; ] &amp;&amp; exit 0
+[ -x $nginxd ] || exit 0
+# Start nginx daemons functions.
+start() {
+if [ -e $nginx_pid ];then
+   echo &quot;nginx already running....&quot;
+   exit 1
+fi
+   echo -n $&quot;Starting $prog: &quot;
+   daemon $nginxd -c ${nginx_config}
+   RETVAL=$?
+   echo
+   [ $RETVAL = 0 ] &amp;&amp; touch /var/lock/subsys/nginx
+   return $RETVAL
+}
+# Stop nginx daemons functions.
+stop() {
+        echo -n $&quot;Stopping $prog: &quot;
+        killproc $nginxd
+        RETVAL=$?
+        echo
+        [ $RETVAL = 0 ] &amp;&amp; rm -f /var/lock/subsys/nginx /var/run/nginx.pid
+}
+# reload nginx service functions.
+reload() {
+    echo -n $&quot;Reloading $prog: &quot;
+    #kill -HUP `cat ${nginx_pid}`
+    killproc $nginxd -HUP
+    RETVAL=$?
+    echo
+}
+# See how we were called.
+case &quot;$1&quot; in
+start)
+        start
+        ;;
+stop)
+        stop
+        ;;
+reload)
+        reload
+        ;;
+restart)
+        stop
+        start
+        ;;
+status)
+        status $prog
+        RETVAL=$?
+        ;;
+*)
+        echo $&quot;Usage: $prog {start|stop|restart|reload|status|help}&quot;
+        exit 1
+esac
+exit $RETVAL</code></pre><p>然后    :wq  保存并退出(别告诉我你不会这个)</p>
+<h3 id="4-2-设置文件的访问权限"><a href="#4-2-设置文件的访问权限" class="headerlink" title="4.2 设置文件的访问权限"></a>4.2 设置文件的访问权限</h3><pre><code>chmod a+x /etc/init.d/nginx   (a+x ==&gt; all user can execute  所有用户可执行)</code></pre><p>这样在控制台就很容易的操作nginx了：查看Nginx当前状态、启动Nginx、停止Nginx、重启Nginx…</p>
+<p>如果修改了nginx的配置文件nginx.conf，也可以使用上面的命令重新加载新的配置文件并运行，可以将此命令加入到rc.local文件中，这样开机的时候nginx就默认启动了</p>
+<h3 id="4-3-加入到rc-local文件中"><a href="#4-3-加入到rc-local文件中" class="headerlink" title="4.3 加入到rc.local文件中"></a>4.3 加入到rc.local文件中</h3><pre><code>vi /etc/rc.local</code></pre><p>加入一行  <code>/etc/init.d/nginx start</code>    保存并退出，下次重启会生效。</p>
+<pre><code>#!/bin/sh
+#
+# This script will be executed *after* all the other init scripts.
+# You can put your own initialization stuff in here if you don&apos;t
+# want to do the full Sys V style init stuff.
+
+touch /var/lock/subsys/local
+
+# nginx auto start
+/etc/init.d/nginx start</code></pre><h1 id="Nginx应用-反向代理-Reverse-Proxy"><a href="#Nginx应用-反向代理-Reverse-Proxy" class="headerlink" title="Nginx应用-反向代理(Reverse Proxy)"></a>Nginx应用-反向代理(Reverse Proxy)</h1></div></article></div></div><!--!--><div class="column column-right is-3-tablet is-3-desktop is-3-widescreen  order-3"><!--!--><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="is-rounded" src="/img/avatar.png" alt="后端小哥"></figure><p class="title is-size-4 is-block line-height-inherit">后端小哥</p><p class="is-size-6 is-block">Coder</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shijiazhuang, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">107</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">20</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">65</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lujiahao0708" target="_blank" rel="noopener">关注我</a></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://juejin.im/user/59239002570c350069c5f0bb" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">掘金</span></span><span class="level-right"><span class="level-item tag">juejin.im</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://blog.csdn.net/xinruodingshui" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">CSDN</span></span><span class="level-right"><span class="level-item tag">blog.csdn.net</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://space.bilibili.com/302086424/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">B站</span></span><span class="level-right"><span class="level-item tag">space.bilibili.com</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Chrome/"><span class="level-start"><span class="level-item">Chrome</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Docker/"><span class="level-start"><span class="level-item">Docker</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Flutter/"><span class="level-start"><span class="level-item">Flutter</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JVM/"><span class="level-start"><span class="level-item">JVM</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">17</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JavaEE/"><span class="level-start"><span class="level-item">JavaEE</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"><span class="level-start"><span class="level-item">MySQL必知必会</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Shiro/"><span class="level-start"><span class="level-item">Shiro</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Simpleblog%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"><span class="level-start"><span class="level-item">Simpleblog博客系统</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/SpringCloud/"><span class="level-start"><span class="level-item">SpringCloud</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">工具教程</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B9%B6%E5%8F%91/"><span class="level-start"><span class="level-item">并发</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"><span class="level-start"><span class="level-item">持续集成</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%97%A5%E5%BF%97/"><span class="level-start"><span class="level-item">日志</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-11T14:03:59.000Z">2020-04-11</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/11/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/GitHub%20Actions%20%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%20Hexo/">GitHub Actions 自动部署 Hexo</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Hexo/">Hexo</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-11T09:28:08.000Z">2020-04-11</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/11/Redis/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Redis学习笔记</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-11T09:25:40.000Z">2020-04-11</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/11/Redis/Redis%E5%AE%89%E8%A3%85-%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83-%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/">Redis安装&amp;搭建本地环境&amp;备份恢复</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2019-12-20T12:54:41.000Z">2019-12-20</time></p><p class="title is-6"><a class="link-muted" href="/2019/12/20/MySQL/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%AC%AC6-7%E7%AB%A0%20%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E4%B8%8E%E6%95%B0%E6%8D%AE%E8%BF%87%E6%BB%A4/">《MySQL必知必会》第6-7章 过滤数据与数据过滤</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">MySQL必知必会</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2019-12-19T14:54:41.000Z">2019-12-19</time></p><p class="title is-6"><a class="link-muted" href="/2019/12/19/MySQL/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%AC%AC4-5%E7%AB%A0%20SELECT%E6%A3%80%E7%B4%A2%E4%B8%8E%E6%8E%92%E5%BA%8F/">《MySQL必知必会》第4-5章 SELECT检索与排序</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">MySQL必知必会</a></p></div></article></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a><p class="size-small"><span>&copy; 2020 后端小哥</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://lujiahao0708.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
