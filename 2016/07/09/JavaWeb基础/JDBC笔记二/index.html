@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>JDBC笔记二 - 后端小哥博客</title><meta description="JDBC笔记第二部分,主要包括:JDBC批处理,事物,连接池三大部分."><meta property="og:type" content="blog"><meta property="og:title" content="JDBC笔记二"><meta property="og:url" content="http://lujiahao0708.github.io/"><meta property="og:site_name" content="后端小哥博客"><meta property="og:description" content="JDBC笔记第二部分,主要包括:JDBC批处理,事物,连接池三大部分."><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2016-07-09T08:17:13.000Z"><meta property="article:modified_time" content="2019-10-12T09:59:47.707Z"><meta property="article:author" content="后端小哥"><meta property="article:tag" content="JavaEE"><meta property="article:tag" content="数据库"><meta property="article:tag" content="MySql"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="http://lujiahao0708.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lujiahao0708.github.io/2016/07/09/JavaWeb%E5%9F%BA%E7%A1%80/JDBC%E7%AC%94%E8%AE%B0%E4%BA%8C/"},"headline":"后端小哥博客","image":["http://lujiahao0708.github.io/img/og_image.png"],"datePublished":"2016-07-09T08:17:13.000Z","dateModified":"2019-10-12T09:59:47.707Z","author":{"@type":"Person","name":"后端小哥"},"description":"JDBC笔记第二部分,主要包括:JDBC批处理,事物,连接池三大部分."}</script><link rel="canonical" href="http://lujiahao0708.github.io/2016/07/09/JavaWeb%E5%9F%BA%E7%A1%80/JDBC%E7%AC%94%E8%AE%B0%E4%BA%8C/"><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?cdef3b7efc8748063e32969cc0b8dedc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/categories/Redis">Redis</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-07-09T08:17:13.000Z" title="2016-07-09T08:17:13.000Z">2016-07-09</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">17 分钟 读完 (大约 2496 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">JDBC笔记二</h1><div class="content"><h2 id="1-JDBC批处理"><a href="#1-JDBC批处理" class="headerlink" title="1. JDBC批处理"></a>1. JDBC批处理</h2><p>Statement 和 PreparedStatement  都提供批处理。<br>    批处理：批量处理sql语句。<br>    Statement的批处理，可以一次性执行不同的sql语句。应用场景：系统初始化（创建数据库，创建不同表）<br>    PreparedStatement 的批处理，只能执行一条sql语句，实际参数可以批量。应用场景：数据的初始化</p>
+<h3 id="1-1-Statement"><a href="#1-1-Statement" class="headerlink" title="1.1    Statement"></a>1.1    Statement</h3><pre><code>addBatch(sql)  ,给批处理缓存中添加sql语句。
+clearBatch();  清空批处理缓存。
+executeBatch() , 执行批处理缓存所有的sql语句。注意：执行完成之后缓存中的内容仍然存在。</code></pre><h3 id="1-2-PreparedStatement"><a href="#1-2-PreparedStatement" class="headerlink" title="1.2    PreparedStatement"></a>1.2    PreparedStatement</h3><pre><code>addBatch()  , 将实际参数批量设置缓存中。注意：获得预处理之前必须提供sql语句。
+
+mysql 默认没开启批处理。
+通过URL之后参数开启， ?rewriteBatchedStatements = true</code></pre><h2 id="2-事务"><a href="#2-事务" class="headerlink" title="2. 事务"></a>2. 事务</h2><h3 id="2-1-什么是事务"><a href="#2-1-什么是事务" class="headerlink" title="2.1 什么是事务"></a>2.1 什么是事务</h3><ul>
+<li>事务：一组业务逻辑操作，要么全部成功，要么全部不成功。</li>
+<li>事务特性：ACID<ul>
+<li>原子性：一个事务是不可划分的一个整体。要么成功，要么不成功。</li>
+<li>一致性：事务操作前后数据一致。（数据完整）。转账前后，两个人和一样的。</li>
+<li>隔离性：多个事务对同一个内容并发操作。</li>
+<li>持久性：事务提交，操作成功了。不能改变了。保存到数据库中了。</li>
+</ul>
+</li>
+<li>隔离问题<ul>
+<li>脏读：一个事务 读到 另一个 事务 没有提交的数据。</li>
+<li>不可重复读：一个事务 读到 另一个事务 已经提交的数据。（update更新）</li>
+<li>虚读(幻读)：一个事务 读到 另一个事务 已经提交的数据。（insert插入） –理论时</li>
+</ul>
+</li>
+<li>事务隔离级别：用于解决隔离问题<ol>
+<li>读未提交：read uncommitted，一个事务读到另一个事务没有提交的数据。存放问题：3个</li>
+<li>读已提交：read committed，一个事务读到另一个事务提交的数据。解决：脏读，存在2个问题</li>
+<li>可重复读：repeatable read ，一个事务中读到数据重复的。及时另一个事务已经提交。解决：脏读、不可重复读，存放1个问题。</li>
+<li>串行化，serializable，单事务，同时只能一个事务在操作。另一个事务挂起(暂停)。解决：3个问题。</li>
+</ol>
+</li>
+<li>默认隔离级别<br>mysql默认隔离级别：repeatable read<br>oracle默认隔离级别：read committed<br>对比：<pre><code>性能：read uncommitted &gt; read committed &gt; repeatable read &gt; serializable
+安全：read uncommitted &lt; read committed &lt; repeatable read &lt; serializable</code></pre></li>
+</ul>
+<h3 id="2-2-事务操作"><a href="#2-2-事务操作" class="headerlink" title="2.2 事务操作"></a>2.2 事务操作</h3><ul>
+<li>mysql 命令操作<br>  开启事务：mysql&gt;  start transaction;            –开启相当于关闭自动提交<br>  提交事务：mysql&gt;  commit;                –全部成功<br>  回滚事务：mysql&gt;  rollback;                –保证全部不成功</li>
+<li>jdbc java代码操作【掌握】– JDBC中必须使用Connection连接进行事务操作。<br>  开启事务：conn.setAutoCommit(false);<br>  提交事务：conn.commit();<br>  回滚事务：conn.rollback();</li>
+</ul>
+<p>mysql 默认事务提交的，及每执行一条sql语句就是一个事务。<br>扩展：oracle事务默认不提交，需要手动提交。</p>
+<h3 id="2-3-保存点"><a href="#2-3-保存点" class="headerlink" title="2.3 保存点"></a>2.3 保存点</h3><p>Savepoint 保存点，用于记录程序执行位置，方便可以随意回滚指定的位置。spring 事务的传播行为<br>AB整体（必须），CD整体（可选）</p>
+<pre><code>Savepoint savepoint = null;
+try{
+   // 1 开启事务
+   conn.setAutoCommit(false);
+   A
+   B
+   // 记录保存点
+   savepoint = conn.setSavepoint();
+   C
+   D
+
+   //2 提交ABCD
+   conn.commit();
+} catch(){
+  if(savepoint != null){
+      //CD 有异常，回滚到CD之前
+      conn.rollback(savepoint);
+      // 提交AB
+      conn.commit();
+  } else {
+     //AB有异常 ,回滚到最开始处
+     conn.rollback();
+  }
+}</code></pre><h3 id="2-4-丢失更新"><a href="#2-4-丢失更新" class="headerlink" title="2.4 丢失更新"></a>2.4 丢失更新</h3><h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4><p>A 查询数据，username = ‘jack’ ,password = ‘1234’<br>B 查询数据，username=”jack”, password=”1234”<br>A 更新用户名 username=”rose”,password=’1234’    –&gt;   username=”rose”,password=”1234”<br>B 更新密码   password=”9999” ,username=”jack”  –&gt;   username=”jack”,password=’9999’<br>丢失更新：最后更新数据，将前面更新的数据覆盖了。</p>
+<h4 id="解决方案：采用锁机制。"><a href="#解决方案：采用锁机制。" class="headerlink" title="解决方案：采用锁机制。"></a>解决方案：采用锁机制。</h4><p>乐观锁：丢失更新肯定不会发生。</p>
+<pre><code>给表中添加一个字段（标识），用于记录操作版本。
+username=&quot;jack&quot;,password=&quot;1234&quot;,version=&quot;1&quot; ，比较版本号，如果一样，修改版本自动+1.。如果不一样，必须先查询，再更新。</code></pre><p>悲观锁：丢失更新肯定会发生。采用数据库锁机制。</p>
+<pre><code>读锁：共享锁，大家可以一起读。
+    select .... from .... lock in share mode;
+写锁：排他锁，只能一个进行写，不能有其他锁（写、读），所有更新update操作丢将自动获得写锁。
+    select ... from ... for update;</code></pre><p>注意：数据库的锁，必须在事务中使用。<br>只要事务操作完成（commit|rollback|超时）自动释放锁</p>
+<h2 id="3-事务实例"><a href="#3-事务实例" class="headerlink" title="3. 事务实例"></a>3. 事务实例</h2><h2 id="4-连接池"><a href="#4-连接池" class="headerlink" title="4. 连接池"></a>4. 连接池</h2><p>1.为什么使用连接池：连接Connection 创建与销毁 比较耗时的。为了提供性能，开发连接池。<br>2.什么是连接池</p>
+<pre><code>javaee规范规定：连接池必须实现接口，javax.sql.DataSource (数据源)
+为了获得连接 getConnection()
+连接池给调用者提供连接，当调用者使用，此链接只能供调动者是使用，其他人不能使用。
+当调用者使用完成之后，必须归还给连接池。连接必须重复使用。</code></pre><p>3.自定义连接池<br>4.第三方连接池</p>
+<pre><code>DBCP，apache
+C3P0 ，hibernate 整合
+tomcat 内置（JNDI）</code></pre><h3 id="4-1-DBCP"><a href="#4-1-DBCP" class="headerlink" title="4.1 DBCP"></a>4.1 DBCP</h3><p>1.Apache提供的<br>2.导入jar包</p>
+<pre><code>commons-dbcp-1.4.jar 核心包
+commons-pool-1.6.jar 依赖包</code></pre><p>3.核心类</p>
+<pre><code>public class BasicDataSource implements DataSource</code></pre><p>4.手动调用</p>
+<pre><code>//1 创建核心类
+BasicDataSource dataSource = new BasicDataSource();
+//2 配置4个基本参数
+dataSource.setDriverClassName(&quot;com.mysql.jdbc.Driver&quot;);
+dataSource.setUrl(&quot;jdbc:mysql:///day16_db&quot;);
+dataSource.setUsername(&quot;root&quot;);
+dataSource.setPassword(&quot;1234&quot;);
+//3 管理连接配置
+dataSource.setMaxActive(30);    //最大活动数
+dataSource.setMaxIdle(20);        //最大空闲数
+dataSource.setMinIdle(10);        //最小空闲数
+dataSource.setInitialSize(15);    //初始化个数</code></pre><p>5.配置调用</p>
+<pre><code>DBCP采用properties文件，key=value ，key为 BasicDataSource属性（及setter获得）
+//0 读取配置文件
+InputStream is = TestDBCP.class.getClassLoader().getResourceAsStream(&quot;dbcpconfig.properties&quot;);
+Properties properties = new Properties();
+properties.load(is);
+//1 加载配置文件，获得配置信息
+DataSource dataSource = BasicDataSourceFactory.createDataSource(properties);</code></pre><p>6.配置文件 dbcpconfig.properties</p>
+<pre><code>#连接设置
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://localhost:3306/day16_db
+username=root
+password=1234
+
+#&lt;!-- 初始化连接 --&gt;
+initialSize=10
+
+#最大连接数量
+maxActive=50
+
+#&lt;!-- 最大空闲连接 --&gt;
+maxIdle=20
+
+#&lt;!-- 最小空闲连接 --&gt;
+minIdle=5
+
+#&lt;!-- 超时等待时间以毫秒为单位 6000毫秒/1000等于60秒 --&gt;
+maxWait=60000
+
+
+#JDBC驱动建立连接时附带的连接属性属性的格式必须为这样：[属性名=property;] 
+#注意：&quot;user&quot; 与 &quot;password&quot; 两个属性会被明确地传递，因此这里不需要包含他们。
+connectionProperties=useUnicode=true;characterEncoding=gbk
+
+#指定由连接池所创建的连接的自动提交（auto-commit）状态。
+defaultAutoCommit=true
+
+#driver default 指定由连接池所创建的连接的只读（read-only）状态。
+#如果没有设置该值，则“setReadOnly”方法将不被调用。（某些驱动并不支持只读模式，如：Informix）
+defaultReadOnly=
+
+#driver default 指定由连接池所创建的连接的事务级别（TransactionIsolation）。
+#可用值为下列之一：（详情可见javadoc。）NONE,READ_UNCOMMITTED, READ_COMMITTED, REPEATABLE_READ, SERIALIZABLE
+defaultTransactionIsolation=READ_UNCOMMITTED</code></pre><h3 id="4-2-C3P0"><a href="#4-2-C3P0" class="headerlink" title="4.2 C3P0"></a>4.2 C3P0</h3><p>1.第三方提供,非常优秀<br>2.导入jar包</p>
+<pre><code>c3p0-0.9.2-pre5.jar 核心包
+mchange-commons-java-0.2.3.jar 依赖包
+c3p0-oracle-thin-extras-0.9.2-pre5.jar 使用oracle的依赖</code></pre><p>3.核心类</p>
+<pre><code>ComboPooledDataSource</code></pre><p>4.手动调用</p>
+<pre><code>//1 核心类 (日志级别：debug info warn  error)
+ComboPooledDataSource dataSource = new ComboPooledDataSource();
+//2 基本4项
+dataSource.setDriverClass(&quot;com.mysql.jdbc.Driver&quot;);
+dataSource.setJdbcUrl(&quot;jdbc:mysql:///day16_db&quot;);
+dataSource.setUser(&quot;root&quot;);
+dataSource.setPassword(&quot;1234&quot;);
+//3 优化
+dataSource.setMaxPoolSize(30);        //最大连接池数
+dataSource.setMinPoolSize(10);        //最小连接池数
+dataSource.setInitialPoolSize(15);    //初始化连接池数
+dataSource.setAcquireIncrement(5);    //每一次增强个数</code></pre><p>5.配置调用</p>
+<pre><code>加载位置：WEB-INF/classes  (classpath , src)
+配置文件名称：c3p0-config.xml
+//1 c3p0...jar 将自动加载配置文件。打包后从WEB-INF/classes (src)目录加载名称为c3p0-config.xml的文件
+//ComboPooledDataSource dataSource = new ComboPooledDataSource(); //自动从配置文件 &lt;default-config&gt;
+ComboPooledDataSource dataSource = new ComboPooledDataSource(&quot;itheima&quot;); //手动指定配置文件 &lt;named-config name=&quot;itheima&quot;&gt; </code></pre><p>6.配置文件 c3p0-config.xml</p>
+<pre><code>&lt;c3p0-config&gt;
+    &lt;!-- 默认配置，如果没有指定则使用这个配置 --&gt;
+    &lt;default-config&gt;
+        &lt;property name=&quot;driverClass&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;
+        &lt;property name=&quot;jdbcUrl&quot;&gt;jdbc:mysql:///day16_db&lt;/property&gt;
+        &lt;property name=&quot;user&quot;&gt;root&lt;/property&gt;
+        &lt;property name=&quot;password&quot;&gt;1234&lt;/property&gt;
+
+        &lt;property name=&quot;checkoutTimeout&quot;&gt;30000&lt;/property&gt;
+        &lt;property name=&quot;idleConnectionTestPeriod&quot;&gt;30&lt;/property&gt;
+        &lt;property name=&quot;initialPoolSize&quot;&gt;10&lt;/property&gt;
+        &lt;property name=&quot;maxIdleTime&quot;&gt;30&lt;/property&gt;
+        &lt;property name=&quot;maxPoolSize&quot;&gt;100&lt;/property&gt;
+        &lt;property name=&quot;minPoolSize&quot;&gt;10&lt;/property&gt;
+        &lt;property name=&quot;maxStatements&quot;&gt;200&lt;/property&gt;
+        &lt;user-overrides user=&quot;test-user&quot;&gt;
+            &lt;property name=&quot;maxPoolSize&quot;&gt;10&lt;/property&gt;
+            &lt;property name=&quot;minPoolSize&quot;&gt;1&lt;/property&gt;
+            &lt;property name=&quot;maxStatements&quot;&gt;0&lt;/property&gt;
+        &lt;/user-overrides&gt;
+    &lt;/default-config&gt; 
+    &lt;!-- 命名的配置 --&gt;
+    &lt;named-config name=&quot;itheima&quot;&gt;
+        &lt;property name=&quot;driverClass&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;
+        &lt;property name=&quot;jdbcUrl&quot;&gt;jdbc:mysql:///day16_db&lt;/property&gt;
+        &lt;property name=&quot;user&quot;&gt;root&lt;/property&gt;
+        &lt;property name=&quot;password&quot;&gt;1234&lt;/property&gt;
+    &lt;!-- 如果池中数据连接不够时一次增长多少个 --&gt;
+        &lt;property name=&quot;acquireIncrement&quot;&gt;5&lt;/property&gt;
+        &lt;property name=&quot;initialPoolSize&quot;&gt;20&lt;/property&gt;
+        &lt;property name=&quot;minPoolSize&quot;&gt;10&lt;/property&gt;
+        &lt;property name=&quot;maxPoolSize&quot;&gt;40&lt;/property&gt;
+        &lt;property name=&quot;maxStatements&quot;&gt;0&lt;/property&gt;
+        &lt;property name=&quot;maxStatementsPerConnection&quot;&gt;5&lt;/property&gt;
+    &lt;/named-config&gt;
+&lt;/c3p0-config&gt; </code></pre><h3 id="4-3-JNDI"><a href="#4-3-JNDI" class="headerlink" title="4.3 JNDI"></a>4.3 JNDI</h3><ul>
+<li>tomcat管理连接池</li>
+<li>JNDI(Java Naming and Directory Interface,Java命名和目录接口)是SUN公司提供的一种标准的Java命名系统接口，用于存放java任意对象，给对象进行命名（使用目录结构）。例如：/a/b/c</li>
+<li>作用：在多个项目之间共享数据，只需要传递名称，就可以获得对象。</li>
+<li>理解：JNDI 就是一个容器，用于存放任意对象。</li>
+<li>tomcat 将连接池存放 JNDI容器，可以获得使用。使用前提必须通知tomcat进行存放，默认情况下tomcat没有存放。</li>
+</ul>
+<p>配置:<br>1.给tomcat配置数据源（连接池），使用 <Context >标签</p>
+<pre><code>方式1：%tomcat%/conf/server.xml --&gt;  在&lt;Host&gt;标签下添加&lt;Context&gt;
+方式2：%tomcat%/conf/Catalina/localhost/day16.xml  ---&gt; &lt;Context&gt;
+    day16/META-INF/Context.xml  在项目的META-INF下创建Context.xml,会自动发布到“方法2”指定位置
+Context.xml中的内容:
+    &lt;Context&gt;
+        &lt;!-- 
+            name 存放进去名称
+            auth 存放位置
+            type 确定存放内容，tomcat将通过指定接口创建实例，底层使用DBCP
+            其他都是DBCP属性设置
+         --&gt;
+      &lt;Resource name=&quot;jdbc/itheima&quot; auth=&quot;Container&quot; type=&quot;javax.sql.DataSource&quot;
+                   maxActive=&quot;100&quot; maxIdle=&quot;30&quot; maxWait=&quot;10000&quot;
+                   username=&quot;root&quot; password=&quot;1234&quot; driverClassName=&quot;com.mysql.jdbc.Driver&quot;
+                   url=&quot;jdbc:mysql://localhost:3306/day16_db&quot;/&gt;
+    &lt;/Context&gt;</code></pre><p>2 从JNDI容器获取，在当前项目web.xml配置</p>
+<pre><code>&lt;!-- 给当前项目配置，从JNDI容器获得指定名称内容 --&gt;
+&lt;resource-ref&gt;
+  &lt;res-ref-name&gt;jdbc/itheima&lt;/res-ref-name&gt;
+  &lt;res-type&gt;javax.sql.DataSource&lt;/res-type&gt;
+  &lt;res-auth&gt;Container&lt;/res-auth&gt;
+&lt;/resource-ref&gt;</code></pre><p>3.使用</p>
+<pre><code>//0 包名：javax.naming
+//1 初始化JNDI容器
+Context context = new InitialContext();
+//2 获得数据源   固定 “java:/comp/env”
+DataSource dataSource = (DataSource)context.lookup(&quot;java:/comp/env/jdbc/itheima&quot;);</code></pre></div><div class="article-tags size-small is-uppercase mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/JavaEE/">JavaEE</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><a class="link-muted mr-2" rel="tag" href="/tags/MySql/">MySql</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button is-info donate"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpeg" alt="支付宝"></span></a><a class="button is-success donate"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat_pay.jpeg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2016/07/25/JavaWeb%E5%9F%BA%E7%A1%80/%E5%88%86%E9%A1%B5/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">分页</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2016/07/04/JavaWeb%E5%9F%BA%E7%A1%80/JDBC%E7%AC%94%E8%AE%B0%E4%B8%80/"><span class="level-item">JDBC笔记一</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><!--!--><div class="column column-right is-3-tablet is-3-desktop is-3-widescreen  order-3"><!--!--><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="is-rounded" src="/img/avatar.png" alt="后端小哥"></figure><p class="title is-size-4 is-block line-height-inherit">后端小哥</p><p class="is-size-6 is-block">Coder</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shijiazhuang, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">107</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">20</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">65</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lujiahao0708" target="_blank" rel="noopener">关注我</a></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://juejin.im/user/59239002570c350069c5f0bb" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">掘金</span></span><span class="level-right"><span class="level-item tag">juejin.im</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://blog.csdn.net/xinruodingshui" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">CSDN</span></span><span class="level-right"><span class="level-item tag">blog.csdn.net</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://space.bilibili.com/302086424/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">B站</span></span><span class="level-right"><span class="level-item tag">space.bilibili.com</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Chrome/"><span class="level-start"><span class="level-item">Chrome</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Docker/"><span class="level-start"><span class="level-item">Docker</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Flutter/"><span class="level-start"><span class="level-item">Flutter</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JVM/"><span class="level-start"><span class="level-item">JVM</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">17</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JavaEE/"><span class="level-start"><span class="level-item">JavaEE</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"><span class="level-start"><span class="level-item">MySQL必知必会</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Shiro/"><span class="level-start"><span class="level-item">Shiro</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Simpleblog%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"><span class="level-start"><span class="level-item">Simpleblog博客系统</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/SpringCloud/"><span class="level-start"><span class="level-item">SpringCloud</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">工具教程</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B9%B6%E5%8F%91/"><span class="level-start"><span class="level-item">并发</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"><span class="level-start"><span class="level-item">持续集成</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%97%A5%E5%BF%97/"><span class="level-start"><span class="level-item">日志</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-11T09:28:08.000Z">2020-04-11</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/11/Redis/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Redis学习笔记</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-11T09:25:40.000Z">2020-04-11</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/11/Redis/Redis%E5%AE%89%E8%A3%85-%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83-%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/">Redis安装&amp;搭建本地环境&amp;备份恢复</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2019-12-20T12:54:41.000Z">2019-12-20</time></p><p class="title is-6"><a class="link-muted" href="/2019/12/20/MySQL/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%AC%AC6-7%E7%AB%A0%20%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E4%B8%8E%E6%95%B0%E6%8D%AE%E8%BF%87%E6%BB%A4/">《MySQL必知必会》第6-7章 过滤数据与数据过滤</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">MySQL必知必会</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2019-12-19T14:54:41.000Z">2019-12-19</time></p><p class="title is-6"><a class="link-muted" href="/2019/12/19/MySQL/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%AC%AC4-5%E7%AB%A0%20SELECT%E6%A3%80%E7%B4%A2%E4%B8%8E%E6%8E%92%E5%BA%8F/">《MySQL必知必会》第4-5章 SELECT检索与排序</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">MySQL必知必会</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2019-12-19T11:54:41.000Z">2019-12-19</time></p><p class="title is-6"><a class="link-muted" href="/2019/12/19/MySQL/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%AC%AC1-3%E7%AB%A0%20MySQL%E4%BB%8B%E7%BB%8D/">《MySQL必知必会》第1-3章 MySQL介绍</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">MySQL必知必会</a></p></div></article></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a><p class="size-small"><span>&copy; 2020 后端小哥</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://lujiahao0708.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

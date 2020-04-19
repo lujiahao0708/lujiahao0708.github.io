@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>19-JavaWeb基础-Filter - 后端小哥博客</title><meta description="JavaEE中Filter过滤器的介绍&amp;#x2F;使用方法&amp;#x2F;生命周期&amp;#x2F;方法详解&amp;#x2F;案例介绍."><meta property="og:type" content="blog"><meta property="og:title" content="19-JavaWeb基础-Filter"><meta property="og:url" content="http://lujiahao0708.github.io/"><meta property="og:site_name" content="后端小哥博客"><meta property="og:description" content="JavaEE中Filter过滤器的介绍&amp;#x2F;使用方法&amp;#x2F;生命周期&amp;#x2F;方法详解&amp;#x2F;案例介绍."><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://ooo.0o0.ooo/2016/07/27/5798496b3b3ed.png"><meta property="og:image" content="https://ooo.0o0.ooo/2016/07/27/5798737cdfea1.png"><meta property="og:image" content="https://ooo.0o0.ooo/2016/07/28/57999a3a4ed25.png"><meta property="article:published_time" content="2017-01-24T07:46:08.000Z"><meta property="article:modified_time" content="2019-10-12T09:59:47.706Z"><meta property="article:author" content="后端小哥"><meta property="article:tag" content="JavaEE"><meta property="article:tag" content="后台"><meta property="article:tag" content="过滤器"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://ooo.0o0.ooo/2016/07/27/5798496b3b3ed.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lujiahao0708.github.io/2017/01/24/JavaWeb%E5%9F%BA%E7%A1%80/19-JavaWeb%E5%9F%BA%E7%A1%80-Filter/"},"headline":"后端小哥博客","image":["https://ooo.0o0.ooo/2016/07/27/5798496b3b3ed.png","https://ooo.0o0.ooo/2016/07/27/5798737cdfea1.png","https://ooo.0o0.ooo/2016/07/28/57999a3a4ed25.png"],"datePublished":"2017-01-24T07:46:08.000Z","dateModified":"2019-10-12T09:59:47.706Z","author":{"@type":"Person","name":"后端小哥"},"description":"JavaEE中Filter过滤器的介绍&#x2F;使用方法&#x2F;生命周期&#x2F;方法详解&#x2F;案例介绍."}</script><link rel="canonical" href="http://lujiahao0708.github.io/2017/01/24/JavaWeb%E5%9F%BA%E7%A1%80/19-JavaWeb%E5%9F%BA%E7%A1%80-Filter/"><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?cdef3b7efc8748063e32969cc0b8dedc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/categories/Redis">Redis</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2017-01-24T07:46:08.000Z" title="2017-01-24T07:46:08.000Z">2017-01-24</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">18 分钟 读完 (大约 2756 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">19-JavaWeb基础-Filter</h1><div class="content"><h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h2><p>当访问资源时，如果不希望此资源被访问，可以使用过滤器进行拦截。<br>访问一个资源，需要路径，过滤器通过路径匹配进行资源拦截。<br>过滤器必须实现接口：javax.servlet.Filter</p>
+<pre><code>Filter
+    init(FilterConfig):void        初始化
+    doFilter(ServletRequest,ServletResponse,FilterChain):void    过滤方法
+    destroy():void        销毁</code></pre><p>默认情况下过滤器会拦截匹配路径和执行的资源<br>需要手动放行:<code>chain.doFilter(request,response);</code></p>
+<h2 id="2-使用方法"><a href="#2-使用方法" class="headerlink" title="2.使用方法"></a>2.使用方法</h2><p>详见<code>统计访问次数</code>的案例</p>
+<h2 id="3-生命周期"><a href="#3-生命周期" class="headerlink" title="3.生命周期"></a>3.生命周期</h2><p>3.1 <code>init(FilterConfig)</code>  </p>
+<pre><code>初始化方法
+    执行时机：服务器启动时执行
+    执行者：tomcat
+FilterConfig：当前过滤器的配置对象
+    getFilterName():String    过滤名称,相当于&lt;filter-name&gt;标签
+    getServletContext():ServletContext    ServletContext对象引用
+    getInitParametes(String):String    获得过滤器初始化参数
+    getInitParameterNames():Enumeration    获得过滤器初始化参数的所有名字
+
+    &lt;filter&gt;
+        &lt;filter-name&gt;CountFilter&lt;/filter-name&gt;
+        &lt;filter-class&gt;com.lujiahao.cms.filter.CountFilter&lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;encoding&lt;/param-name&gt;
+            &lt;param-value&gt;UTF-8&lt;/param-value&gt;
+    &lt;/filter&gt;</code></pre><p>3.2 <code>doFilter(ServletRequest,ServletResponse ,FilterChain)</code></p>
+<pre><code>路径匹配一次执行一次。一次请求拦截一次。</code></pre><p>3.3 <code>destroy()</code></p>
+<pre><code>执行时机：服务器正常关闭时执行
+执行者：tomcat</code></pre><h2 id="4-doFilter方法详解"><a href="#4-doFilter方法详解" class="headerlink" title="4.doFilter方法详解"></a>4.doFilter方法详解</h2><p>参数1ServletRequest 和参数2  ServletResponse</p>
+<pre><code>回顾：Object               List               ArrayList
+      ServletRequest        HttpServletRequest        tomcat实现类
+结论：可以强转获得Http协议有关对象
+    HttpServletRequest  request = （HttpServletRequest） req;
+    HttpServletResponse  request = （HttpServletResponse） res;</code></pre><p>参数3：FilterChain</p>
+<pre><code>FilterChain 过滤器链，当请求资源时，多个过滤器都生效，tomcat将生成一个链，用于存放多个过滤器。
+第一个过滤器执行完成，并发行时，将执行第二个过滤器，。。。。。当最后一个过滤器放行时，将执行资源。</code></pre><p><img src="https://ooo.0o0.ooo/2016/07/27/5798496b3b3ed.png" alt="aaaaa.png"></p>
+<p>过滤器链中 过滤器执行顺序 与 <filter-mapping> 映射在web.xml配置顺序一致的。web.xml 先配置先执行</p>
+<h2 id="5-lt-url-pattern-gt-匹配路径"><a href="#5-lt-url-pattern-gt-匹配路径" class="headerlink" title="5.&lt;url-pattern&gt;匹配路径"></a>5.<code>&lt;url-pattern&gt;</code>匹配路径</h2><p>回顾：servlet路径配置</p>
+<pre><code>1.完全匹配，必须/开头 ，例如：/a/b/c/oneServlet
+2.不完全匹配，以/开头   *结尾，例如：/a/b/*  , /*
+3.通配符匹配. *.开头，例如： *.jsp  、 *.do   、*.action 等
+4 缺省  /   以上都没有匹配将执行。</code></pre><p>过滤器路径编写，与servlet一致的，过滤器过滤的就是指定servlet。</p>
+<pre><code>/oneServlet  、 /twoServlet
+/*   过滤器 将匹配以上两个servlet</code></pre><h2 id="6-dispatcher配置"><a href="#6-dispatcher配置" class="headerlink" title="6.dispatcher配置"></a>6.<code>dispatcher</code>配置</h2><p><filter-mapping><dispatcher> 用于配置过滤器在何处进行拦截。</p>
+<pre><code>取值：    REQUEST、 FORWARD、 INCLUDE、ERROR
+request : 表示在请求开始时拦截。默认值。
+forward：表示在请求转发开始时拦截。及 request.getRequestDistacher(..).forward 被调用时。
+include：表示在请求包含开始时拦截。及 request.getRequestDistacher(..).include 被调用时。
+error ： 表示程序异常，显示友好页面之前拦截。</code></pre><h2 id="案例〇-dispatcher配置友好错误页面"><a href="#案例〇-dispatcher配置友好错误页面" class="headerlink" title="案例〇 : dispatcher配置友好错误页面"></a>案例〇 : dispatcher配置友好错误页面</h2><p>IE会将500的错误以他自己的方式展现出来,这就不符合需求,所以需要手动配置友好错误页面.<br>如果有多个友好错误界面,不能在每个jsp页面更改状态码,这就需要一个过滤器来统一过滤.</p>
+<p>1.创建<code>FriendErrorFilter</code>实现<code>javax.servlet.Filter</code>接口</p>
+<pre><code>/**
+ * 友好错误界面过滤器
+ * Created by lujiahao on 2016/7/27.
+ */
+public class FriendErrorFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        // 修改状态码
+        response.setStatus(200);
+        // 放行
+        filterChain.doFilter(request,response);
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+}</code></pre><p>2.配置到tomcat(web.xml)</p>
+<pre><code>&lt;!--配置友好错误页面过滤器--&gt;
+&lt;error-page&gt;
+    &lt;error-code&gt;500&lt;/error-code&gt;
+    &lt;location&gt;/demo0/frienderror.jsp&lt;/location&gt;
+&lt;/error-page&gt;
+&lt;!--友好错误页面过滤器--&gt;
+&lt;filter&gt;
+    &lt;filter-name&gt;FriendErrorFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;com.lujiahao.filter.FriendErrorFilter&lt;/filter-class&gt;
+&lt;/filter&gt;
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;FriendErrorFilter&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/frienderror.jsp&lt;/url-pattern&gt;
+    &lt;dispatcher&gt;ERROR&lt;/dispatcher&gt;
+&lt;/filter-mapping&gt;</code></pre><p>3.编写友好错误界面(error.jsp)</p>
+<pre><code>&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Title&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        我是友好错误界面&lt;br/&gt;
+        服务器繁忙,请稍后重试
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre><p>4.模拟服务器500错误</p>
+<pre><code>&lt;%
+    int i = 1/0;
+%&gt;</code></pre><h2 id="案例一-统计访问次数"><a href="#案例一-统计访问次数" class="headerlink" title="案例一 : 统计访问次数"></a>案例一 : 统计访问次数</h2><p>原理:将数据记录到ServletContext 所有用户共享</p>
+<p>1.创建<code>CountFilter</code>实现<code>javax.servlet.Filter</code>接口</p>
+<pre><code>/**
+ * 统计次数的过滤器
+ * Created by lujiahao on 2016/7/27.
+ */
+public class CountFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        // 获得访问路径   /pages/main/main.jsp
+        String servletPath = request.getServletPath();
+        String filePath = servletPath.substring(servletPath.lastIndexOf(&quot;/&quot;)+1,servletPath.lastIndexOf(&quot;.&quot;));
+
+        // 获得servletContext获取统计数据
+        ServletContext servletContext = request.getSession().getServletContext();
+        Integer num = (Integer) servletContext.getAttribute(filePath);
+        if (num == null) {
+            num = 1;// 第一次访问
+        } else {
+            num ++;
+        }
+        // 存放到ServletContext中
+        servletContext.setAttribute(filePath,num);
+
+        // 放行
+        filterChain.doFilter(request,response);
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+}</code></pre><p>2.配置到tomcat(web.xml)</p>
+<pre><code>&lt;!--统计次数的过滤器--&gt;
+&lt;filter&gt;
+    &lt;filter-name&gt;CountFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;com.lujiahao.cms.filter.CountFilter&lt;/filter-class&gt;
+&lt;/filter&gt;
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;CountFilter&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/pages/main/main.jsp&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;</code></pre><p>3.JSP中使用</p>
+<pre><code>访问次数:${applicationScope.main}次&lt;br/&gt;</code></pre><h2 id="案例三-自动登录"><a href="#案例三-自动登录" class="headerlink" title="案例三 : 自动登录"></a>案例三 : 自动登录</h2><p>原理图:<br><img src="https://ooo.0o0.ooo/2016/07/27/5798737cdfea1.png" alt="QQ截图20160727163940.png"></p>
+<p>1.修改以前的登录逻辑,添加对自动登录的标记</p>
+<pre><code>/**
+ * 登录操作
+ */
+private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    // 1.获取数据并封装
+    Customer customer = LBeanUtils.populate(Customer.class, request.getParameterMap());
+    // 2.通知service进行登录
+    CustomerServeice customerServeice = new CustomerServiceImpl();
+    Customer loginCustomer = customerServeice.login(customer);
+
+    // 3.处理
+    if (loginCustomer != null) {
+        // -------------自动登录start-------------
+        // checkbox选中的话获得的值是on
+        String autologin = request.getParameter(&quot;autologin&quot;);
+        if (autologin != null) {
+            // 勾选了记住密码,  使用cookie将用户的登录名和密码发送到浏览器,并通知浏览器保存(持久化cookie)
+            // 1.创建cookie对象
+            String username = URLEncoder.encode(loginCustomer.getName(), &quot;UTF-8&quot;);
+            String password = URLEncoder.encode(loginCustomer.getPwd(), &quot;UTF-8&quot;);
+            // 存入需要进行URLEndode编码,不然会报错:http://blog.csdn.net/liuxiao723846/article/details/22155393
+            Cookie cookie = new Cookie(&quot;autoLoginCookie&quot;, username + &quot;&amp;&quot; + password);
+            // 2.设置有效时间
+            cookie.setMaxAge(60 * 60);// 1小时
+            // 3.设置路径
+            cookie.setPath(&quot;/&quot;);
+            // 4.发送cookie
+            response.addCookie(cookie);
+        }
+        // -------------自动登录end-------------
+
+        // 成功  -- session记录登录状态,重定向到主页面
+        // * session作用域保存数据
+        request.getSession().setAttribute(&quot;loginCustomer&quot;, loginCustomer);
+        response.sendRedirect(request.getContextPath() + &quot;/pages/main/main.jsp&quot;);
+    } else {
+        // 不成功  --- request记录当次请求提示,请求转发到login.jsp 显示数据
+        request.setAttribute(&quot;msg&quot;, &quot;用户名和密码不匹配&quot;);
+        request.setAttribute(&quot;customer&quot;, customer);// 回显数据
+        request.getRequestDispatcher(&quot;pages/login/login.jsp&quot;).forward(request, response);
+    }
+}</code></pre><p>2.编写自动登录的过滤器</p>
+<pre><code>/**
+ * 自动登录的过滤器
+ * Created by lujiahao on 2016/7/27.
+ */
+public class AutoLoginFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        Customer loginCustomer = (Customer) request.getSession().getAttribute(&quot;loginCustomer&quot;);
+        // 1.已经登录
+        if (loginCustomer != null) {
+            filterChain.doFilter(request,response);
+            return;
+        }
+
+        // 2.没有登录,获取cookie信息
+        Cookie[] allCookie = request.getCookies();
+        String cookieValue = null;
+        if (allCookie != null) {
+            for (Cookie cookie : allCookie) {
+                if (&quot;autoLoginCookie&quot;.equals(cookie.getName())) {
+                    cookieValue = cookie.getValue();
+                    break;// 一旦查询到了就跳出循环,提升性能
+                }
+            }
+        }
+
+        // 3.没有cookie信息
+        if (cookieValue == null) {
+            filterChain.doFilter(request,response);
+            return;
+        }
+
+        // 4.查询到cookie信息,获得用户数据
+        String username = URLDecoder.decode(cookieValue.split(&quot;&amp;&quot;)[0],&quot;UTF-8&quot;);
+        String password = URLDecoder.decode(cookieValue.split(&quot;&amp;&quot;)[1],&quot;UTF-8&quot;);
+        Customer customer = new Customer(username,password);
+
+        // 5.查询用户信息
+        CustomerServeice customerServeice = new CustomerServiceImpl();
+        loginCustomer = customerServeice.login(customer);
+
+        // 6.没有查询到用户信息----例如:密码修改
+        if (loginCustomer == null) {
+            filterChain.doFilter(request,response);
+            // 应该删除cookie
+            Cookie cookie = new Cookie(&quot;autoLoginCookie&quot;,&quot;&quot;);
+            cookie.setMaxAge(0);// 删除
+            cookie.setPath(&quot;/&quot;);// 保存的时候写的路径要和这里一样
+            response.addCookie(cookie);
+            return;
+        }
+
+        // 7.查询到用户信息,执行自动登录
+        request.getSession().setAttribute(&quot;loginCustomer&quot;,loginCustomer);
+
+        // 放行
+        filterChain.doFilter(request,response);
+    }
+    @Override
+    public void destroy() {
+
+    }
+}</code></pre><h2 id="案例四-GET-POST中文乱码统一处理"><a href="#案例四-GET-POST中文乱码统一处理" class="headerlink" title="案例四 : GET/POST中文乱码统一处理"></a>案例四 : GET/POST中文乱码统一处理</h2><p>1.旧的处理方式:</p>
+<pre><code>public class GetPostServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        /*
+        String username = request.getParameter(&quot;username&quot;);
+        String password = request.getParameter(&quot;password&quot;);
+
+        //处理编码
+        username = new String(username.getBytes(&quot;ISO8859-1&quot;),&quot;UTF-8&quot;);
+        password = new String(password.getBytes(&quot;ISO8859-1&quot;),&quot;UTF-8&quot;);
+
+        System.out.println(&quot;get:&quot;);
+        System.out.println(username);
+        System.out.println(password);
+        */
+        this.doPost(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //post请求乱码
+        //request.setCharacterEncoding(&quot;UTF-8&quot;);
+
+        String username = request.getParameter(&quot;username&quot;);
+        String password = request.getParameter(&quot;password&quot;);
+
+        System.out.println(&quot;post:&quot;);
+        System.out.println(username);
+        System.out.println(password);
+    }
+}</code></pre><p>2.使用过滤器+装饰着模式的处理方式:</p>
+<pre><code>/**
+ * 处理Get/Post请求乱码的过滤器
+ * Created by lujiahao on 2016/7/27.
+ */
+public class GetPostEncodingFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        //编码设置 另一个filter编写   这个只能解决POST乱码的问题
+        request.setCharacterEncoding(&quot;UTF-8&quot;);
+
+        // 这个里面有处理GET乱码
+        // 使用装饰者模式增强的request
+        MyRequest myRequest = new MyRequest(request);
+        // 放行
+        filterChain.doFilter(myRequest,response);
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+}
+
+/**
+ * 使用装饰者设计模式
+ * HttpServletRequestWrapper是系统为我们准备好的装饰者的父类,已经完成了相应的工作
+ * Created by lujiahao on 2016/7/27.
+ */
+public class MyRequest extends HttpServletRequestWrapper {
+    private boolean isEncoding = false;// 默认是没有编码的
+    private HttpServletRequest request;
+    public MyRequest(HttpServletRequest request) {
+        super(request);// 将tomcat的request传入父类,提供给不需要增强的方法使用
+        this.request = request;
+    }
+
+    // 需要增强的方法直接覆写父类方法就好了
+
+    // 通过名称获得第一个值
+    @Override
+    public String getParameter(String name) {
+        String[] parameterValues = this.getParameterValues(name);
+        if (parameterValues == null) {
+            return null;
+        }
+        return parameterValues[0];
+    }
+
+    // 通过名称获得所有的值
+    @Override
+    public String[] getParameterValues(String name) {
+        return this.getParameterMap().get(name);
+    }
+
+    @Override
+    public Map&lt;String, String[]&gt; getParameterMap() {
+        // 1.获得tomcat原始数据
+        Map&lt;String, String[]&gt; map = request.getParameterMap();
+        // 2.处理get请求的乱码
+        if (&quot;GET&quot;.equals(request.getMethod()) &amp;&amp; !isEncoding) {
+            // 3.遍历map
+            for(Map.Entry&lt;String,String[]&gt; entry : map.entrySet()){
+                // 4.获得所有value数据
+                String[] value = entry.getValue();
+                // 处理所有乱码
+                for (int i = 0; i &lt; value.length; i++) {
+                    try {
+                        value[i] = new String(value[i].getBytes(&quot;ISO-8859-1&quot;),&quot;UTF-8&quot;);
+                    } catch (UnsupportedEncodingException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            isEncoding = true;// 已经解决完乱码就不要再次解决了
+        }
+        return map;
+    }
+}</code></pre><h2 id="案例五-页面静态化-amp-全栈压缩"><a href="#案例五-页面静态化-amp-全栈压缩" class="headerlink" title="案例五 : 页面静态化 &amp; 全栈压缩"></a>案例五 : 页面静态化 &amp; 全栈压缩</h2><p>页面静态化原理图:<br><img src="https://ooo.0o0.ooo/2016/07/28/57999a3a4ed25.png" alt="QQ截图20160728133730.png"><br>1.装饰者模式增强HttpServletResponse</p>
+<pre><code>public class MyResponse extends HttpServletResponseWrapper{
+
+    private HttpServletResponse response;
+
+    //提供自定义缓存
+    private ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+    private PrintWriter pw = null;
+    public MyResponse(HttpServletResponse response) {
+        super(response);
+        this.response = response;
+    }
+
+    @Override
+    public PrintWriter getWriter() throws IOException {
+        if(pw == null){
+            pw = new PrintWriter(new OutputStreamWriter(baos , &quot;UTF-8&quot; ));
+            System.out.println(&quot;执行&quot; + pw);
+        }
+        return pw;
+    }
+
+    /**
+     * 获得自定义缓存内容
+     * @return
+     */
+    public byte[] getData(){
+        return baos.toByteArray();
+    }
+
+}</code></pre><p>2.过滤器写法</p>
+<pre><code>public class PageStaticFilter implements Filter {
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
+
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse resp,
+            FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) resp;
+
+        //1 获得页面位置
+        //D:\java\tomcat\apache-tomcat-7.0.53\webapps\day19_demo\demo04\1.html
+        ServletContext sc = request.getSession().getServletContext();
+        String id= request.getParameter(&quot;id&quot;);
+        String path = &quot;/demo04/&quot;+id+&quot;.html&quot;;// 静态页面存放的位置
+        String htmlPath = sc.getRealPath(path);
+
+        //2 文件是否存在
+        File htmlFile = new File(htmlPath);
+        if(htmlFile.exists()){
+            //存在就显示
+            request.getRequestDispatcher(path).forward(request, response);
+            return;
+        }
+
+        // 自定义response 提供缓存，用于存放 发送到浏览器所有内容
+        MyResponse myResponse = new MyResponse(response);
+        //放行
+        chain.doFilter(request, myResponse);
+
+        //内容已经写入到自定义缓存
+        byte[] arrayByte = myResponse.getData();
+
+        /***写入到文件 start**/
+        //将指定的内容内容到文件
+        FileOutputStream out = new FileOutputStream(htmlFile);
+        out.write(arrayByte);
+        out.close();
+
+        //手动写入到浏览器
+        response.getOutputStream().write(arrayByte);
+        /***写入到文件 end**/
+
+        /**全站压缩 ， 将需要发送的数据，压缩之后再发给浏览器，节省流量
+            全站压缩和页面静态化是冲突的,需要一个一个来测试**/
+        /*
+        // 设置发送的数据位压缩数据
+        response.setHeader(&quot;content-encoding&quot;, &quot;gzip&quot;);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(); //存放压缩后的结果
+        GZIPOutputStream gzipOut = new GZIPOutputStream(baos); //压缩的位置
+        gzipOut.write(arrayByte); //需要压缩的原始数据
+        gzipOut.close();
+
+        response.getOutputStream().write(baos.toByteArray());
+        */
+    }
+
+    @Override
+    public void destroy() {
+    }
+}</code></pre><h2 id="扩展-装饰者设计模式"><a href="#扩展-装饰者设计模式" class="headerlink" title="扩展:装饰者设计模式"></a>扩展:装饰者设计模式</h2><p>乱码解决的十几分钟的时候讲了这个东西</p>
+<h2 id="jar包和war包的区别"><a href="#jar包和war包的区别" class="headerlink" title="jar包和war包的区别"></a>jar包和war包的区别</h2><p>java项目 压缩 ：jar包<br>web项目 压缩：war包 。 当war添加到tomcat/webapps下将自动解压<br>    jar包和war包压缩格式都是 zip</p>
+<h2 id="升级订制版HttpFilter"><a href="#升级订制版HttpFilter" class="headerlink" title="升级订制版HttpFilter"></a>升级订制版HttpFilter</h2><p>这个非常好,用到的思想和Servlet中的service()方法非常类似,好好总结一下<br><a href="http://www.cnblogs.com/jianjianyang/p/5001471.html">http://www.cnblogs.com/jianjianyang/p/5001471.html</a></p>
+</div><div class="article-tags size-small is-uppercase mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/JavaEE/">JavaEE</a><a class="link-muted mr-2" rel="tag" href="/tags/%E5%90%8E%E5%8F%B0/">后台</a><a class="link-muted mr-2" rel="tag" href="/tags/%E8%BF%87%E6%BB%A4%E5%99%A8/">过滤器</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button is-info donate"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpeg" alt="支付宝"></span></a><a class="button is-success donate"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat_pay.jpeg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2017/02/19/Docker%E6%95%99%E7%A8%8B/Docker%E6%95%99%E7%A8%8B-%E4%B8%80-Docker%E7%AE%80%E4%BB%8B/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Docker教程(一)---Docker简介</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2016/12/12/JavaWeb%E5%9F%BA%E7%A1%80/11-JavaWeb%E5%9F%BA%E7%A1%80-EL-JSTL/"><span class="level-item">11-JavaWeb基础-EL-JSTL</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><!--!--><div class="column column-right is-3-tablet is-3-desktop is-3-widescreen  order-3"><!--!--><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="is-rounded" src="/img/avatar.png" alt="后端小哥"></figure><p class="title is-size-4 is-block line-height-inherit">后端小哥</p><p class="is-size-6 is-block">Coder</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shijiazhuang, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">107</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">20</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">65</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lujiahao0708" target="_blank" rel="noopener">关注我</a></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://juejin.im/user/59239002570c350069c5f0bb" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">掘金</span></span><span class="level-right"><span class="level-item tag">juejin.im</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://blog.csdn.net/xinruodingshui" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">CSDN</span></span><span class="level-right"><span class="level-item tag">blog.csdn.net</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://space.bilibili.com/302086424/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">B站</span></span><span class="level-right"><span class="level-item tag">space.bilibili.com</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Chrome/"><span class="level-start"><span class="level-item">Chrome</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Docker/"><span class="level-start"><span class="level-item">Docker</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Flutter/"><span class="level-start"><span class="level-item">Flutter</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JVM/"><span class="level-start"><span class="level-item">JVM</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">17</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JavaEE/"><span class="level-start"><span class="level-item">JavaEE</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"><span class="level-start"><span class="level-item">MySQL必知必会</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Shiro/"><span class="level-start"><span class="level-item">Shiro</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Simpleblog%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"><span class="level-start"><span class="level-item">Simpleblog博客系统</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/SpringCloud/"><span class="level-start"><span class="level-item">SpringCloud</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">工具教程</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B9%B6%E5%8F%91/"><span class="level-start"><span class="level-item">并发</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"><span class="level-start"><span class="level-item">持续集成</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%97%A5%E5%BF%97/"><span class="level-start"><span class="level-item">日志</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-11T09:28:08.000Z">2020-04-11</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/11/Redis/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Redis学习笔记</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-11T09:25:40.000Z">2020-04-11</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/11/Redis/Redis%E5%AE%89%E8%A3%85-%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83-%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/">Redis安装&amp;搭建本地环境&amp;备份恢复</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2019-12-20T12:54:41.000Z">2019-12-20</time></p><p class="title is-6"><a class="link-muted" href="/2019/12/20/MySQL/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%AC%AC6-7%E7%AB%A0%20%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E4%B8%8E%E6%95%B0%E6%8D%AE%E8%BF%87%E6%BB%A4/">《MySQL必知必会》第6-7章 过滤数据与数据过滤</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">MySQL必知必会</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2019-12-19T14:54:41.000Z">2019-12-19</time></p><p class="title is-6"><a class="link-muted" href="/2019/12/19/MySQL/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%AC%AC4-5%E7%AB%A0%20SELECT%E6%A3%80%E7%B4%A2%E4%B8%8E%E6%8E%92%E5%BA%8F/">《MySQL必知必会》第4-5章 SELECT检索与排序</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">MySQL必知必会</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2019-12-19T11:54:41.000Z">2019-12-19</time></p><p class="title is-6"><a class="link-muted" href="/2019/12/19/MySQL/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%AC%AC1-3%E7%AB%A0%20MySQL%E4%BB%8B%E7%BB%8D/">《MySQL必知必会》第1-3章 MySQL介绍</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">MySQL必知必会</a></p></div></article></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a><p class="size-small"><span>&copy; 2020 后端小哥</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://lujiahao0708.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Docker教程(四)---Dockerfile命令详解 - 后端小哥博客</title><meta description="Dockerfile命令总结"><meta property="og:type" content="blog"><meta property="og:title" content="Docker教程(四)---Dockerfile命令详解"><meta property="og:url" content="http://lujiahao0708.github.io/"><meta property="og:site_name" content="后端小哥博客"><meta property="og:description" content="Dockerfile命令总结"><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2017-02-28T12:55:40.000Z"><meta property="article:modified_time" content="2019-10-12T09:59:47.704Z"><meta property="article:author" content="后端小哥"><meta property="article:tag" content="Docker"><meta property="article:tag" content="Java"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="http://lujiahao0708.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lujiahao0708.github.io/2017/02/28/Docker%E6%95%99%E7%A8%8B/Docker%E6%95%99%E7%A8%8B-%E5%9B%9B-Dockerfile%E8%AF%A6%E8%A7%A3/"},"headline":"后端小哥博客","image":["http://lujiahao0708.github.io/img/og_image.png"],"datePublished":"2017-02-28T12:55:40.000Z","dateModified":"2019-10-12T09:59:47.704Z","author":{"@type":"Person","name":"后端小哥"},"description":"Dockerfile命令总结"}</script><link rel="canonical" href="http://lujiahao0708.github.io/2017/02/28/Docker%E6%95%99%E7%A8%8B/Docker%E6%95%99%E7%A8%8B-%E5%9B%9B-Dockerfile%E8%AF%A6%E8%A7%A3/"><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?cdef3b7efc8748063e32969cc0b8dedc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/categories/Redis">Redis</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2017-02-28T12:55:40.000Z" title="2017-02-28T12:55:40.000Z">2017-02-28</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">16 分钟 读完 (大约 2425 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">Docker教程(四)---Dockerfile命令详解</h1><div class="content"><h2 id="深入docker镜像"><a href="#深入docker镜像" class="headerlink" title="深入docker镜像"></a>深入docker镜像</h2><p>拉取镜像文件到本地</p>
+<pre><code>docker pull centos</code></pre><p>查看本地镜像：</p>
+<pre><code>docker images </code></pre><p>查找镜像</p>
+<pre><code>docker search [镜像名称]</code></pre><p>构建镜像</p>
+<pre><code>1. 使用docker commit 命令      用户名:lujiahao
+    docker commit 容器名称/ID lujiahao/centos-tomcat
+    docker commit -m=&quot;describe&quot; --author=&quot;lujiahao&quot; 容器名称/ID  lujiahao/centos-tomcat:test
+    docker inspect lujiahao/centos-tomcat:test
+2. 使用docker build命令和Dockerfile文件(推荐)
+    docker build  -t=“用户名/镜像名称&quot; .
+    docker build  -t=&quot;crxy/centos&quot; .
+    点表示会在当前目录中找Dockerfile文件
+    建议创建镜像的时候单独一个目录,然后在写Dockerfile,这个目录叫构建目录.如果目录下面有其他文件,会把目录下所有文件发送给docker的守护进程</code></pre><p>查看构建的步骤和层级</p>
+<pre><code>docker history 用户ID/镜像名</code></pre><h2 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h2><ul>
+<li>dockerfile中的指令会按照从上到下执行</li>
+<li>docker首先从基础镜像运行一个容器</li>
+<li>执行一条指令，对容器进行修改</li>
+<li>执行类似docker commit的操作，提交一个新的镜像层</li>
+<li>docker再基于刚提交的镜像运行一个新容器</li>
+<li>然后执行dockerfile中的下一条指令，直到所有指令都执行完毕</li>
+</ul>
+<h2 id="Dockerfile指令详解"><a href="#Dockerfile指令详解" class="headerlink" title="Dockerfile指令详解"></a>Dockerfile指令详解</h2><ul>
+<li>所有指令都必须为大写字母</li>
+<li>以#开头的都认为是注释</li>
+</ul>
+<h3 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h3><pre><code>第一条指令必须是`FROM`(指定使用的基础镜像)</code></pre><h3 id="MAINTAINER"><a href="#MAINTAINER" class="headerlink" title="MAINTAINER"></a>MAINTAINER</h3><pre><code>指定镜像的作者信息</code></pre><h3 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h3><pre><code>指定镜像被构建时要运行的命令,默认会使用/bin/bash -c 执行RUN 后面指定的命令
+也可以使用RUN  [&quot;mkdir&quot;,&quot;a.txt&quot;]</code></pre><h3 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h3><pre><code>告诉docker该容器需要对外开放的端口</code></pre><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><pre><code>指定一个容器运行时要执行的命令 
+docker run -i -t lujiahao/cenos-tomcat /bin/bash
+等于在Dockerfile中添加 CMD [&quot;/bin/ps&quot;]
+注意：使用 docker run 命令可以覆盖CMD指令</code></pre><h3 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h3><pre><code>与CMD类似，但是ENTRYPOINT指定的命令不会被docker run指定的命令覆盖，
+它会把docker run命令行中指定的参数传递给ENTRYPOINT指令中指定的命令当作参数。
+ENTRYPOINT [&quot;/bin/ps&quot;]
+docker run -t -i lujiahao/centos  -l
+ENTRYPOINT 还可以和CMD组合一块来用，可以实现，当用户不指定参数的时候使用默认的参数执行，如果用户指定的话就使用用户提供的参数.
+ENTRYPOINT [&quot;/bin/ps&quot;]
+CMD [&quot;-h&quot;]
+注意：如果确实要覆盖默认的参数的话，可以在docker run中指定--entrypoint进行覆盖</code></pre><h3 id="WORKDIR"><a href="#WORKDIR" class="headerlink" title="WORKDIR"></a>WORKDIR</h3><pre><code>WORKDIR /etc
+RUN touch a.txt
+WORKDIR /usr/local
+RUN touch b.txt
+注意：可以在docker run命令中使用-w覆盖工作目录，但是不会影响之前在工作目录中执行的命令</code></pre><h3 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h3><pre><code>设置环境变量，在这设置的环境变量可以在后面的指令中使用，使用$引用
+并且这个环境变量也会被持久保存到从我们的镜像创建的任何容器中。可以使用env命令查看
+也可以使用docker run 命令行的-e参数来传递环境变量，这些变量只在运行时有效 -e JAVA_HOME=/usr/local</code></pre><h3 id="USER-了解"><a href="#USER-了解" class="headerlink" title="USER(了解)"></a>USER(了解)</h3><pre><code>可以指定以什么用户去运行这个容器
+USER ftp（用户信息：查看/etc/group）
+还可以使用其他组合方式
+USER 用户名/UID:组/GID（用户名/UID和组/GID可以单独指定或者组合）
+不指定的话默认就是root用户</code></pre><h3 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h3><pre><code>ADD指令用来将构建目录下的指定文件复制到镜像中(注意只能是构建目录下面的文件)
+ADD a.txt /etc/a.txt
+ADD 在添加压缩文件的时候会把压缩文件自动解压。(gzip bzip2 xz),如果目的位置已经存在了和压缩文件同名的文件或者目录，那么这些文件将会被覆盖。</code></pre><h3 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h3><pre><code>COPY和ADD类似，但是COPY命令不会对压缩文件进行解压，只负责复制。
+如果目的位置不存在，docker会自动创建所有需要的目录，就像使用make -p一样
+注意：使用COPY和ADD的命令的时候，复制的源文件必须在当前构建环境之内，也就是和Dockerfile同一目录，否则会找不到。</code></pre><h3 id="ONBUILD"><a href="#ONBUILD" class="headerlink" title="ONBUILD"></a>ONBUILD</h3><pre><code>这个指令能为镜像添加触发器，当一个镜像被用作其他镜像的基础镜像时，
+该镜像中的触发器将会执行。这个触发器所指定的命令会在FROM指令之后执行。
+ONBUILD ADD . /usr/local
+先在一个镜像中添加这个触发器，再使用这个镜像作为基础镜像创建一个镜像，
+会发现在FROM指令之后就开始执行基础镜像中设置的触发器中的指令了。启动一个容器可以查看效果。
+注意：触发器只能被继承一次。
+有一些命令是不能在ONBUILD中指定的。包括FROM,MAINTAINER,ONBUILD,这样是为了防止在构建过程中产生递归调用的问题。</code></pre><h3 id="dockerignore"><a href="#dockerignore" class="headerlink" title=".dockerignore"></a>.dockerignore</h3><pre><code>在执行build的时候忽略掉不需要的文件。
+在Dockerfile同目录下创建.dockerignore,将要忽略的文件填到里面即可.</code></pre><h3 id="VOLUME"><a href="#VOLUME" class="headerlink" title="VOLUME"></a>VOLUME</h3><pre><code>可以理解为设置(共享目录，磁盘挂载),添加到容器中,并没有真正提交到镜像文件中
+这个指令用来向基于镜像创建的容器添加卷，一个卷可以存在于一个或者多个容器内的特定的目录。
+卷的特点
+    1：卷可以在容器间共享和重用
+    2：对卷的修改是立刻生效的
+    3：对卷的修改不会对更新镜像产生影响
+    4：卷会一直存在直到没有任何容器再使用它。
+卷功能可以让我们将一些数据添加到镜像中而不是将将这个内容提交到镜像中。并且允许我们在多个容器间共享这些内容。
+    格式：VOLUME  [&quot;/usr/projrct&quot;]
+    还可以一次指定多个VOLUME [&quot;/usr/project&quot;,&quot;/data&quot;]
+创建数据卷
+    VOLUME  [&quot;/usr/projrct&quot;]
+    或者在启动容器的时候创建docker run -it -v /webapp centos /bin/bash
+    注意：默认情况下，如果只是声明数据卷而没有映射到宿主机上的具体目录，docker会在/var/lib/docker/vfs/dir/
+        目录下分配一个具有唯一名字的目录给该数据卷。通过docker inspect 命令可以查看具体路径
+指定宿主主机目录作为数据卷
+                        宿主机目录:容器目录
+    docker run -it -v /usr/local/webapp:/webapp centos /bin/bash
+    注意：如果容器内部已经存在webapp目录，那么目录中的文件将会被覆盖。
+默认情况下，数据卷是具有读写权限，rw权限，可以改为只读权限,ro
+    docker run -it -v /usr/local/webapp:/webapp:ro centos /bin/bash
+使用场景:
+    容器里面的tomcat/webapps/目录和本地宿主机的目录对应上,本地修改代码后,
+    直接重启容器即可(如果是html连重启都不用了),相当于一个动态部署.</code></pre><h2 id="镜像操作"><a href="#镜像操作" class="headerlink" title="镜像操作"></a>镜像操作</h2><h2 id="docker的构建缓存"><a href="#docker的构建缓存" class="headerlink" title="docker的构建缓存"></a>docker的构建缓存</h2><blockquote>
+<p>由于每一步的构建过程都会将结果提交为镜像，所以docker的构建镜像过程就显得非常聪明，它会将之前的镜像层看作缓存。再进行重新构建时会从第一条发生了变化的指令开始，前面的都使用缓存</p>
+</blockquote>
+<p>不使用构建缓存的两种方式:</p>
+<ul>
+<li>可以使用 <code>--no-cache</code> 参数来指定不使用缓存功能 </li>
+<li>一般会在dockerfile中使用ENV指令设置一个时间(ENV CREATE_TIME 2015-01-01),写在<code>FROM</code>下面,这样只要一改了这个就不会使用构建缓存了</li>
+</ul>
+<h2 id="容器端口映射"><a href="#容器端口映射" class="headerlink" title="容器端口映射"></a>容器端口映射</h2><p>默认情况下docker不会自动打开这些端口，必须在运行容器的时候指定-P(大写)参数，这样就可以打开expose指定的所有端口。 会随机映射到宿主机的一个端口上</p>
+<p>EXPOSE指令可以同时指定一个或多个需要对外开放的端口</p>
+<pre><code>expose 80 8080 6379</code></pre><p>对外开放端口的两种方式</p>
+<pre><code>-P(大写) 这样的话会将dockerfile文件中EXPOSE 指令指定的所有端口一并公开
+-p(小写)可以手工指定需要对外公开的端口</code></pre><p>如果没有使用expose指定需要对外开放的端口，还可以在启动容器的时候动态指定，使用-p(小写)参数</p>
+<pre><code>-p 80(docker会在宿主机上随机选择一个位于49000~49900内未被使用的端口来映射到容器中的80端口上)
+-p 8080:8080(把宿主机上的8080端口映射到容器的8080端口) 前面的表示宿主机
+-p 80:80 -p 8080:8080 同时指定多个</code></pre><p>使用<code>docker ps</code> 可以查看容器的端口分配情况 或者使用<code>docker port 容器ID/名称</code>查看</p>
+<h3 id="推送镜像到Docker-Hub-需要先登录：docker-login"><a href="#推送镜像到Docker-Hub-需要先登录：docker-login" class="headerlink" title="推送镜像到Docker Hub(需要先登录：docker login)"></a>推送镜像到Docker Hub(需要先登录：docker login)</h3><pre><code>docker push 用户ID/镜像名(docker 1.6以下版本这样使用)
+docker1.6需要使用下面命令才能推送
+docker tag image_id docker.io/login_name/image_name
+docker push docker.io/login_name/image_name
+推送可能会报错，cdn-registry-1.docker.io: no such host 是因为网络问题、重试几次。</code></pre><h3 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h3><pre><code>docker rmi 用户ID/镜像名
+或者docker rmi `docker images -a -q`
+删除所有未打标签的镜像
+ docker rmi -f $(docker images --filter &apos;dangling=true&apos;)</code></pre></div><div class="article-tags size-small is-uppercase mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Docker/">Docker</a><a class="link-muted mr-2" rel="tag" href="/tags/Java/">Java</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button is-info donate"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpeg" alt="支付宝"></span></a><a class="button is-success donate"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat_pay.jpeg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2017/03/06/Docker%E6%95%99%E7%A8%8B/Docker%E6%95%99%E7%A8%8B-%E4%BA%94-Azure%E8%99%9A%E6%8B%9F%E5%AE%89%E8%A3%85Docker/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Docker教程(五)---Azure虚拟安装Docker</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2017/02/24/Docker%E6%95%99%E7%A8%8B/Docker%E6%95%99%E7%A8%8B-%E4%B8%89-%E5%AE%B9%E5%99%A8%E5%91%BD%E4%BB%A4/"><span class="level-item">Docker教程(三)---容器命令</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><!--!--><div class="column column-right is-3-tablet is-3-desktop is-3-widescreen  order-3"><!--!--><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="is-rounded" src="/img/avatar.png" alt="后端小哥"></figure><p class="title is-size-4 is-block line-height-inherit">后端小哥</p><p class="is-size-6 is-block">Coder</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shijiazhuang, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">107</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">20</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">65</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lujiahao0708" target="_blank" rel="noopener">关注我</a></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://juejin.im/user/59239002570c350069c5f0bb" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">掘金</span></span><span class="level-right"><span class="level-item tag">juejin.im</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://blog.csdn.net/xinruodingshui" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">CSDN</span></span><span class="level-right"><span class="level-item tag">blog.csdn.net</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://space.bilibili.com/302086424/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">B站</span></span><span class="level-right"><span class="level-item tag">space.bilibili.com</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Chrome/"><span class="level-start"><span class="level-item">Chrome</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Docker/"><span class="level-start"><span class="level-item">Docker</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Flutter/"><span class="level-start"><span class="level-item">Flutter</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JVM/"><span class="level-start"><span class="level-item">JVM</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">17</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JavaEE/"><span class="level-start"><span class="level-item">JavaEE</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"><span class="level-start"><span class="level-item">MySQL必知必会</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Shiro/"><span class="level-start"><span class="level-item">Shiro</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Simpleblog%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"><span class="level-start"><span class="level-item">Simpleblog博客系统</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/SpringCloud/"><span class="level-start"><span class="level-item">SpringCloud</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">工具教程</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B9%B6%E5%8F%91/"><span class="level-start"><span class="level-item">并发</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"><span class="level-start"><span class="level-item">持续集成</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%97%A5%E5%BF%97/"><span class="level-start"><span class="level-item">日志</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-11T09:28:08.000Z">2020-04-11</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/11/Redis/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Redis学习笔记</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-11T09:25:40.000Z">2020-04-11</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/11/Redis/Redis%E5%AE%89%E8%A3%85-%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83-%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/">Redis安装&amp;搭建本地环境&amp;备份恢复</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2019-12-20T12:54:41.000Z">2019-12-20</time></p><p class="title is-6"><a class="link-muted" href="/2019/12/20/MySQL/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%AC%AC6-7%E7%AB%A0%20%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E4%B8%8E%E6%95%B0%E6%8D%AE%E8%BF%87%E6%BB%A4/">《MySQL必知必会》第6-7章 过滤数据与数据过滤</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">MySQL必知必会</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2019-12-19T14:54:41.000Z">2019-12-19</time></p><p class="title is-6"><a class="link-muted" href="/2019/12/19/MySQL/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%AC%AC4-5%E7%AB%A0%20SELECT%E6%A3%80%E7%B4%A2%E4%B8%8E%E6%8E%92%E5%BA%8F/">《MySQL必知必会》第4-5章 SELECT检索与排序</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">MySQL必知必会</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2019-12-19T11:54:41.000Z">2019-12-19</time></p><p class="title is-6"><a class="link-muted" href="/2019/12/19/MySQL/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%AC%AC1-3%E7%AB%A0%20MySQL%E4%BB%8B%E7%BB%8D/">《MySQL必知必会》第1-3章 MySQL介绍</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">MySQL必知必会</a></p></div></article></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a><p class="size-small"><span>&copy; 2020 后端小哥</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://lujiahao0708.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

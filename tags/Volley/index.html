@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>标签: Volley - 后端小哥博客</title><meta description="一个 Java 程序猿"><meta property="og:type" content="blog"><meta property="og:title" content="后端小哥博客"><meta property="og:url" content="http://lujiahao0708.github.io/"><meta property="og:site_name" content="后端小哥博客"><meta property="og:description" content="一个 Java 程序猿"><meta property="og:locale" content="zh_CN"><meta property="article:author" content="后端小哥"><meta property="article:tag" content="博客"><meta property="article:tag" content="技术博客"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="http://lujiahao0708.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lujiahao0708.github.io"},"headline":"后端小哥博客","image":["http://lujiahao0708.github.io/img/og_image.png"],"author":{"@type":"Person","name":"后端小哥"},"description":"一个 Java 程序猿"}</script><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?cdef3b7efc8748063e32969cc0b8dedc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/categories/Redis">Redis</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags">标签</a></li><li class="is-active"><a href="#" aria-current="page">Volley</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-05-23T06:42:23.000Z" title="2016-05-23T06:42:23.000Z">2016-05-23</time><span class="level-item"><a class="link-muted" href="/categories/Android/">Android</a></span><span class="level-item">2 分钟 读完 (大约 287 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/05/23/Android/Volley%E5%AD%A6%E4%B9%A0%E7%AC%AC%E4%B8%89%E7%AF%87-%E7%BD%91%E7%BB%9C%E7%BA%BF%E7%A8%8B/">Volley学习第三篇-网络线程</a></h1><div class="content"><h2 id="前文概要"><a href="#前文概要" class="headerlink" title="前文概要"></a>前文概要</h2><p>其实<code>NetworkDispatcher</code>和<code>CacheDispatcher</code>是很相像的.感觉看<code>NetworkDispatcher</code>要比<code>CacheDispatcher</code>要简单.</p>
+<p>因为它不需要进行判断缓存的过期时间和新鲜时间,仅仅是执行请求,然后在缓存响应结果,所以要简单些.</p>
+<h2 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h2><blockquote>
+<p>同样的继承Thread,只看<code>run()</code>方法里面的就好了</p>
+<p>同样的死循环,队列无内容时阻塞</p>
+</blockquote>
+<ul>
+<li><p>1.首先从队列中取出Request请求</p>
+<pre><code>request = mQueue.take();</code></pre></li>
+<li><p>2.判断请求是否取消</p>
+<pre><code>if (request.isCanceled()) {
+    request.finish(&quot;network-discard-cancelled&quot;);
+    continue;
+}</code></pre></li>
+<li><p>3.请求未取消,执行网络请求并得到NetworkResponse对象</p>
+<pre><code>NetworkResponse networkResponse = mNetwork.performRequest(request);</code></pre><p>具体的网络请求还是需要看Network接口的实现类中是如何操作的.</p>
+</li>
+<li><p>4.判断服务器返回码是否是304(资源未更新)</p>
+<pre><code>if (networkResponse.notModified &amp;&amp; request.hasHadResponseDelivered()) {
+    request.finish(&quot;not-modified&quot;);
+    continue;
+}</code></pre></li>
+<li><p>5.是否缓存请求的响应</p>
+<pre><code>if (request.shouldCache() &amp;&amp; response.cacheEntry != null) {
+    mCache.put(request.getCacheKey(), response.cacheEntry);
+    request.addMarker(&quot;network-cache-written&quot;);
+}</code></pre></li>
+<li><p>6.分发</p>
+<pre><code>mDelivery.postResponse(request, response);</code></pre></li>
+</ul>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>其实看明白先前的缓存线程之后,理解网络线程也不是难事了.</p>
+<p>明天详细解释下具体响应的转化和分发流程.</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-05-23T03:14:42.000Z" title="2016-05-23T03:14:42.000Z">2016-05-23</time><span class="level-item"><a class="link-muted" href="/categories/Android/">Android</a></span><span class="level-item">8 分钟 读完 (大约 1162 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/05/23/Android/Volley%E5%AD%A6%E4%B9%A0%E7%AC%AC%E4%BA%8C%E7%AF%87-%E7%BC%93%E5%AD%98%E6%B5%81%E7%A8%8B/">Volley学习第二篇-缓存流程</a></h1><div class="content"><h2 id="前文概要"><a href="#前文概要" class="headerlink" title="前文概要"></a>前文概要</h2><blockquote>
+<p>上篇说道Volley初始化的时候需要创建一个RequestQueue消息队列,下面就来看看这个RequestQueue.</p>
+</blockquote>
+<h2 id="RequestQueue"><a href="#RequestQueue" class="headerlink" title="RequestQueue"></a>RequestQueue</h2><blockquote>
+<p>是一个队列管理器,里面维护了两个队列—<code>CacheQueue</code>和<code>NetowrkQueue</code>.</p>
+</blockquote>
+<p>Volley类里面的newRequestQueue方法中调用了队列的start()方法,就从这个方法入手.</p>
+<pre><code>public void start() {
+    stop();  // Make sure any currently running dispatchers are stopped.
+    // Create the cache dispatcher and start it.
+    mCacheDispatcher = new CacheDispatcher(mCacheQueue, mNetworkQueue, mCache, mDelivery);
+    mCacheDispatcher.start();
+
+    // 这里默认创建4个线程
+    // Create network dispatchers (and corresponding threads) up to the pool size.
+    for (int i = 0; i &lt; mDispatchers.length; i++) {
+        NetworkDispatcher networkDispatcher = new NetworkDispatcher(mNetworkQueue, mNetwork,
+                mCache, mDelivery);
+        mDispatchers[i] = networkDispatcher;
+        networkDispatcher.start();
+    }
+}</code></pre><p>这里创建了1个<code>CacheDispatcher</code>和4个<code>NetworkDispatcher</code>.<code>CacheDispatcher</code>和4个<code>NetworkDispatcher</code>都是继承了Thread的两个线程,一个是缓存线程,另一个是网络线程.</p>
+<p>其中<code>DEFAULT_NETWORK_THREAD_POOL_SIZE</code>中定义了网络线程的个数,可以根据不同的cpu核数来自定义开多少个网络线程<code>(线程数 = cpu核数 * 2 + 1)</code>.</p>
+<h2 id="CacheDispatcher缓存线程的流程"><a href="#CacheDispatcher缓存线程的流程" class="headerlink" title="CacheDispatcher缓存线程的流程"></a>CacheDispatcher缓存线程的流程</h2><p>它继承了Thread,所以只需要看它的<code>run()</code>方法就好了.</p>
+<pre><code>while (true) {
+    try {
+        // Get a request from the cache triage queue, blocking until
+        // at least one is available.从缓存队列中不停的取出request,直到队列中只有一个请求的时候阻塞
+        final Request request = mCacheQueue.take();
+        request.addMarker(&quot;cache-queue-take&quot;);
+
+        // If the request has been canceled, don&apos;t bother dispatching it.
+        if (request.isCanceled()) {
+            request.finish(&quot;cache-discard-canceled&quot;);
+            continue;// 请求取消就不读缓存了
+        }
+
+        // Attempt to retrieve this item from cache. 从缓存中获取缓存信息的实体
+        Cache.Entry entry = mCache.get(request.getCacheKey());
+        if (entry == null) {
+            request.addMarker(&quot;cache-miss&quot;);
+            // Cache miss; send off to the network dispatcher.
+            mNetworkQueue.put(request);// 缓存木有,将请求添加到网络请求队列
+            continue;
+        }
+
+        // If it is completely expired 过期, just send it to the network.
+        if (entry.isExpired()) {
+            request.addMarker(&quot;cache-hit-expired&quot;);
+            request.setCacheEntry(entry);
+            mNetworkQueue.put(request);// 缓存过期,添加到网络请求队列
+            continue;
+        }
+
+        // We have a cache hit; parse its data for delivery back to the request.
+        request.addMarker(&quot;cache-hit&quot;);
+        // 解析网络数据  这个是由请求对象request来解析的
+        // 文档中说道:request对象负责请求和解析网络请求
+        Response&lt;?&gt; response = request.parseNetworkResponse(
+                new NetworkResponse(entry.data, entry.responseHeaders));
+        request.addMarker(&quot;cache-hit-parsed&quot;);
+
+        if (!entry.refreshNeeded()) {// 缓存是否需要刷新
+            // Completely unexpired cache hit. Just deliver the response.
+            mDelivery.postResponse(request, response);// 无需刷新,直接分发
+        } else {
+            // Soft-expired cache hit. We can deliver the cached response,
+            // but we need to also send the request to the network for
+            // refreshing.
+            request.addMarker(&quot;cache-hit-refresh-needed&quot;);
+            request.setCacheEntry(entry);// 更新缓存
+
+            // Mark the response as intermediate.// 中间  媒介
+            response.intermediate = true;
+
+            // Post the intermediate response back to the user and have
+            // the delivery then forward the request along to the network.
+            mDelivery.postResponse(request, response, new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        mNetworkQueue.put(request);
+                    } catch (InterruptedException e) {
+                        // Not much we can do about this.
+                    }
+                }
+            });
+        }
+
+    } catch (InterruptedException e) {
+        // We may have been interrupted because it was time to quit.
+        if (mQuit) {
+            return;
+        }
+        continue;
+    }
+}</code></pre><p>缓存的主体流程就在这个死循环里面,Volley的dispatcher的原理和Handler里面的looper的原理非常相似.</p>
+<h2 id="读取缓存分发到主线程"><a href="#读取缓存分发到主线程" class="headerlink" title="读取缓存分发到主线程"></a>读取缓存分发到主线程</h2><pre><code>Response&lt;?&gt; response = request.parseNetworkResponse(new NetworkResponse(entry.data, entry.responseHeaders));
+request.addMarker(&quot;cache-hit-parsed&quot;);
+
+if (!entry.refreshNeeded()) {
+    // Completely unexpired cache hit. Just deliver the response.
+    mDelivery.postResponse(request, response);
+} else {
+    // Soft-expired cache hit. We can deliver the cached response,
+    // but we need to also send the request to the network for
+    // refreshing.
+    request.addMarker(&quot;cache-hit-refresh-needed&quot;);
+    request.setCacheEntry(entry);
+
+    // Mark the response as intermediate.// 中间  媒介
+    response.intermediate = true;
+
+    // Post the intermediate response back to the user and have
+    // the delivery then forward the request along to the network.
+    mDelivery.postResponse(request, response, new Runnable() {
+        @Override
+        public void run() {
+            try {
+                mNetworkQueue.put(request);
+            } catch (InterruptedException e) {
+                // Not much we can do about this.
+            }
+        }
+    });
+}</code></pre><h3 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h3><pre><code>request.parseNetworkResponse(new NetworkResponse(entry.data, entry.responseHeaders));`</code></pre><p><code>entry.data</code>是缓存的原始的<code>byte数组</code>,将<code>byte数组</code>和<code>响应头</code>封装成一个<code>NetworkResponse对象</code>(Volley里面的网络响应的统一对象).<br><code>parseNetworkResponse()</code>方法将<code>NetworkResponse对象</code>解析成<code>Response</code>供各种泛型的转换.</p>
+<pre><code>mDelivery.postResponse(request, response);</code></pre><p><code>mDelivery</code>对象时在<code>CacheDispatcher</code>的构造方法的时候赋值的,往上找找<code>RequestQueue</code>中的<code>start()</code>方法中<code>mCacheDispatcher = new CacheDispatcher(mCacheQueue, mNetworkQueue, mCache, mDelivery);</code></p>
+<p>继续找</p>
+<pre><code>public RequestQueue(Cache cache, Network network, int threadPoolSize,ResponseDelivery delivery) {
+    mCache = cache;
+    mNetwork = network;
+    mDispatchers = new NetworkDispatcher[threadPoolSize];
+    mDelivery = delivery;
+}</code></pre><p>还找</p>
+<pre><code>public RequestQueue(Cache cache, Network network, int threadPoolSize) {
+    this(cache, network, threadPoolSize,
+            new ExecutorDelivery(new Handler(Looper.getMainLooper())));
+}</code></pre><p>看mDelivery就是<code>new ExecutorDelivery(new Handler(Looper.getMainLooper()))</code></p>
+<p>ExecutorDelivery中构造方法中有一个非常重要的一行</p>
+<pre><code>public ExecutorDelivery(final Handler handler) {
+    // Make an Executor that just wraps the handler.
+    mResponsePoster = new Executor() {
+        @Override
+        public void execute(Runnable command) {
+            handler.post(command);
+        }
+    };
+}</code></pre><p><code>handler</code>将<code>runnable对象</code>post出去,而handler是通过<code>Looper.getMainLooper</code>创建的,这样就是通过我们用主线程创建的Handler将响应发送到主线程中了.</p>
+<p>至此,Volley缓存的读取/分发就完成了.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="http://img.blog.csdn.net/20140511114837375?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3VvbGluX2Jsb2c=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""><br>官方图解中的绿色的那部分—缓存线程的流程就结束了.</p>
+<p>后面我会慢慢肥西网络线程相关的东西.</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-05-21T11:00:29.000Z" title="2016-05-21T11:00:29.000Z">2016-05-21</time><span class="level-item"><a class="link-muted" href="/categories/Android/">Android</a></span><span class="level-item">4 分钟 读完 (大约 577 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/05/21/Android/Volley%E5%AD%A6%E4%B9%A0%E7%AC%AC%E4%B8%80%E7%AF%87-%E6%A1%86%E6%9E%B6%E5%85%A5%E5%8F%A3/">Volley学习第一篇-框架入口.md</a></h1><div class="content"><h2 id="前文概要"><a href="#前文概要" class="headerlink" title="前文概要"></a>前文概要</h2><p>这是我的Volley学习第一篇的笔记.<br>看了一个星期的各类教程之后的总结,准备把Volley的整体流程都总结一遍,同时会对Volley进行一些扩展,最后会跟着大神的脚步模仿一个Volley出来.</p>
+<p>水平有限,望多指教.</p>
+<h2 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h2><ul>
+<li><a href="http://blog.csdn.net/guolin_blog/article/details/17656437">郭霖大神的博客</a></li>
+<li><a href="http://a.codekk.com/blogs/detail/54cfab086c4761e5001b2542">codeKK Volley源码解析</a></li>
+<li><a href="https://android.googlesource.com/platform/frameworks/volley/">Volley源码</a></li>
+</ul>
+<h2 id="创建全局的RequestQueue"><a href="#创建全局的RequestQueue" class="headerlink" title="创建全局的RequestQueue"></a>创建全局的RequestQueue</h2><p>使用Volley的时候会创建一个全局的RequestQueue,一般会在自定义的Application类里面创建.</p>
+<pre><code>RequestQueue requestQueue = Volley.newRequestQueue(appContext);</code></pre><h2 id="Volley框架的入口点"><a href="#Volley框架的入口点" class="headerlink" title="Volley框架的入口点"></a>Volley框架的入口点</h2><p>这里我们就发现原来Volley的入口是Volley类里面的一个静态方法<code>newRequestQueue()</code></p>
+<pre><code>public static RequestQueue newRequestQueue(Context context) {
+    return newRequestQueue(context, null);
+}</code></pre><h2 id="Volley框架的真正的入口"><a href="#Volley框架的真正的入口" class="headerlink" title="Volley框架的真正的入口"></a>Volley框架的真正的入口</h2><p>这是一个参数的方法,会调用两个参数的newRequestQueue方法,传入一个默认的null.</p>
+<pre><code>public static RequestQueue newRequestQueue(Context context, HttpStack stack) {
+
+    File cacheDir = new File(context.getCacheDir(), DEFAULT_CACHE_DIR);
+
+    String userAgent = &quot;volley/0&quot;;
+    try {
+        String packageName = context.getPackageName();
+        PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
+        userAgent = packageName + &quot;/&quot; + info.versionCode;
+    } catch (NameNotFoundException e) {
+    }
+
+    if (stack == null) {
+        if (Build.VERSION.SDK_INT &gt;= 9) {
+            stack = new HurlStack();
+        } else {
+            // Prior to Gingerbread, HttpUrlConnection was unreliable.
+            // See: http://android-developers.blogspot.com/2011/09/androids-http-clients.html
+            stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
+        }
+    }
+
+    Network network = new BasicNetwork(stack);
+
+    RequestQueue queue = new RequestQueue(new DiskBasedCache(cacheDir), network);
+    queue.start();
+
+    return queue;
+}</code></pre><p>这里才是真正的创建RequestQueue的地方,因为传入的第二个参数是null,所以stack== null是成立的,这是就会根据不同的系统版本创建不同的HttpStack子类的实例对象,然后将它包装成BasicNetwork对象.</p>
+<p>同时第一行的时候就创建了Volley的缓存目录(当然你可以根据你的需求随意更改缓存目录的位置),并将缓存目录包装成一个DiskBasedCache对象.</p>
+<p>至此,RequestQueue需要的缓存和网络请求对象就创建成功了,然后我们的RequestQueue请求队列就创建成功了.</p>
+<p>通过<code>start()</code>方法就启动了我们的请求队列.</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>两个<code>newRequestQueue</code>方法使用的这种方式其实非常巧妙,以前我看到这种方式就叫他重载调用(不知道叫的对不对,哈哈).</p>
+<p>这是我的Volley系列的第一篇,好的开始,加油↖(^ω^)↗!</p>
+</div></article></div></div><!--!--><div class="column column-right is-3-tablet is-3-desktop is-3-widescreen  order-3"><!--!--><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="is-rounded" src="/img/avatar.png" alt="后端小哥"></figure><p class="title is-size-4 is-block line-height-inherit">后端小哥</p><p class="is-size-6 is-block">Coder</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shijiazhuang, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">107</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">20</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">65</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lujiahao0708" target="_blank" rel="noopener">关注我</a></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://juejin.im/user/59239002570c350069c5f0bb" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">掘金</span></span><span class="level-right"><span class="level-item tag">juejin.im</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://blog.csdn.net/xinruodingshui" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">CSDN</span></span><span class="level-right"><span class="level-item tag">blog.csdn.net</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://space.bilibili.com/302086424/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">B站</span></span><span class="level-right"><span class="level-item tag">space.bilibili.com</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Chrome/"><span class="level-start"><span class="level-item">Chrome</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Docker/"><span class="level-start"><span class="level-item">Docker</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Flutter/"><span class="level-start"><span class="level-item">Flutter</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JVM/"><span class="level-start"><span class="level-item">JVM</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">17</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JavaEE/"><span class="level-start"><span class="level-item">JavaEE</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"><span class="level-start"><span class="level-item">MySQL必知必会</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Shiro/"><span class="level-start"><span class="level-item">Shiro</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Simpleblog%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"><span class="level-start"><span class="level-item">Simpleblog博客系统</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/SpringCloud/"><span class="level-start"><span class="level-item">SpringCloud</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">工具教程</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B9%B6%E5%8F%91/"><span class="level-start"><span class="level-item">并发</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"><span class="level-start"><span class="level-item">持续集成</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%97%A5%E5%BF%97/"><span class="level-start"><span class="level-item">日志</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-11T09:28:08.000Z">2020-04-11</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/11/Redis/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Redis学习笔记</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-11T09:25:40.000Z">2020-04-11</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/11/Redis/Redis%E5%AE%89%E8%A3%85-%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83-%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/">Redis安装&amp;搭建本地环境&amp;备份恢复</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2019-12-20T12:54:41.000Z">2019-12-20</time></p><p class="title is-6"><a class="link-muted" href="/2019/12/20/MySQL/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%AC%AC6-7%E7%AB%A0%20%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E4%B8%8E%E6%95%B0%E6%8D%AE%E8%BF%87%E6%BB%A4/">《MySQL必知必会》第6-7章 过滤数据与数据过滤</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">MySQL必知必会</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2019-12-19T14:54:41.000Z">2019-12-19</time></p><p class="title is-6"><a class="link-muted" href="/2019/12/19/MySQL/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%AC%AC4-5%E7%AB%A0%20SELECT%E6%A3%80%E7%B4%A2%E4%B8%8E%E6%8E%92%E5%BA%8F/">《MySQL必知必会》第4-5章 SELECT检索与排序</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">MySQL必知必会</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2019-12-19T11:54:41.000Z">2019-12-19</time></p><p class="title is-6"><a class="link-muted" href="/2019/12/19/MySQL/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%AC%AC1-3%E7%AB%A0%20MySQL%E4%BB%8B%E7%BB%8D/">《MySQL必知必会》第1-3章 MySQL介绍</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">MySQL必知必会</a></p></div></article></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a><p class="size-small"><span>&copy; 2020 后端小哥</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://lujiahao0708.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
