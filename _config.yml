@@ -82,5 +82,7 @@ theme: icarus
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:lujiahao0708/lujiahao0708.github.io.git
-  branch: master
+  repo: 
+    github: git@github.com:lujiahao0708/lujiahao0708.github.io.git
+    coding: https://e.coding.net/sjzcode/sjzcode.coding.me.git
+  branch: hexo
