@@ -84,5 +84,5 @@ deploy:
   type: git
   repo: 
     github: git@github.com:lujiahao0708/lujiahao0708.github.io.git
-    coding: https://e.coding.net/sjzcode/sjzcode.coding.me.git
-  branch: hexo
+    coding: git@e.coding.net:sjzcode/sjzcode.coding.me.git
+  branch: master
