@@ -12,14 +12,14 @@ tags:
 通常公司代码一般托管在公司自建 Gitlab 服务上，自己的代码托管在 GitHub 或者 Coding 这样的网站上。Git 账户经常切换非常不方便，这就需要配置多个 Git 账户，以向不同的网站 push 代码。本文将介绍如何在 Mac 上配置多个 Git 账户，以及快速切换管理。
 
 <!--more-->
-# 1.生成秘钥
-Mac 中秘钥文件都保存在 `/Users/你的用户名/.ssh` 目录下，如果没有该目录手动创建即可。进入到该目录后根据邮箱生成秘钥：`ssh-keygen -t rsa -C ‘邮箱账号'`
+# 1.生成密钥
+Mac 中密钥文件都保存在 `/Users/你的用户名/.ssh` 目录下，如果没有该目录手动创建即可。进入到该目录后根据邮箱生成密钥：`ssh-keygen -t rsa -C ‘邮箱账号'`
 
 ![](https://raw.githubusercontent.com/lujiahao0708/PicRepo/master/blogPic/Mac%E7%9B%B8%E5%85%B3/Mac%20%E5%A4%9A%20Git%20%E8%B4%A6%E6%88%B7%E9%85%8D%E7%BD%AE/%E7%94%9F%E6%88%90%E7%A7%98%E9%92%A5.png)
 
-> 注意红框处 `id_rsa_testgit` ，此处是指定秘钥名称，可以根据不同的账号命名，方便区分。如果不指定名称会使用默认值：`id_rsa`，再次生成秘钥会覆盖上一次的秘钥，因此每次都要指定不同的名称。名称输入完后一直回车直到秘钥生成。
+> 注意红框处 `id_rsa_testgit` ，此处是指定密钥名称，可以根据不同的账号命名，方便区分。如果不指定名称会使用默认值：`id_rsa`，再次生成密钥会覆盖上一次的密钥，因此每次都要指定不同的名称。名称输入完后一直回车直到密钥生成。
 
-使用 `ssh-keygen` 命令，分别生成 GitHub 和 Coding 的秘钥。每组秘钥其中以.pub结尾的是公钥，另一个是私钥。查看生成的所有秘钥：
+使用 `ssh-keygen` 命令，分别生成 GitHub 和 Coding 的密钥。每组密钥其中以.pub结尾的是公钥，另一个是私钥。查看生成的所有密钥：
 ```
 ~/.ssh  ls -l
 rw-------  lujiahao  staff     2 KiB  Sun Apr 19 20:11:54 2020  id_rsa_coding
