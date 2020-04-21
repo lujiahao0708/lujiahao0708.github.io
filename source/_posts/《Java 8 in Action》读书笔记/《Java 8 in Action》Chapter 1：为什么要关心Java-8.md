@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 《Java 8 in Action》Chapter 1：为什么要关心Java 8
-date: 2019-03-02 14:11:14
 categories: Java
 tags:
-- Java8
-- 读书笔记
+  - Java8
+  - 读书笔记
 description: 《Java 8 in Action》Chapter 1：为什么要关心Java 8
+abbrlink: 88e39eba
+date: 2019-03-02 14:11:14
 ---
 
 自1998年 JDK 1.0(Java 1.0) 发布以来，Java 已经受到了学生、项目经理和程序员等一大批活跃用户的欢迎。这一语言极富活力，不断被用在大大小小的项目里。从 Java 1.1(1997年) 一直到 Java 7(2011年)，Java 通过增加新功能，不断得到良好的升级。Java 8 则是在2014年3月发布的。Java 8 所做的改变，在许多方面比 Java 历史上任何一次改变都深远，而且极大的提高了 Java 代码的简洁性。

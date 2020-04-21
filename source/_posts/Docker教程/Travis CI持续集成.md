@@ -1,12 +1,13 @@
 ---
 title: Travis CI持续集成GitHub个人博客
-date: 2018-06-27 22:53:59
 categories: 持续集成
 tags:
-- 持续集成
-- 博客系统
-- hexo
-description: Travis CI持续集成GitHub个人博客,Github代码push触发自动部署个人博客
+  - 持续集成
+  - 博客系统
+  - hexo
+description: 'Travis CI持续集成GitHub个人博客,Github代码push触发自动部署个人博客'
+abbrlink: b23c159
+date: 2018-06-27 22:53:59
 ---
 
 # 什么是Travis CI

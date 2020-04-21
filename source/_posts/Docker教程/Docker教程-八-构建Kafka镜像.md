@@ -1,11 +1,12 @@
 ---
 title: Docker教程(八)---构建Kafka镜像
-date: 2017-03-22 13:41:45
 categories: JavaEE
 tags:
-- Docker
-- Java
-description: Dockerfile命令实战,构建Kafka镜像
+  - Docker
+  - Java
+description: 'Dockerfile命令实战,构建Kafka镜像'
+abbrlink: 201c24d3
+date: 2017-03-22 13:41:45
 ---
 
 # Kafka

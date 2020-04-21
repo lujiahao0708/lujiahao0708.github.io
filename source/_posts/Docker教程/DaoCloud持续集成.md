@@ -1,13 +1,14 @@
 ---
 title: Simpleblog博客系统(一)---DaoCloud持续集成
-date: 2018-03-21 22:27:39
 categories: Simpleblog博客系统
 tags:
-- Docker
-- Java
-- 持续集成
-- 博客系统
-description: DaoCloud持续集成,Github代码push触发自动编译生效
+  - Docker
+  - Java
+  - 持续集成
+  - 博客系统
+description: 'DaoCloud持续集成,Github代码push触发自动编译生效'
+abbrlink: ca00fe4
+date: 2018-03-21 22:27:39
 ---
 
 ## DaoCloud持续集成

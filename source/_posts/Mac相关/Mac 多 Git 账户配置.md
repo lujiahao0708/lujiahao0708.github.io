@@ -1,13 +1,13 @@
 ---
 layout: post
 title: Mac 多 Git 账户配置
-date: 2020-04-20 10:40:52
 categories: Mac
 toc: true
 tags:
-- Mac
-- Git
-
+  - Mac
+  - Git
+abbrlink: 5c6f02af
+date: 2020-04-20 10:40:52
 ---
 通常公司代码一般托管在公司自建 Gitlab 服务上，自己的代码托管在 GitHub 或者 Coding 这样的网站上。Git 账户经常切换非常不方便，这就需要配置多个 Git 账户，以向不同的网站 push 代码。本文将介绍如何在 Mac 上配置多个 Git 账户，以及快速切换管理。
 

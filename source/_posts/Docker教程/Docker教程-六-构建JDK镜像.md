@@ -1,11 +1,12 @@
 ---
 title: Docker教程(六)---构建JDK镜像
-date: 2017-03-06 16:54:23
 categories: JavaEE
 tags:
-- Docker
-- Java
-description: Dockerfile命令实战,构建JDK1.7镜像
+  - Docker
+  - Java
+description: 'Dockerfile命令实战,构建JDK1.7镜像'
+abbrlink: 12d05bfb
+date: 2017-03-06 16:54:23
 ---
 
 ## 1.创建文件夹jdk

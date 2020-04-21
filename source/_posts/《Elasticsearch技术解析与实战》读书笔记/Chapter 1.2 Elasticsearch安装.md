@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 《Elasticsearch技术解析与实战》Chapter 1.2 Elasticsearch安装
-date: 2019-04-14 11:34:52
 categories: Java
 tags:
-- Elasticsearch
-- 读书笔记
+  - Elasticsearch
+  - 读书笔记
 description: 《Elasticsearch技术解析与实战》Chapter 1.2 Elasticsearch安装
+abbrlink: 7251e71b
+date: 2019-04-14 11:34:52
 ---
 
 # 1. 下载安装

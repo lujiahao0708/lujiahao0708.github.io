@@ -1,12 +1,13 @@
 ---
 title: JDBC笔记二
-date: 2016-07-09 16:17:13
 categories: JavaEE
 tags:
   - JavaEE
   - 数据库
   - MySql
-description: JDBC笔记第二部分,主要包括:JDBC批处理,事物,连接池三大部分.
+description: 'JDBC笔记第二部分,主要包括:JDBC批处理,事物,连接池三大部分.'
+abbrlink: 84e56a04
+date: 2016-07-09 16:17:13
 ---
 
 ## 1. JDBC批处理

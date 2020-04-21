@@ -1,11 +1,12 @@
 ---
 title: Volley学习第一篇-框架入口.md
 categories: Android
-date: 2016-05-21 19:00:29
 tags:
   - Http
   - Volley
 description: Volley框架入口分析
+abbrlink: 108a631c
+date: 2016-05-21 19:00:29
 ---
 
 ## 前文概要

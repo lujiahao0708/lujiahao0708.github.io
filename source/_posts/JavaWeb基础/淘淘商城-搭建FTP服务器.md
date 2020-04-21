@@ -1,6 +1,5 @@
 ---
 title: 淘淘商城-搭建FTP服务器
-date: 2016-11-02 11:16:07
 categories: JavaEE
 tags:
   - JavaEE
@@ -8,6 +7,8 @@ tags:
   - FTP
   - Linux
 description: 使用VSFTP搭建FTP服务器笔记
+abbrlink: 5e9bf6a3
+date: 2016-11-02 11:16:07
 ---
 
 ## 1.前期准备

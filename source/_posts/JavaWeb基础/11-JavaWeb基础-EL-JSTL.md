@@ -1,13 +1,13 @@
 ---
 title: 11-JavaWeb基础-EL-JSTL
-date: 2016-12-12 12:37:52
 categories: JavaEE
 tags:
   - JavaEE
   - 后台
   - EL
   - JSTL
-
+abbrlink: 169ffca8
+date: 2016-12-12 12:37:52
 ---
 
 ## EL表达式

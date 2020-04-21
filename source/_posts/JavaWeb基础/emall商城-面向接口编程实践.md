@@ -1,12 +1,13 @@
 ---
 layout: post
 title: emall商城-面向接口编程实践
-date: 2017-10-22 20:43:17
 categories: JavaEE
 tags:
   - JavaEE
   - 商城
 description: 面向接口编程实践-缓存实现
+abbrlink: 5b4b6af8
+date: 2017-10-22 20:43:17
 ---
 
 ## 1. 面向接口编程

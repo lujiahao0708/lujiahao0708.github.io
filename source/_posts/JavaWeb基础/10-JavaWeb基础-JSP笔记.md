@@ -1,12 +1,12 @@
 ---
 title: 10-JavaWeb基础-JSP笔记
-date: 2016-12-5 17:52:14
 categories: JavaEE
 tags:
   - JavaEE
   - 后台
   - JSP
-
+abbrlink: fd25bde8
+date: 2016-12-05 17:52:14
 ---
 
 ## 什么是JSP

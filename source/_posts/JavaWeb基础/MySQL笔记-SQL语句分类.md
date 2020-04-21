@@ -1,11 +1,12 @@
 ---
 title: MySQL笔记-SQL语句分类
-date: 2017-05-23 14:48:09
 categories: JavaEE
-tags: 
-- JavaEE
-- MySQL
+tags:
+  - JavaEE
+  - MySQL
 description: SQL语句分类
+abbrlink: 2444abf
+date: 2017-05-23 14:48:09
 ---
 
 SQL语句可以分为以下四类 : `数据操作语言(DML)` , `数据定义语言(DDL)` , `数据控制语言(DCL)` , `事务控制语言(TCL)`.

@@ -1,11 +1,12 @@
 ---
 title: 《MySQL必知必会》第1-3章 MySQL介绍
-date: 2019-12-19 19:54:41
 categories: MySQL必知必会
 toc: true
 tags:
-- MySQL
-- MySQL必知必会
+  - MySQL
+  - MySQL必知必会
+abbrlink: 8b4d1597
+date: 2019-12-19 19:54:41
 ---
 
 # 1. 术语介绍

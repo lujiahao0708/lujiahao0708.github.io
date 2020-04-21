@@ -1,12 +1,13 @@
 ---
 title: AJAX笔记
-date: 2016-07-28 14:09:10
 categories: JavaEE
 tags:
   - JavaEE
   - 后台
   - AJAX
 description: JavaEE中AJAX
+abbrlink: fce3647f
+date: 2016-07-28 14:09:10
 ---
 
 ## Ajax介绍&编写流程

@@ -1,11 +1,11 @@
 ---
 title: 09.JavaWeb基础-cookie-session
-date: 2016-11-28 17:28:17
 tags:
   - JavaWeb基础
   - Cookie
   - Session
-
+abbrlink: 896fbfe9
+date: 2016-11-28 17:28:17
 ---
 
 ## 1.会话技术

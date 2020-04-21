@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 《Java 8 in Action》Chapter 5：使用流
-date: 2019-03-10 11:34:52
 categories: Java
 tags:
-- Java8
-- 读书笔记
+  - Java8
+  - 读书笔记
 description: 《Java 8 in Action》Chapter 5：使用流
+abbrlink: 572c6791
+date: 2019-03-10 11:34:52
 ---
 
 > 流让你从外部迭代转向内部迭代，for循环显示迭代不用再写了，流内部管理对集合数据的迭代。这种处理数据的方式很有用，因为你让Stream API管理如何处理数据。这样Stream API就可以在背后进行多种优化。此外，使用内部迭代的话，Stream API可以决定并行运行你的代码。这要是用外部迭代的话就办不到了，因为你只能用单一线程挨个迭代。

@@ -1,12 +1,13 @@
 ---
 title: Hibernate笔记一
-date: 2016-08-08 21:20:47
 categories: JavaEE
 tags:
   - JavaEE
   - 数据库
   - Hibernate
 description: Hibernate框架的介绍 / 配置方法 / 使用方法
+abbrlink: dd159bfa
+date: 2016-08-08 21:20:47
 ---
 
 

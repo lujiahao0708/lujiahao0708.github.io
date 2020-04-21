@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 《深入理解Java虚拟机》前期准备
-date: 2019-01-10 19:22:27
 categories: JVM
 tags:
-- JVM
-- 读书笔记
+  - JVM
+  - 读书笔记
 description: 《深入理解Java虚拟机》读书笔记 前期准备
+abbrlink: 20a87ee
+date: 2019-01-10 19:22:27
 ---
 
 # 为什么要学习 JVM

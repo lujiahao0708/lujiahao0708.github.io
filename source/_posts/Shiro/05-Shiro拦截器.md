@@ -1,9 +1,10 @@
 ---
 title: 05-Shiro拦截器
-date: 2019-10-16 20:42:34
 categories: Shiro
 tags:
-- Shiro
+  - Shiro
+abbrlink: e4a8fea8
+date: 2019-10-16 20:42:34
 ---
 
 Shiro内置了很多默认的拦截器，比如身份验证、授权等相关的。

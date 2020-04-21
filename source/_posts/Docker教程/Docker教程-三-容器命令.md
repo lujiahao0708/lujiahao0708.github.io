@@ -1,11 +1,12 @@
 ---
 title: Docker教程(三)---容器命令
-date: 2017-02-24 10:55:25
 categories: JavaEE
 tags:
-- Docker
-- Java
+  - Docker
+  - Java
 description: Docker容器命令总结
+abbrlink: afdfdec3
+date: 2017-02-24 10:55:25
 ---
 
 ## Docker 容器命令

@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 谷歌推出12款新官方主题，赶快给你的Chrome换换样子！
-date: 2019-02-13 11:48:46
 categories: Chrome
 tags:
-- 主题
-- Chrome
+  - 主题
+  - Chrome
 description: 谷歌推出12款新官方主题，赶快给你的Chrome换换样子！
+abbrlink: b7450b36
+date: 2019-02-13 11:48:46
 ---
 
 ## 前言

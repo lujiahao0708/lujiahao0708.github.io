@@ -1,10 +1,11 @@
 ---
 title: 02.Shiro入门实例
-date: 2019-10-13 20:42:34
 categories: Shiro
 tags:
-- Shiro
-- Spring Boot
+  - Shiro
+  - Spring Boot
+abbrlink: 9144b96d
+date: 2019-10-13 20:42:34
 ---
 
 本篇为Shiro入门案例，使用Spring Boot集成。

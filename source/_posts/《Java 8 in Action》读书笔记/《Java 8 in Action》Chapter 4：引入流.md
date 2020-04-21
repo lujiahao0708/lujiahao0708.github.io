@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 《Java 8 in Action》Chapter 4：引入流
-date: 2019-03-08 11:34:52
 categories: Java
 tags:
-- Java8
-- 读书笔记
+  - Java8
+  - 读书笔记
 description: 《Java 8 in Action》Chapter 4：引入流
+abbrlink: d8840bff
+date: 2019-03-08 11:34:52
 ---
 
 # 1. 流简介

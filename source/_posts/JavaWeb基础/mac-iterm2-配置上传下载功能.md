@@ -1,12 +1,13 @@
 ---
 layout: post
 title: Mac iTerm2 配置 rz/sz 上传下载功能
-date: 2019-01-31 10:16:00
 categories: 工具教程
 tags:
-- mac
-- iterm2
+  - mac
+  - iterm2
 description: Mac iTerm2 配置 rz/sz 上传下载功能
+abbrlink: 719434de
+date: 2019-01-31 10:16:00
 ---
 
 

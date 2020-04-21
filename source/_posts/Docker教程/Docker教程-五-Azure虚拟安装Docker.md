@@ -1,11 +1,12 @@
 ---
 title: Docker教程(五)---Azure虚拟安装Docker
-date: 2017-03-06 16:52:39
 categories: JavaEE
 tags:
-- Docker
-- Java
+  - Docker
+  - Java
 description: 解决非root用户无法运行docker命令的问题
+abbrlink: 5c43d0f4
+date: 2017-03-06 16:52:39
 ---
 
 老大把Azure的权限给我了,哈哈,可惜我已经准备离职了,但是工作还是要继续的.

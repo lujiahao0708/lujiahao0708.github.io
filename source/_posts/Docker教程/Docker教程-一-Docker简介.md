@@ -1,11 +1,12 @@
 ---
 title: Docker教程(一)---Docker简介
-date: 2017-02-19 23:15:46
 categories: JavaEE
 tags:
-- Docker
-- Java
-description: Docker 简介, Docker 与传统虚拟化技术的区别,以及 Docker 的应用场景
+  - Docker
+  - Java
+description: 'Docker 简介, Docker 与传统虚拟化技术的区别,以及 Docker 的应用场景'
+abbrlink: cbe75bf3
+date: 2017-02-19 23:15:46
 ---
 ## 虚拟化技术
 传统虚拟化方式是虚拟机虚拟出一套硬件后,在上面运行一个完整的操作系统;而容器技术是直接使用宿主机的资源,是一种轻量级的虚拟技术.

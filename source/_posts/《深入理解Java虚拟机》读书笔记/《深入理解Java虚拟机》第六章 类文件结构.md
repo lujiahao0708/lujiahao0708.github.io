@@ -1,12 +1,13 @@
 ---
 layout: post
-title: 《深入理解Java虚拟机》第六章 类文件结构 
-date: 2019-01-12 19:22:27
+title: 《深入理解Java虚拟机》第六章 类文件结构
 categories: JVM
 tags:
-- JVM
-- 读书笔记
+  - JVM
+  - 读书笔记
 description: 《深入理解Java虚拟机》读书笔记 第六章 类文件结构
+abbrlink: 64aed4c5
+date: 2019-01-12 19:22:27
 ---
 
 # 6.1 概述

@@ -1,10 +1,11 @@
 ---
 title: 解决Mac下VSCode打开zsh乱码
-date: 2019-07-21 11:38:26
 categories: Mac
 tags:
-- VSCode
-- Mac技巧
+  - VSCode
+  - Mac技巧
+abbrlink: eb5777dc
+date: 2019-07-21 11:38:26
 ---
 
 ## 1.乱码问题

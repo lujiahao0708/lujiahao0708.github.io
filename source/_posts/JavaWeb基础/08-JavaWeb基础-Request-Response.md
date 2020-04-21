@@ -1,10 +1,11 @@
 ---
 title: 08.JavaWeb基础-Response-Request
-date: 2016-11-21 11:22:52
 tags:
   - JavaWeb基础
   - Response
   - Request
+abbrlink: 81aadbc5
+date: 2016-11-21 11:22:52
 ---
 # 1.Response
 ## 1.1 响应行

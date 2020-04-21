@@ -1,10 +1,11 @@
 ---
 title: 07-Shiro与Spring Boot用户授权.md
-date: 2019-10-18 20:42:34
 categories: Shiro
 tags:
-- Shiro
-- Spring Boot
+  - Shiro
+  - Spring Boot
+abbrlink: e155730c
+date: 2019-10-18 20:42:34
 ---
 
 Spring Boot与Shiro整合案例，用户授权部分。

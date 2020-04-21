@@ -1,11 +1,11 @@
 ---
-title: 'Redis安装&搭建本地环境&备份恢复'
-date: 2020-04-11 17:25:40
+title: Redis安装&搭建本地环境&备份恢复
 categories: Redis
 tags: Redis
 toc: true
 description: Redis安装&搭建本地环境&备份恢复
-
+abbrlink: 91efe6a0
+date: 2020-04-11 17:25:40
 ---
 
 搭建流程记录,方便日后查看。

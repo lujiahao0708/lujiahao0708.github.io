@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 《Java 8 in Action》Chapter 11：CompletableFuture：组合式异步编程
-date: 2019-03-24 11:34:52
 categories: Java
 tags:
-- Java8
-- 读书笔记
+  - Java8
+  - 读书笔记
 description: 《Java 8 in Action》Chapter 11：CompletableFuture：组合式异步编程
+abbrlink: 56cbc3f9
+date: 2019-03-24 11:34:52
 ---
 
 某个网站的数据来自Facebook、Twitter和Google，这就需要网站与互联网上的多个Web服务通信。可是，你并不希望因为等待某些服务的响应，阻塞应用程序的运行，浪费数十亿宝贵的CPU时钟周期。比如，不要因为等待Facebook的数据，暂停对来自Twitter的数据处理。

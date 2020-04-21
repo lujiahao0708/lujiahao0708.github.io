@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 《Java 8 in Action》Chapter 6：用流收集数据
-date: 2019-03-16 11:34:52
 categories: Java
 tags:
-- Java8
-- 读书笔记
+  - Java8
+  - 读书笔记
 description: 《Java 8 in Action》Chapter 6：用流收集数据
+abbrlink: b630d074
+date: 2019-03-16 11:34:52
 ---
 
 # 1. 收集器简介

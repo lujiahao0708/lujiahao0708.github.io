@@ -1,11 +1,12 @@
 ---
 title: Volley学习第三篇-网络线程
-date: 2016-05-23 14:42:23
 categories: Android
 tags:
   - Http
   - Volley
 description: Volley网络线程的分析
+abbrlink: ec364bdb
+date: 2016-05-23 14:42:23
 ---
 
 ## 前文概要

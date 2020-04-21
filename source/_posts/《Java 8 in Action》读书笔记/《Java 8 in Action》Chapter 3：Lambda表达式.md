@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 《Java 8 in Action》Chapter 3：Lambda表达式
-date: 2019-03-07 22:34:52
 categories: Java
 tags:
-- Java8
-- 读书笔记
+  - Java8
+  - 读书笔记
 description: 《Java 8 in Action》Chapter 3：Lambda表达式
+abbrlink: b1d345e3
+date: 2019-03-07 22:34:52
 ---
 
 # 1. Lambda简介

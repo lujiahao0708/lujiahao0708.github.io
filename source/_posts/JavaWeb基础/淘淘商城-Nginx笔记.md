@@ -1,6 +1,5 @@
 ---
 title: 淘淘商城-Nginx笔记
-date: 2016-11-02 10:16:07
 categories: JavaEE
 tags:
   - JavaEE
@@ -8,7 +7,9 @@ tags:
   - FTP
   - Linux
   - Nginx
-description: Nginx三个功能1.http服务器(图片服务器)2.虚拟主机3.反向代理,负载均衡
+description: 'Nginx三个功能1.http服务器(图片服务器)2.虚拟主机3.反向代理,负载均衡'
+abbrlink: d6c92711
+date: 2016-11-02 10:16:07
 ---
 
 # Nginx

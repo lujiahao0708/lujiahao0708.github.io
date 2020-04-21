@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 《Java 8 in Action》Chapter 8：重构、测试和调试
-date: 2019-03-18 11:34:52
 categories: Java
 tags:
-- Java8
-- 读书笔记
+  - Java8
+  - 读书笔记
 description: 《Java 8 in Action》Chapter 8：重构、测试和调试
+abbrlink: 9d40e29b
+date: 2019-03-18 11:34:52
 ---
 
 > 我们会介绍几种方法，帮助你重构代码，以适配使用Lambda表达式，让你的代码具备更好的可读性和灵活性。除此之外，我们还会讨论目前比较流行的几种面向对象的设计模式，

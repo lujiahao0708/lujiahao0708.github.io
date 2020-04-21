@@ -1,8 +1,10 @@
+---
 title: Android网络基础
 categories: Android
 tags:
   - Http
 description: Android网络访问使用HttpURLConnection还是HttpClient
+abbrlink: f69983ae
 date: 2015-12-02 18:14:41
 ---
 

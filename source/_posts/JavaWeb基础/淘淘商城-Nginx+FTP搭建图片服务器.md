@@ -1,6 +1,5 @@
 ---
 title: 淘淘商城-Nginx+FTP搭建图片服务器
-date: 2016-11-02 12:16:07
 categories: JavaEE
 tags:
   - JavaEE
@@ -9,6 +8,8 @@ tags:
   - Linux
   - Nginx
 description: Nginx+FTP搭建图片服务器
+abbrlink: 5cab112c
+date: 2016-11-02 12:16:07
 ---
 
 # Nginx

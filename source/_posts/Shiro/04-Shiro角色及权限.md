@@ -1,10 +1,11 @@
 ---
 title: 04-Shiro角色及权限
-date: 2019-10-15 20:42:34
 categories: Shiro
 tags:
-- Shiro
-- Spring Boot
+  - Shiro
+  - Spring Boot
+abbrlink: 515f117b
+date: 2019-10-15 20:42:34
 ---
 
 授权，也叫访问控制，即在应用中控制谁能访问哪些资源(如访问页面/编辑数据/页面操作等)。

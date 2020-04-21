@@ -1,6 +1,5 @@
 ---
 title: Android Studio导出并使用aar和jar
-date: 2016-06-27 16:58:34
 categories: Android
 tags:
   - 打包
@@ -8,7 +7,9 @@ tags:
   - gradle
   - jar
   - aar
-description: 使用Android Studio导出aar文件和jar包,并使用它们.
+description: '使用Android Studio导出aar文件和jar包,并使用它们.'
+abbrlink: 6aaba340
+date: 2016-06-27 16:58:34
 ---
 
 今天想往项目中导入Zxing,不知道怎么就想到不使用library的方式而使用包的方式来导入,然后就有了下面的东西了.

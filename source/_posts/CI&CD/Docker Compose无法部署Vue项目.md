@@ -1,11 +1,11 @@
 ---
 title: Docker Compose无法部署Vue项目
-date: 2019-09-12 19:04:47
 categories: Docker
 tags:
-- CI&CD
-- Docker
-
+  - CI&CD
+  - Docker
+abbrlink: 61d3a67d
+date: 2019-09-12 19:04:47
 ---
 
 近期在进行Vue项目自动化构建，遇到一些问题，下面记录一个典型的问题。

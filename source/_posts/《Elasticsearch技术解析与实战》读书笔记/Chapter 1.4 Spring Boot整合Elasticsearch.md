@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 《Elasticsearch技术解析与实战》Chapter 1.4 Spring Boot整合Elasticsearch
-date: 2019-04-16 11:34:52
 categories: Java
 tags:
-- Elasticsearch
-- 读书笔记
+  - Elasticsearch
+  - 读书笔记
 description: 《Elasticsearch技术解析与实战》Chapter 1.4 Spring Boot整合Elasticsearch
+abbrlink: 19f71057
+date: 2019-04-16 11:34:52
 ---
 
 # 1. spring-boot-starter-data-elasticsearch

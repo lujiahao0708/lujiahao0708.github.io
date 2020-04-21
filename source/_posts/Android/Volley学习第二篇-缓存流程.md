@@ -1,11 +1,12 @@
 ---
 title: Volley学习第二篇-缓存流程
-date: 2016-05-23 11:14:42
 categories: Android
 tags:
   - Http
   - Volley
 description: Volley缓存流程的分析
+abbrlink: e1a23cf6
+date: 2016-05-23 11:14:42
 ---
 
 ## 前文概要

@@ -1,9 +1,11 @@
+---
 title: Android网络层二次封装
 categories: Android
 tags:
   - Http
 description: Android网络层二次封装
-date: 2016-5-18 15:40:12
+abbrlink: fc00fc77
+date: 2016-05-18 15:40:12
 ---
 ## 项目介绍
 对Volley进行二次封装，方便使用和扩展。主要是学习封装的思想。

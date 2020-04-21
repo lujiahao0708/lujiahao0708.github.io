@@ -1,11 +1,12 @@
 ---
 title: Docker教程(四)---Dockerfile命令详解
-date: 2017-02-28 20:55:40
 categories: JavaEE
 tags:
-- Docker
-- Java
+  - Docker
+  - Java
 description: Dockerfile命令总结
+abbrlink: b603c996
+date: 2017-02-28 20:55:40
 ---
 
 ## 深入docker镜像

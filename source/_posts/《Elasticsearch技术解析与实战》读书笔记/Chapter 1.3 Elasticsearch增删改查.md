@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 《Elasticsearch技术解析与实战》Chapter 1.3 Elasticsearch增删改查
-date: 2019-04-15 11:34:52
 categories: Java
 tags:
-- Elasticsearch
-- 读书笔记
+  - Elasticsearch
+  - 读书笔记
 description: 《Elasticsearch技术解析与实战》Chapter 1.3 Elasticsearch增删改查
+abbrlink: 763a1549
+date: 2019-04-15 11:34:52
 ---
 
 # 1. 新增文档，建立索引

@@ -1,6 +1,5 @@
 ---
-title: 'MVC介绍&用户管理系统'
-date: 2016-06-24 16:59:01
+title: MVC介绍&用户管理系统
 categories: JavaEE
 tags:
   - JavaEE
@@ -8,6 +7,8 @@ tags:
   - MVC
   - 设计模式
 description: MVC模式的具体应用案例-用户管理系统
+abbrlink: 5d93e1da
+date: 2016-06-24 16:59:01
 ---
 
 ## MVC

@@ -1,11 +1,12 @@
 ---
 title: 《MySQL必知必会》第4-5章 SELECT检索与排序
-date: 2019-12-19 22:54:41
 categories: MySQL必知必会
 toc: true
 tags:
-- MySQL
-- MySQL必知必会
+  - MySQL
+  - MySQL必知必会
+abbrlink: 1ebe294a
+date: 2019-12-19 22:54:41
 ---
 
 # 1. SELECT 语句

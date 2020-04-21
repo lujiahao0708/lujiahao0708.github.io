@@ -1,11 +1,12 @@
 ---
 layout: post
 title: Mac使用ssh公钥免密登录服务器
-date: 2019-05-28 21:54:46
 categories: Mac
 tags:
-- Mac技巧
+  - Mac技巧
 description: 不输密码登录服务器?竟然还有这种操作!
+abbrlink: ae27fcbe
+date: 2019-05-28 21:54:46
 ---
 
 > 每次登陆服务器都要输入密码,重复无用的操作让人心生厌烦。“懒人是推动社会进步的动力”,我的宗旨就是能自动的就不要手动。

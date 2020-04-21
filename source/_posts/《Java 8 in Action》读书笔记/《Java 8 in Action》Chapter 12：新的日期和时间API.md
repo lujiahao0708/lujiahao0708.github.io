@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 《Java 8 in Action》Chapter 12：新的日期和时间API
-date: 2019-03-26 11:34:52
 categories: Java
 tags:
-- Java8
-- 读书笔记
+  - Java8
+  - 读书笔记
 description: 《Java 8 in Action》Chapter 12：新的日期和时间API
+abbrlink: '33416609'
+date: 2019-03-26 11:34:52
 ---
 
 - 在Java 1.0中，对日期和时间的支持只能依赖java.util.Date类。同时这个类还有两个很大的缺点：年份的起始选择是1900年，月份的起始从0开始。

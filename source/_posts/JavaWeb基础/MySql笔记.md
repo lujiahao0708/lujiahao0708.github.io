@@ -1,12 +1,13 @@
 ---
 title: MySql笔记
-date: 2016-06-30 10:01:06
 categories: JavaEE
 tags:
   - JavaEE
   - 数据库
   - MySql
 description: MySql笔记
+abbrlink: cb940dd7
+date: 2016-06-30 10:01:06
 ---
 
 ## 1.数据库知识

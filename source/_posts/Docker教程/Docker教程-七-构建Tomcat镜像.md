@@ -1,11 +1,12 @@
 ---
 title: Docker教程(七)---构建Tomcat镜像
-date: 2017-03-07 16:01:45
 categories: JavaEE
 tags:
-- Docker
-- Java
-description: Dockerfile命令实战,构建Tomcat镜像
+  - Docker
+  - Java
+description: 'Dockerfile命令实战,构建Tomcat镜像'
+abbrlink: ca4ed89c
+date: 2017-03-07 16:01:45
 ---
 
 这次镜像构建是基于上篇的JDK镜像构建的.

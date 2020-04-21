@@ -1,10 +1,11 @@
 ---
 title: 03-Shiro自定义Realm及加密
-date: 2019-10-14 20:42:34
 categories: Shiro
 tags:
-- Shiro
-- Spring Boot
+  - Shiro
+  - Spring Boot
+abbrlink: 696c7113
+date: 2019-10-14 20:42:34
 ---
 
 Shiro的ini方式配置用户名密码，灵活性差，安全性不佳。本文介绍自定义Realm及加密，可以安全的获取数据认证。

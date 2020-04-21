@@ -1,11 +1,12 @@
 ---
 title: Docker教程(二)---安装Docker
-date: 2017-02-23 14:06:49
 categories: JavaEE
 tags:
-- Docker
-- Java
+  - Docker
+  - Java
 description: Docker安装步骤总结
+abbrlink: 4d30a5a
+date: 2017-02-23 14:06:49
 ---
 
 ## Docker 核心组件

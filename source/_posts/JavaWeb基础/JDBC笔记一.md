@@ -1,12 +1,13 @@
 ---
 title: JDBC笔记一
-date: 2016-07-04 17:28:41
 categories: JavaEE
 tags:
   - JavaEE
   - 数据库
   - MySql
-description: JDBC笔记第一部分,主要包括:JDBC简单应用,Junit 测试,JDBC工具类,自定义异常等.
+description: 'JDBC笔记第一部分,主要包括:JDBC简单应用,Junit 测试,JDBC工具类,自定义异常等.'
+abbrlink: bf6544ad
+date: 2016-07-04 17:28:41
 ---
 
 ## 1. JDBC简单应用

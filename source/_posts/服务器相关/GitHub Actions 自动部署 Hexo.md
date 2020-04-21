@@ -1,11 +1,12 @@
 ---
 title: GitHub Actions 自动部署 Hexo
-date: 2020-04-11 22:03:59
 categories: Hexo
 toc: true
 tags:
-- GitHub Actions
-- Hexo
+  - GitHub Actions
+  - Hexo
+abbrlink: df27ccfb
+date: 2020-04-11 22:03:59
 ---
 
 [Github Actions](https://github.com/features/actions) 是 GitHub 官方 CI 工具，与 GitHub 无缝集成。之前博客使用 TravisCI 实现的自动部署，现在转用 GitHub Actions 部署，本文记录部署流程。

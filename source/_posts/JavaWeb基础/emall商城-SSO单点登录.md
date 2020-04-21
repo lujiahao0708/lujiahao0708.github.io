@@ -1,11 +1,12 @@
 ---
 title: emall商城-SSO单点登录
-date: 2017-10-18 11:30:05
 categories: JavaEE
 tags:
   - JavaEE
   - 商城
 description: 单点登录实现
+abbrlink: 9f6a058f
+date: 2017-10-18 11:30:05
 ---
 
 ## 1. 前期准备

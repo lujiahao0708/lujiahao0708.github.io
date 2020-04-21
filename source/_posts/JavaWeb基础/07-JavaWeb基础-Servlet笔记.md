@@ -1,10 +1,11 @@
 ---
 title: 07.JavaWeb基础_Servlet笔记
-date: 2016-11-20 09:52:43
 tags:
   - JavaWeb基础
   - Servlet
 description: Servlet基础总结
+abbrlink: 6b2f0a50
+date: 2016-11-20 09:52:43
 ---
 
 ## Servlet基础

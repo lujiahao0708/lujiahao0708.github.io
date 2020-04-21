@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 《Elasticsearch技术解析与实战》Chapter 1.1：Elasticsearch入门和倒排索引
-date: 2019-04-12 11:34:52
 categories: Java
 tags:
-- Elasticsearch
-- 读书笔记
+  - Elasticsearch
+  - 读书笔记
 description: 《Elasticsearch技术解析与实战》Chapter 1.1：Elasticsearch入门和倒排索引
+abbrlink: 864b09eb
+date: 2019-04-12 11:34:52
 ---
 
 # 1. 简介

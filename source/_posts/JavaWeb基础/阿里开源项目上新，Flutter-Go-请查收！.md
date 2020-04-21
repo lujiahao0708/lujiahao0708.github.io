@@ -1,12 +1,13 @@
 ---
 layout: post
 title: 阿里开源项目上新，Flutter Go 请查收！
-date: 2019-02-14 17:39:18
 categories: Flutter
 tags:
-- Flutter
-- 开源项目
+  - Flutter
+  - 开源项目
 description: flutter 开发者帮助 APP，包含 flutter 常用 140+ 组件的demo 演示与中文文档
+abbrlink: d26371f0
+date: 2019-02-14 17:39:18
 ---
 
 ## 前言
