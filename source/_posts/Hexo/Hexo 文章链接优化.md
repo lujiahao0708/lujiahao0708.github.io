@@ -1,5 +1,5 @@
 ---
-title: Hexo 生成永久文章链接
+title: 1Hexo 生成永久文章链接
 categories: Hexo
 toc: true
 tags:
