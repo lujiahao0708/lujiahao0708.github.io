@@ -55,24 +55,40 @@ Coding 的配置与 GitHub 配置基本相似，查看并复制公钥内容：`c
 ```
 #github
 Host github.com
-        HostName github.com
-        PreferredAuthentications publickey
-        IdentityFile ~/.ssh/id_rsa_github
+HostName github.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/id_rsa_github
+User user1
+
 #coding
 Host sjzcode.coding.net
-        HostName sjzcode.coding.net
-        PreferredAuthentications publickey
-        IdentityFile ~/.ssh/id_rsa_coding
+HostName sjzcode.coding.net
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/id_rsa_coding
+User user2
 ```
 `config` 文件中各个字段的含义：
 
         Host : 配置别名
         HostName : git服务器地址
         IdentityFile : 私钥文件位置
+        User : 用户名
 
 > 如果你配置的 Coding ，需要注意 `HostName` 要填写你的团队的地址，Coding 现在对于新用户都是注册为团队，并为每个团队单独创建了一个二级域名，比如我的账户二级域名：`sjzcode.coding.net`。直接写 `coding.net` 无法认证成功。
 
-# 4.验证
+# 4.更新 Identities
+私钥配置成功后还需要将之添加到 ssh-agent 中，下面是相关命令：
+```
+1.清除缓存
+  ssh-add -D
+2.添加 keys
+  ssh-add ~/.ssh/id_rsa_github
+  ssh-add ~/.ssh/id_rsa_coding
+3.查看 keys
+  ssh-add -l
+```
+
+# 5.验证
 命令 `ssh -T git@别名` 验证是否配置成功。
 ```
 ~/.ssh ssh -T git@github.com
@@ -83,7 +99,7 @@ Coding 提示: Hello xxx, You've connected to Coding.net via SSH. This is a pers
 xx，你好，你已经通过 SSH 协议认证 Coding.net 服务，这是一个个人公钥.
 公钥指纹：xxxxxxxxx
 ```
-# 5.账号快速切换
+# 6.账号快速切换
 > 如果在各个托管平台使用的用户名和邮箱都相同，请忽略此步骤。
 > 这一步的原理就是通过自定义命令别名来实现快速切换用户。
 
