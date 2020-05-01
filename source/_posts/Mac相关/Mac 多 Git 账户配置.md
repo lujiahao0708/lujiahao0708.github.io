@@ -55,17 +55,21 @@ Coding 的配置与 GitHub 配置基本相似，查看并复制公钥内容：`c
 ```
 #github
 Host github.com
-HostName github.com
-PreferredAuthentications publickey
-IdentityFile ~/.ssh/id_rsa_github
-User user1
+    HostName github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/id_rsa_github
+    User user1
+	AddKeysToAgent yes
+	UseKeychain yes
 
 #coding
 Host sjzcode.coding.net
-HostName sjzcode.coding.net
-PreferredAuthentications publickey
-IdentityFile ~/.ssh/id_rsa_coding
-User user2
+    HostName sjzcode.coding.net
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/id_rsa_coding
+    User user2
+	AddKeysToAgent yes
+	UseKeychain yes
 ```
 `config` 文件中各个字段的含义：
 
@@ -73,6 +77,8 @@ User user2
         HostName : git服务器地址
         IdentityFile : 私钥文件位置
         User : 用户名
+        AddKeysToAgent : 添加到 ss-agent 中
+        UseKeychain : 添加到钥匙串中
 
 > 如果你配置的 Coding ，需要注意 `HostName` 要填写你的团队的地址，Coding 现在对于新用户都是注册为团队，并为每个团队单独创建了一个二级域名，比如我的账户二级域名：`sjzcode.coding.net`。直接写 `coding.net` 无法认证成功。
 
@@ -87,8 +93,22 @@ User user2
 3.查看 keys
   ssh-add -l
 ```
+上面 `config` 中的 `AddKeysToAgent` 和 `UseKeychain` 这两个配置在 `macOS 10.12.2` 以后的系统生效，会将私钥添加到 Mac 的钥匙串中。
+`ssh-agent` 是一个用于存储私钥的临时性的 `session` 服务，也就是说当你重启之后，`ssh-agent` 服务也就重置了。
 
-# 5.验证
+# 5.Automator 自动设置
+打开 Automator(自动操作),选择 `实用工具` --> `运行 Shell 脚本`,然后在弹出框中填入秘钥配置命令:
+```
+ssh-add ~/.ssh/id_rsa_github
+ssh-add ~/.ssh/id_rsa_gitlab_sqyc
+```
+
+![](https://raw.githubusercontent.com/lujiahao0708/PicRepo/master/blogPic/Mac%E7%9B%B8%E5%85%B3/Mac%20%E5%A4%9A%20Git%20%E8%B4%A6%E6%88%B7%E9%85%8D%E7%BD%AE/%E8%87%AA%E5%8A%A8%E6%93%8D%E4%BD%9C.png)
+
+然后将脚本添加到启动项中，每次系统重启后会执行这个 Automator task，自动 ssh-add 所有的私钥
+![](https://raw.githubusercontent.com/lujiahao0708/PicRepo/master/blogPic/Mac%E7%9B%B8%E5%85%B3/Mac%20%E5%A4%9A%20Git%20%E8%B4%A6%E6%88%B7%E9%85%8D%E7%BD%AE/%E6%B7%BB%E5%8A%A0%E5%90%AF%E5%8A%A8%E9%A1%B9.png)
+
+# 6.验证
 命令 `ssh -T git@别名` 验证是否配置成功。
 ```
 ~/.ssh ssh -T git@github.com
@@ -111,6 +131,9 @@ alias cgg='git config --global user.name 用户名2 && git config --global user.
 ```
 切记执行 `source ~/.bash_profile` 以使修改生效。
 
+# 参考资料
+- [https://segmentfault.com/q/1010000000835302](https://segmentfault.com/q/1010000000835302)
+- [http://www.geekjc.com/post/5cd0f404b7ee7010c8065a6b](http://www.geekjc.com/post/5cd0f404b7ee7010c8065a6b)
 
 # Tips
 欢迎收藏和转发，感谢你的支持！(๑•̀ㅂ•́)و✧ 
