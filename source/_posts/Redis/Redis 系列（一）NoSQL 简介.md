@@ -1,6 +1,5 @@
 ---
-layout: post
-title: Redis 系列 -（一）NoSQL 简介
+title: Redis 系列（一）NoSQL 简介
 categories: Redis
 toc: true
 tags:
