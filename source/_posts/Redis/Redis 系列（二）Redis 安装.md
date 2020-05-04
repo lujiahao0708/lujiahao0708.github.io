@@ -135,7 +135,7 @@ lrwxrwxrwx 1 root root       12 Mar 13 20:21 redis-sentinel -> redis-server
 - redis-benchmark：性能测试工具
 - redis-check-aof：修复有问题的 AOF 文件
 - redis-check-dump：修复有问题的 dump.rdb 文件
-- redis-cli：客户端链接脚本
+- redis-cli：客户端连接脚本
 - redis-sentinel：redis 集群脚本
 - redis-server：redis 服务器启动脚本
 
