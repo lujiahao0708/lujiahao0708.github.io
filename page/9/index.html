@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>后端小哥博客</title><meta description="一个 Java 程序猿"><meta property="og:type" content="blog"><meta property="og:title" content="后端小哥博客"><meta property="og:url" content="http://lujiahao0708.github.io/"><meta property="og:site_name" content="后端小哥博客"><meta property="og:description" content="一个 Java 程序猿"><meta property="og:locale" content="zh_CN"><meta property="article:author" content="后端小哥"><meta property="article:tag" content="博客"><meta property="article:tag" content="技术博客"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="http://lujiahao0708.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lujiahao0708.github.io"},"headline":"后端小哥博客","image":["http://lujiahao0708.github.io/img/og_image.png"],"author":{"@type":"Person","name":"后端小哥"},"description":"一个 Java 程序猿"}</script><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?cdef3b7efc8748063e32969cc0b8dedc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/categories/Redis">Redis</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2017-03-06T16:52:39.000Z" title="2017-03-06T16:52:39.000Z">2017-03-06</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">1 分钟 读完 (大约 187 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/5c43d0f4.html">Docker教程(五)---Azure虚拟安装Docker</a></h1><div class="content"><p>老大把Azure的权限给我了,哈哈,可惜我已经准备离职了,但是工作还是要继续的.</p>
+<p>一切进行的非常顺利,登录Azure云平台,创建虚机,然后切换root权限安装docker,退出root用户,准备docker pull centos…<br>无法运行,卧槽!</p>
+<p>运行docker命令弹出如下提示:</p>
+<pre><code>Cannot connect to the Docker daemon. Is the docker daemon running on this host?</code></pre><p>docker出于安全的考虑才会这样做(<a href="http://dockone.io/article/589">http://dockone.io/article/589</a>).</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ol>
+<li><p>切换root权限</p>
+<pre><code>visudo -f /etc/sudoers</code></pre></li>
+<li><p>在 <code>/etc/sudoers</code> 中添加如下内容</p>
+<pre><code>azureuser  ALL=(ALL)       NOPASSWD: /usr/bin/docker</code></pre></li>
+<li><p>退出root用户</p>
+</li>
+<li><p>执行 <code>vim ~/.bashrc</code> 添加</p>
+<pre><code>alias docker=&apos;sudo /usr/bin/docker&apos;</code></pre></li>
+<li><p>保存后执行</p>
+<pre><code>source ~/.bashrc</code></pre></li>
+</ol>
+<p>此时就可以自由的使用docker命令了.</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2017-02-28T20:55:40.000Z" title="2017-02-28T20:55:40.000Z">2017-02-28</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">16 分钟 读完 (大约 2425 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/b603c996.html">Docker教程(四)---Dockerfile命令详解</a></h1><div class="content"><h2 id="深入docker镜像"><a href="#深入docker镜像" class="headerlink" title="深入docker镜像"></a>深入docker镜像</h2><p>拉取镜像文件到本地</p>
+<pre><code>docker pull centos</code></pre><p>查看本地镜像：</p>
+<pre><code>docker images </code></pre><p>查找镜像</p>
+<pre><code>docker search [镜像名称]</code></pre><p>构建镜像</p>
+<pre><code>1. 使用docker commit 命令      用户名:lujiahao
+    docker commit 容器名称/ID lujiahao/centos-tomcat
+    docker commit -m=&quot;describe&quot; --author=&quot;lujiahao&quot; 容器名称/ID  lujiahao/centos-tomcat:test
+    docker inspect lujiahao/centos-tomcat:test
+2. 使用docker build命令和Dockerfile文件(推荐)
+    docker build  -t=“用户名/镜像名称&quot; .
+    docker build  -t=&quot;crxy/centos&quot; .
+    点表示会在当前目录中找Dockerfile文件
+    建议创建镜像的时候单独一个目录,然后在写Dockerfile,这个目录叫构建目录.如果目录下面有其他文件,会把目录下所有文件发送给docker的守护进程</code></pre><p>查看构建的步骤和层级</p>
+<pre><code>docker history 用户ID/镜像名</code></pre><h2 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h2><ul>
+<li>dockerfile中的指令会按照从上到下执行</li>
+<li>docker首先从基础镜像运行一个容器</li>
+<li>执行一条指令，对容器进行修改</li>
+<li>执行类似docker commit的操作，提交一个新的镜像层</li>
+<li>docker再基于刚提交的镜像运行一个新容器</li>
+<li>然后执行dockerfile中的下一条指令，直到所有指令都执行完毕</li>
+</ul>
+<h2 id="Dockerfile指令详解"><a href="#Dockerfile指令详解" class="headerlink" title="Dockerfile指令详解"></a>Dockerfile指令详解</h2><ul>
+<li>所有指令都必须为大写字母</li>
+<li>以#开头的都认为是注释</li>
+</ul>
+<h3 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h3><pre><code>第一条指令必须是`FROM`(指定使用的基础镜像)</code></pre><h3 id="MAINTAINER"><a href="#MAINTAINER" class="headerlink" title="MAINTAINER"></a>MAINTAINER</h3><pre><code>指定镜像的作者信息</code></pre><h3 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h3><pre><code>指定镜像被构建时要运行的命令,默认会使用/bin/bash -c 执行RUN 后面指定的命令
+也可以使用RUN  [&quot;mkdir&quot;,&quot;a.txt&quot;]</code></pre><h3 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h3><pre><code>告诉docker该容器需要对外开放的端口</code></pre><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><pre><code>指定一个容器运行时要执行的命令 
+docker run -i -t lujiahao/cenos-tomcat /bin/bash
+等于在Dockerfile中添加 CMD [&quot;/bin/ps&quot;]
+注意：使用 docker run 命令可以覆盖CMD指令</code></pre><h3 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h3><pre><code>与CMD类似，但是ENTRYPOINT指定的命令不会被docker run指定的命令覆盖，
+它会把docker run命令行中指定的参数传递给ENTRYPOINT指令中指定的命令当作参数。
+ENTRYPOINT [&quot;/bin/ps&quot;]
+docker run -t -i lujiahao/centos  -l
+ENTRYPOINT 还可以和CMD组合一块来用，可以实现，当用户不指定参数的时候使用默认的参数执行，如果用户指定的话就使用用户提供的参数.
+ENTRYPOINT [&quot;/bin/ps&quot;]
+CMD [&quot;-h&quot;]
+注意：如果确实要覆盖默认的参数的话，可以在docker run中指定--entrypoint进行覆盖</code></pre><h3 id="WORKDIR"><a href="#WORKDIR" class="headerlink" title="WORKDIR"></a>WORKDIR</h3><pre><code>WORKDIR /etc
+RUN touch a.txt
+WORKDIR /usr/local
+RUN touch b.txt
+注意：可以在docker run命令中使用-w覆盖工作目录，但是不会影响之前在工作目录中执行的命令</code></pre><h3 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h3><pre><code>设置环境变量，在这设置的环境变量可以在后面的指令中使用，使用$引用
+并且这个环境变量也会被持久保存到从我们的镜像创建的任何容器中。可以使用env命令查看
+也可以使用docker run 命令行的-e参数来传递环境变量，这些变量只在运行时有效 -e JAVA_HOME=/usr/local</code></pre><h3 id="USER-了解"><a href="#USER-了解" class="headerlink" title="USER(了解)"></a>USER(了解)</h3><pre><code>可以指定以什么用户去运行这个容器
+USER ftp（用户信息：查看/etc/group）
+还可以使用其他组合方式
+USER 用户名/UID:组/GID（用户名/UID和组/GID可以单独指定或者组合）
+不指定的话默认就是root用户</code></pre><h3 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h3><pre><code>ADD指令用来将构建目录下的指定文件复制到镜像中(注意只能是构建目录下面的文件)
+ADD a.txt /etc/a.txt
+ADD 在添加压缩文件的时候会把压缩文件自动解压。(gzip bzip2 xz),如果目的位置已经存在了和压缩文件同名的文件或者目录，那么这些文件将会被覆盖。</code></pre><h3 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h3><pre><code>COPY和ADD类似，但是COPY命令不会对压缩文件进行解压，只负责复制。
+如果目的位置不存在，docker会自动创建所有需要的目录，就像使用make -p一样
+注意：使用COPY和ADD的命令的时候，复制的源文件必须在当前构建环境之内，也就是和Dockerfile同一目录，否则会找不到。</code></pre><h3 id="ONBUILD"><a href="#ONBUILD" class="headerlink" title="ONBUILD"></a>ONBUILD</h3><pre><code>这个指令能为镜像添加触发器，当一个镜像被用作其他镜像的基础镜像时，
+该镜像中的触发器将会执行。这个触发器所指定的命令会在FROM指令之后执行。
+ONBUILD ADD . /usr/local
+先在一个镜像中添加这个触发器，再使用这个镜像作为基础镜像创建一个镜像，
+会发现在FROM指令之后就开始执行基础镜像中设置的触发器中的指令了。启动一个容器可以查看效果。
+注意：触发器只能被继承一次。
+有一些命令是不能在ONBUILD中指定的。包括FROM,MAINTAINER,ONBUILD,这样是为了防止在构建过程中产生递归调用的问题。</code></pre><h3 id="dockerignore"><a href="#dockerignore" class="headerlink" title=".dockerignore"></a>.dockerignore</h3><pre><code>在执行build的时候忽略掉不需要的文件。
+在Dockerfile同目录下创建.dockerignore,将要忽略的文件填到里面即可.</code></pre><h3 id="VOLUME"><a href="#VOLUME" class="headerlink" title="VOLUME"></a>VOLUME</h3><pre><code>可以理解为设置(共享目录，磁盘挂载),添加到容器中,并没有真正提交到镜像文件中
+这个指令用来向基于镜像创建的容器添加卷，一个卷可以存在于一个或者多个容器内的特定的目录。
+卷的特点
+    1：卷可以在容器间共享和重用
+    2：对卷的修改是立刻生效的
+    3：对卷的修改不会对更新镜像产生影响
+    4：卷会一直存在直到没有任何容器再使用它。
+卷功能可以让我们将一些数据添加到镜像中而不是将将这个内容提交到镜像中。并且允许我们在多个容器间共享这些内容。
+    格式：VOLUME  [&quot;/usr/projrct&quot;]
+    还可以一次指定多个VOLUME [&quot;/usr/project&quot;,&quot;/data&quot;]
+创建数据卷
+    VOLUME  [&quot;/usr/projrct&quot;]
+    或者在启动容器的时候创建docker run -it -v /webapp centos /bin/bash
+    注意：默认情况下，如果只是声明数据卷而没有映射到宿主机上的具体目录，docker会在/var/lib/docker/vfs/dir/
+        目录下分配一个具有唯一名字的目录给该数据卷。通过docker inspect 命令可以查看具体路径
+指定宿主主机目录作为数据卷
+                        宿主机目录:容器目录
+    docker run -it -v /usr/local/webapp:/webapp centos /bin/bash
+    注意：如果容器内部已经存在webapp目录，那么目录中的文件将会被覆盖。
+默认情况下，数据卷是具有读写权限，rw权限，可以改为只读权限,ro
+    docker run -it -v /usr/local/webapp:/webapp:ro centos /bin/bash
+使用场景:
+    容器里面的tomcat/webapps/目录和本地宿主机的目录对应上,本地修改代码后,
+    直接重启容器即可(如果是html连重启都不用了),相当于一个动态部署.</code></pre><h2 id="镜像操作"><a href="#镜像操作" class="headerlink" title="镜像操作"></a>镜像操作</h2><h2 id="docker的构建缓存"><a href="#docker的构建缓存" class="headerlink" title="docker的构建缓存"></a>docker的构建缓存</h2><blockquote>
+<p>由于每一步的构建过程都会将结果提交为镜像，所以docker的构建镜像过程就显得非常聪明，它会将之前的镜像层看作缓存。再进行重新构建时会从第一条发生了变化的指令开始，前面的都使用缓存</p>
+</blockquote>
+<p>不使用构建缓存的两种方式:</p>
+<ul>
+<li>可以使用 <code>--no-cache</code> 参数来指定不使用缓存功能 </li>
+<li>一般会在dockerfile中使用ENV指令设置一个时间(ENV CREATE_TIME 2015-01-01),写在<code>FROM</code>下面,这样只要一改了这个就不会使用构建缓存了</li>
+</ul>
+<h2 id="容器端口映射"><a href="#容器端口映射" class="headerlink" title="容器端口映射"></a>容器端口映射</h2><p>默认情况下docker不会自动打开这些端口，必须在运行容器的时候指定-P(大写)参数，这样就可以打开expose指定的所有端口。 会随机映射到宿主机的一个端口上</p>
+<p>EXPOSE指令可以同时指定一个或多个需要对外开放的端口</p>
+<pre><code>expose 80 8080 6379</code></pre><p>对外开放端口的两种方式</p>
+<pre><code>-P(大写) 这样的话会将dockerfile文件中EXPOSE 指令指定的所有端口一并公开
+-p(小写)可以手工指定需要对外公开的端口</code></pre><p>如果没有使用expose指定需要对外开放的端口，还可以在启动容器的时候动态指定，使用-p(小写)参数</p>
+<pre><code>-p 80(docker会在宿主机上随机选择一个位于49000~49900内未被使用的端口来映射到容器中的80端口上)
+-p 8080:8080(把宿主机上的8080端口映射到容器的8080端口) 前面的表示宿主机
+-p 80:80 -p 8080:8080 同时指定多个</code></pre><p>使用<code>docker ps</code> 可以查看容器的端口分配情况 或者使用<code>docker port 容器ID/名称</code>查看</p>
+<h3 id="推送镜像到Docker-Hub-需要先登录：docker-login"><a href="#推送镜像到Docker-Hub-需要先登录：docker-login" class="headerlink" title="推送镜像到Docker Hub(需要先登录：docker login)"></a>推送镜像到Docker Hub(需要先登录：docker login)</h3><pre><code>docker push 用户ID/镜像名(docker 1.6以下版本这样使用)
+docker1.6需要使用下面命令才能推送
+docker tag image_id docker.io/login_name/image_name
+docker push docker.io/login_name/image_name
+推送可能会报错，cdn-registry-1.docker.io: no such host 是因为网络问题、重试几次。</code></pre><h3 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h3><pre><code>docker rmi 用户ID/镜像名
+或者docker rmi `docker images -a -q`
+删除所有未打标签的镜像
+ docker rmi -f $(docker images --filter &apos;dangling=true&apos;)</code></pre></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2017-02-24T10:55:25.000Z" title="2017-02-24T10:55:25.000Z">2017-02-24</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">5 分钟 读完 (大约 816 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/afdfdec3.html">Docker教程(三)---容器命令</a></h1><div class="content"><h2 id="Docker-容器命令"><a href="#Docker-容器命令" class="headerlink" title="Docker 容器命令"></a>Docker 容器命令</h2><p>交互式操作流程</p>
+<h3 id="运行一个容器（交互式）"><a href="#运行一个容器（交互式）" class="headerlink" title="运行一个容器（交互式）"></a>运行一个容器（交互式）</h3><pre><code>docker run -i -t centos /bin/bash
+-i 表示stdin标准输入
+-t表示tty终端</code></pre><p>第一次执行docker run命令会先从远程仓库中拉取centos的镜像<br>内部流程如下图</p>
+<p><img src="https://ooo.0o0.ooo/2017/02/23/58aebf93e43f4.jpg" alt="run命令内部流程.jpg"></p>
+<h3 id="退出容器"><a href="#退出容器" class="headerlink" title="退出容器"></a>退出容器</h3><pre><code>exit</code></pre><h3 id="重命名容器"><a href="#重命名容器" class="headerlink" title="重命名容器"></a>重命名容器</h3><pre><code>docker rename 旧名称 新名称
+另一种方法,启动时重命名
+docker run --name crxy -t -i centos /bin/bash
+合法的容器名称正则[a-zA-Z0-9_.-]</code></pre><h3 id="查看容器列表"><a href="#查看容器列表" class="headerlink" title="查看容器列表"></a>查看容器列表</h3><pre><code>docker ps [-a]  [-l]  [-n num]</code></pre><h3 id="重新启动已经停止的容器"><a href="#重新启动已经停止的容器" class="headerlink" title="重新启动已经停止的容器"></a>重新启动已经停止的容器</h3><pre><code>docker start 容器名称/容器ID</code></pre><h3 id="附着到一个容器上"><a href="#附着到一个容器上" class="headerlink" title="附着到一个容器上"></a>附着到一个容器上</h3><pre><code>docker attach 容器名称/容器ID
+    使用`exit`退出容器后,重新由`docker start`命令启动了容器
+    此时可以使用这个命令重新进入到容器里面
+    可以理解为从外部进入到这个容器内部
+    仅仅适用于使用-it启动的容器,像下面的后台启动的是无法使用这个命令的</code></pre><p>后台长期运行</p>
+<h3 id="创建长期运行的容器"><a href="#创建长期运行的容器" class="headerlink" title="创建长期运行的容器"></a>创建长期运行的容器</h3><pre><code>docker run --name lujiahao -d centos /bin/bash -c &quot;while true;do echo hello world;sleep 1;done&quot;</code></pre><p>会返回该容器的长id : 55ba56913bb5666ecb352a031503b5191cc8f186558e2f22380c2adadecc7c14</p>
+<p>我们通过<code>docker ps</code>获得的是这个长id的前十二位</p>
+<p>docker run后面追加-d=true或者-d，那么容器将会运行在后台模式.</p>
+<h3 id="获取容器日志"><a href="#获取容器日志" class="headerlink" title="获取容器日志"></a>获取容器日志</h3><pre><code>docker logs [--tail num] [-t] [-f]  容器名称/容器ID
+    旧版本的日志位置/var/lib/docker/containers/ID/ID-json.log
+    但是新版本的实验并没有发现这个log存在位置
+    -t 是来添加时间戳的
+    -f 持续输出</code></pre><h3 id="查看容器内的进程"><a href="#查看容器内的进程" class="headerlink" title="查看容器内的进程"></a>查看容器内的进程</h3><pre><code>docker top 容器名称/容器ID</code></pre><h3 id="操作一个正在运行的容器"><a href="#操作一个正在运行的容器" class="headerlink" title="操作一个正在运行的容器"></a>操作一个正在运行的容器</h3><pre><code>在容器内部运行进程(docker1.3之后才支持)   
+docker exec -d lujiahao touch /etc/lujiahao.txt
+在后台运行的容器里面创建一个文件
+docker exec -it lujiahao /bin/bash
+连到一个在后台运行的容器,此时执行exit退出,后台容器还在运行</code></pre><h3 id="停止容器"><a href="#停止容器" class="headerlink" title="停止容器"></a>停止容器</h3><pre><code>docker stop 容器名称/容器ID  
+    向容器发送停止指令,容器自己停止,建议使用
+docker kill 容器名称/容器ID   
+    直接停掉,不建议使用</code></pre><h3 id="获取容器详细信息"><a href="#获取容器详细信息" class="headerlink" title="获取容器详细信息"></a>获取容器详细信息</h3><pre><code>docker inspect  [--format | -f] 容器名称/容器ID
+    例子：docker inspect --format=&apos;{{.State.Running}}&apos; lujiahao
+    容器存储位置：/var/lib/docker/containers</code></pre><h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><pre><code>docker rm 容器名称/容器ID</code></pre><p>正在运行中的容器是无法删除的,会出现下面的提示</p>
+<pre><code>Error response from daemon: You cannot remove a running container 55ba56913bb5666ecb352a031503b5191cc8f186558e2f22380c2adadecc7c14. 
+Stop the container before attempting removal or use -f</code></pre><p>可以先停止容器,或者使用 <code>-f</code> 参数</p>
+<h3 id="批量删除正在运行中的容器"><a href="#批量删除正在运行中的容器" class="headerlink" title="批量删除正在运行中的容器"></a>批量删除正在运行中的容器</h3><pre><code>docker rm `docker ps -a -q`
+    docker ps -a -q : 这个命令用来获取所有容器的id</code></pre><h3 id="容器的导入和导出"><a href="#容器的导入和导出" class="headerlink" title="容器的导入和导出"></a>容器的导入和导出</h3><pre><code>导出：docker export 容器ID/名称 &gt; my_container.tar
+导入：cat mycontainer.tar | docker import - 镜像名称:标签</code></pre><h3 id="镜像的保存和加载-暂时还没讲到"><a href="#镜像的保存和加载-暂时还没讲到" class="headerlink" title="镜像的保存和加载(暂时还没讲到)"></a>镜像的保存和加载(暂时还没讲到)</h3><pre><code>保存：docker save 镜像ID &gt; my_image.tar 
+加载：docker load&lt; my_image.tar</code></pre></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2017-02-23T14:06:49.000Z" title="2017-02-23T14:06:49.000Z">2017-02-23</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">3 分钟 读完 (大约 447 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/4d30a5a.html">Docker教程(二)---安装Docker</a></h1><div class="content"><h2 id="Docker-核心组件"><a href="#Docker-核心组件" class="headerlink" title="Docker 核心组件"></a>Docker 核心组件</h2><h3 id="镜像-Image"><a href="#镜像-Image" class="headerlink" title="镜像(Image)"></a>镜像(Image)</h3><p>镜像是构建docker世界的基石,也是docker生命周期中的构建阶段.</p>
+<h3 id="仓库-Registry"><a href="#仓库-Registry" class="headerlink" title="仓库(Registry)"></a>仓库(Registry)</h3><p>存储用户构建的镜像以及官方的镜像,分为公有和私有.<br>Docker公司运营的公有仓库叫做 <a href="https://hub.docker.com/">Docker Hub</a></p>
+<h3 id="容器-Container"><a href="#容器-Container" class="headerlink" title="容器(Container)"></a>容器(Container)</h3><p>容器是基于镜像启动的，容器中可以运行一个或多个进程。<br>容器是docker生命周期中的启动或执行阶段。</p>
+<blockquote>
+<p>仓库里面存储着镜像,基于镜像可以启动容器<br/><br>container = image + docker run</p>
+</blockquote>
+<h2 id="Docker工作流"><a href="#Docker工作流" class="headerlink" title="Docker工作流"></a>Docker工作流</h2><p><img src="https://ooo.0o0.ooo/2017/02/23/58ae7759b7e41.jpg" alt="dockerworkflow.jpg"></p>
+<h2 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h2><blockquote>
+<p>宿主机Centos7 64位,因为 Docker 是基于64位系统构建的.</p>
+</blockquote>
+<ol>
+<li><p>验证linux内核版本<code>uname -a</code>,官方建议使用3.8版本以上</p>
+</li>
+<li><p>检查<code>Device Mapper(Docker的存储驱动)</code></p>
+<pre><code>grep device-mapper /proc/devices
+如果不存在则安装yum install -y device-mapper
+加载dm_mod内核模块 modprobe dm_mod</code></pre></li>
+<li><p>安装</p>
+<pre><code>yum -y install docker(默认安装最新版)</code></pre></li>
+<li><p>安装指定版本 Docker</p>
+<pre><code>查看可安装的版本
+    yum makecache fast(相当于更新本地缓存)
+    yum list docker --showduplicates
+安装指定版本
+    yum install 2:1.12.5-14.el7.centos</code></pre></li>
+<li><p>验证</p>
+<pre><code>启动docker
+    systemctl start docker(centos7)
+添加开机启动项
+    systemctl enable docker(centos7)
+验证docker是否正常
+    systemctl status  docker
+    docker info</code></pre><p>出现下面图片表示安装成功了<br><img src="https://ooo.0o0.ooo/2017/02/23/58ae7b4432591.jpg" alt="dockerinfo.jpg"></p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此,Docker已经顺利安装了,下面进入到基础命令学习阶段吧!</p>
+<hr>
+<p>欢迎大家关注 : LF工作室</p>
+<p>简书 : <a href="https://www.jianshu.com/u/e61935d18b09">https://www.jianshu.com/u/e61935d18b09</a></p>
+<p>掘金 : <a href="https://juejin.im/user/59239002570c350069c5f0bb">https://juejin.im/user/59239002570c350069c5f0bb</a></p>
+<p>微信公众号 :<br><img src="https://raw.githubusercontent.com/lujiahao0708/PicRepo/master/%E5%85%AC%E4%BC%97%E5%8F%B7%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg" alt=""><br>头条号 :<br><img src="https://github.com/lujiahao0708/PicRepo/raw/master/%E5%A4%B4%E6%9D%A1%E5%8F%B7%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg" alt=""></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2017-02-19T23:15:46.000Z" title="2017-02-19T23:15:46.000Z">2017-02-19</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">4 分钟 读完 (大约 598 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/cbe75bf3.html">Docker教程(一)---Docker简介</a></h1><div class="content"><h2 id="虚拟化技术"><a href="#虚拟化技术" class="headerlink" title="虚拟化技术"></a>虚拟化技术</h2><p>传统虚拟化方式是虚拟机虚拟出一套硬件后,在上面运行一个完整的操作系统;而容器技术是直接使用宿主机的资源,是一种轻量级的虚拟技术.</p>
+<p>Docker 在容器的基础上，进行了进一步的封装，从文件系统、网络互联到进程隔离等等，极大的简化了容器的创建和维护。使得 Docker 技术比虚拟机技术更为轻便、快捷。</p>
+<p><img src="https://ooo.0o0.ooo/2017/02/19/58a9b255d3d09.jpg" alt="VMvsDocker.jpg"></p>
+<p>这幅图比较了 Docker 和传统虚拟化方式的不同之处，可见容器是在操作系统层面上实现虚拟化，直接复用本地主机的操作系统，而传统方式则是在硬件层面实现。</p>
+<h2 id="虚拟机和容器的区别"><a href="#虚拟机和容器的区别" class="headerlink" title="虚拟机和容器的区别"></a>虚拟机和容器的区别</h2><p>相同点:</p>
+<ul>
+<li>均可在不同主机之间进行迁移</li>
+<li>权限级别操作相同</li>
+</ul>
+<p>不同点:</p>
+<ul>
+<li>虚拟机是硬件虚拟化,容器是系统层面虚拟化</li>
+<li>虚拟机臃肿性能有限,迁移难度较大;容器轻量占用空间小,迁移方便,性能接近原生系统</li>
+<li>一台服务器支持虚拟机数量有限,容器却可以达到上千个</li>
+</ul>
+<blockquote>
+<p>容器和虚拟机各有各的优缺点，容器也并不是虚拟机的替代品，只是二者在适应不同的需求下各有特点</p>
+</blockquote>
+<h2 id="Docker思想及理念"><a href="#Docker思想及理念" class="headerlink" title="Docker思想及理念"></a>Docker思想及理念</h2><ul>
+<li>docker 封装思想和 Java 的跨平台思想非常相似</li>
+<li>建议一个容器只部署一个应用(当然也可以部署多个)</li>
+</ul>
+<h2 id="Docker应用场景"><a href="#Docker应用场景" class="headerlink" title="Docker应用场景"></a>Docker应用场景</h2><ul>
+<li>大量部署相同相似环境服务器(例如微信公众号环境)</li>
+<li>为开发、测试提供一个轻量级的独立沙盒环境,让应用程序在不同的环境中，得到相同的运行结果</li>
+<li>应用的自动化测试/持续集成/自动化打包/发布</li>
+<li>高性能、超大规模的宿主机部署</li>
+</ul>
+<hr>
+<p>欢迎大家关注 : LF工作室</p>
+<p>简书 : <a href="https://www.jianshu.com/u/e61935d18b09">https://www.jianshu.com/u/e61935d18b09</a></p>
+<p>掘金 : <a href="https://juejin.im/user/59239002570c350069c5f0bb">https://juejin.im/user/59239002570c350069c5f0bb</a></p>
+<p>微信公众号 :<br><img src="https://raw.githubusercontent.com/lujiahao0708/PicRepo/master/%E5%85%AC%E4%BC%97%E5%8F%B7%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg" alt=""><br>头条号 :<br><img src="https://github.com/lujiahao0708/PicRepo/raw/master/%E5%A4%B4%E6%9D%A1%E5%8F%B7%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg" alt=""></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2017-01-24T15:46:08.000Z" title="2017-01-24T15:46:08.000Z">2017-01-24</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">18 分钟 读完 (大约 2756 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/9ce38a25.html">19-JavaWeb基础-Filter</a></h1><div class="content"><h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h2><p>当访问资源时，如果不希望此资源被访问，可以使用过滤器进行拦截。<br>访问一个资源，需要路径，过滤器通过路径匹配进行资源拦截。<br>过滤器必须实现接口：javax.servlet.Filter</p>
+<pre><code>Filter
+    init(FilterConfig):void        初始化
+    doFilter(ServletRequest,ServletResponse,FilterChain):void    过滤方法
+    destroy():void        销毁</code></pre><p>默认情况下过滤器会拦截匹配路径和执行的资源<br>需要手动放行:<code>chain.doFilter(request,response);</code></p>
+<h2 id="2-使用方法"><a href="#2-使用方法" class="headerlink" title="2.使用方法"></a>2.使用方法</h2><p>详见<code>统计访问次数</code>的案例</p>
+<h2 id="3-生命周期"><a href="#3-生命周期" class="headerlink" title="3.生命周期"></a>3.生命周期</h2><p>3.1 <code>init(FilterConfig)</code>  </p>
+<pre><code>初始化方法
+    执行时机：服务器启动时执行
+    执行者：tomcat
+FilterConfig：当前过滤器的配置对象
+    getFilterName():String    过滤名称,相当于&lt;filter-name&gt;标签
+    getServletContext():ServletContext    ServletContext对象引用
+    getInitParametes(String):String    获得过滤器初始化参数
+    getInitParameterNames():Enumeration    获得过滤器初始化参数的所有名字
+
+    &lt;filter&gt;
+        &lt;filter-name&gt;CountFilter&lt;/filter-name&gt;
+        &lt;filter-class&gt;com.lujiahao.cms.filter.CountFilter&lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;encoding&lt;/param-name&gt;
+            &lt;param-value&gt;UTF-8&lt;/param-value&gt;
+    &lt;/filter&gt;</code></pre><p>3.2 <code>doFilter(ServletRequest,ServletResponse ,FilterChain)</code></p>
+<pre><code>路径匹配一次执行一次。一次请求拦截一次。</code></pre><p>3.3 <code>destroy()</code></p>
+<pre><code>执行时机：服务器正常关闭时执行
+执行者：tomcat</code></pre><h2 id="4-doFilter方法详解"><a href="#4-doFilter方法详解" class="headerlink" title="4.doFilter方法详解"></a>4.doFilter方法详解</h2><p>参数1ServletRequest 和参数2  ServletResponse</p>
+<pre><code>回顾：Object               List               ArrayList
+      ServletRequest        HttpServletRequest        tomcat实现类
+结论：可以强转获得Http协议有关对象
+    HttpServletRequest  request = （HttpServletRequest） req;
+    HttpServletResponse  request = （HttpServletResponse） res;</code></pre><p>参数3：FilterChain</p>
+<pre><code>FilterChain 过滤器链，当请求资源时，多个过滤器都生效，tomcat将生成一个链，用于存放多个过滤器。
+第一个过滤器执行完成，并发行时，将执行第二个过滤器，。。。。。当最后一个过滤器放行时，将执行资源。</code></pre><p><img src="https://ooo.0o0.ooo/2016/07/27/5798496b3b3ed.png" alt="aaaaa.png"></p>
+<p>过滤器链中 过滤器执行顺序 与 <filter-mapping> 映射在web.xml配置顺序一致的。web.xml 先配置先执行</p>
+<h2 id="5-lt-url-pattern-gt-匹配路径"><a href="#5-lt-url-pattern-gt-匹配路径" class="headerlink" title="5.&lt;url-pattern&gt;匹配路径"></a>5.<code>&lt;url-pattern&gt;</code>匹配路径</h2><p>回顾：servlet路径配置</p>
+<pre><code>1.完全匹配，必须/开头 ，例如：/a/b/c/oneServlet
+2.不完全匹配，以/开头   *结尾，例如：/a/b/*  , /*
+3.通配符匹配. *.开头，例如： *.jsp  、 *.do   、*.action 等
+4 缺省  /   以上都没有匹配将执行。</code></pre><p>过滤器路径编写，与servlet一致的，过滤器过滤的就是指定servlet。</p>
+<pre><code>/oneServlet  、 /twoServlet
+/*   过滤器 将匹配以上两个servlet</code></pre><h2 id="6-dispatcher配置"><a href="#6-dispatcher配置" class="headerlink" title="6.dispatcher配置"></a>6.<code>dispatcher</code>配置</h2><p><filter-mapping><dispatcher> 用于配置过滤器在何处进行拦截。</p>
+<pre><code>取值：    REQUEST、 FORWARD、 INCLUDE、ERROR
+request : 表示在请求开始时拦截。默认值。
+forward：表示在请求转发开始时拦截。及 request.getRequestDistacher(..).forward 被调用时。
+include：表示在请求包含开始时拦截。及 request.getRequestDistacher(..).include 被调用时。
+error ： 表示程序异常，显示友好页面之前拦截。</code></pre><h2 id="案例〇-dispatcher配置友好错误页面"><a href="#案例〇-dispatcher配置友好错误页面" class="headerlink" title="案例〇 : dispatcher配置友好错误页面"></a>案例〇 : dispatcher配置友好错误页面</h2><p>IE会将500的错误以他自己的方式展现出来,这就不符合需求,所以需要手动配置友好错误页面.<br>如果有多个友好错误界面,不能在每个jsp页面更改状态码,这就需要一个过滤器来统一过滤.</p>
+<p>1.创建<code>FriendErrorFilter</code>实现<code>javax.servlet.Filter</code>接口</p>
+<pre><code>/**
+ * 友好错误界面过滤器
+ * Created by lujiahao on 2016/7/27.
+ */
+public class FriendErrorFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        // 修改状态码
+        response.setStatus(200);
+        // 放行
+        filterChain.doFilter(request,response);
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+}</code></pre><p>2.配置到tomcat(web.xml)</p>
+<pre><code>&lt;!--配置友好错误页面过滤器--&gt;
+&lt;error-page&gt;
+    &lt;error-code&gt;500&lt;/error-code&gt;
+    &lt;location&gt;/demo0/frienderror.jsp&lt;/location&gt;
+&lt;/error-page&gt;
+&lt;!--友好错误页面过滤器--&gt;
+&lt;filter&gt;
+    &lt;filter-name&gt;FriendErrorFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;com.lujiahao.filter.FriendErrorFilter&lt;/filter-class&gt;
+&lt;/filter&gt;
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;FriendErrorFilter&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/frienderror.jsp&lt;/url-pattern&gt;
+    &lt;dispatcher&gt;ERROR&lt;/dispatcher&gt;
+&lt;/filter-mapping&gt;</code></pre><p>3.编写友好错误界面(error.jsp)</p>
+<pre><code>&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Title&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        我是友好错误界面&lt;br/&gt;
+        服务器繁忙,请稍后重试
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre><p>4.模拟服务器500错误</p>
+<pre><code>&lt;%
+    int i = 1/0;
+%&gt;</code></pre><h2 id="案例一-统计访问次数"><a href="#案例一-统计访问次数" class="headerlink" title="案例一 : 统计访问次数"></a>案例一 : 统计访问次数</h2><p>原理:将数据记录到ServletContext 所有用户共享</p>
+<p>1.创建<code>CountFilter</code>实现<code>javax.servlet.Filter</code>接口</p>
+<pre><code>/**
+ * 统计次数的过滤器
+ * Created by lujiahao on 2016/7/27.
+ */
+public class CountFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        // 获得访问路径   /pages/main/main.jsp
+        String servletPath = request.getServletPath();
+        String filePath = servletPath.substring(servletPath.lastIndexOf(&quot;/&quot;)+1,servletPath.lastIndexOf(&quot;.&quot;));
+
+        // 获得servletContext获取统计数据
+        ServletContext servletContext = request.getSession().getServletContext();
+        Integer num = (Integer) servletContext.getAttribute(filePath);
+        if (num == null) {
+            num = 1;// 第一次访问
+        } else {
+            num ++;
+        }
+        // 存放到ServletContext中
+        servletContext.setAttribute(filePath,num);
+
+        // 放行
+        filterChain.doFilter(request,response);
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+}</code></pre><p>2.配置到tomcat(web.xml)</p>
+<pre><code>&lt;!--统计次数的过滤器--&gt;
+&lt;filter&gt;
+    &lt;filter-name&gt;CountFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;com.lujiahao.cms.filter.CountFilter&lt;/filter-class&gt;
+&lt;/filter&gt;
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;CountFilter&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/pages/main/main.jsp&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;</code></pre><p>3.JSP中使用</p>
+<pre><code>访问次数:${applicationScope.main}次&lt;br/&gt;</code></pre><h2 id="案例三-自动登录"><a href="#案例三-自动登录" class="headerlink" title="案例三 : 自动登录"></a>案例三 : 自动登录</h2><p>原理图:<br><img src="https://ooo.0o0.ooo/2016/07/27/5798737cdfea1.png" alt="QQ截图20160727163940.png"></p>
+<p>1.修改以前的登录逻辑,添加对自动登录的标记</p>
+<pre><code>/**
+ * 登录操作
+ */
+private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    // 1.获取数据并封装
+    Customer customer = LBeanUtils.populate(Customer.class, request.getParameterMap());
+    // 2.通知service进行登录
+    CustomerServeice customerServeice = new CustomerServiceImpl();
+    Customer loginCustomer = customerServeice.login(customer);
+
+    // 3.处理
+    if (loginCustomer != null) {
+        // -------------自动登录start-------------
+        // checkbox选中的话获得的值是on
+        String autologin = request.getParameter(&quot;autologin&quot;);
+        if (autologin != null) {
+            // 勾选了记住密码,  使用cookie将用户的登录名和密码发送到浏览器,并通知浏览器保存(持久化cookie)
+            // 1.创建cookie对象
+            String username = URLEncoder.encode(loginCustomer.getName(), &quot;UTF-8&quot;);
+            String password = URLEncoder.encode(loginCustomer.getPwd(), &quot;UTF-8&quot;);
+            // 存入需要进行URLEndode编码,不然会报错:http://blog.csdn.net/liuxiao723846/article/details/22155393
+            Cookie cookie = new Cookie(&quot;autoLoginCookie&quot;, username + &quot;&amp;&quot; + password);
+            // 2.设置有效时间
+            cookie.setMaxAge(60 * 60);// 1小时
+            // 3.设置路径
+            cookie.setPath(&quot;/&quot;);
+            // 4.发送cookie
+            response.addCookie(cookie);
+        }
+        // -------------自动登录end-------------
+
+        // 成功  -- session记录登录状态,重定向到主页面
+        // * session作用域保存数据
+        request.getSession().setAttribute(&quot;loginCustomer&quot;, loginCustomer);
+        response.sendRedirect(request.getContextPath() + &quot;/pages/main/main.jsp&quot;);
+    } else {
+        // 不成功  --- request记录当次请求提示,请求转发到login.jsp 显示数据
+        request.setAttribute(&quot;msg&quot;, &quot;用户名和密码不匹配&quot;);
+        request.setAttribute(&quot;customer&quot;, customer);// 回显数据
+        request.getRequestDispatcher(&quot;pages/login/login.jsp&quot;).forward(request, response);
+    }
+}</code></pre><p>2.编写自动登录的过滤器</p>
+<pre><code>/**
+ * 自动登录的过滤器
+ * Created by lujiahao on 2016/7/27.
+ */
+public class AutoLoginFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        Customer loginCustomer = (Customer) request.getSession().getAttribute(&quot;loginCustomer&quot;);
+        // 1.已经登录
+        if (loginCustomer != null) {
+            filterChain.doFilter(request,response);
+            return;
+        }
+
+        // 2.没有登录,获取cookie信息
+        Cookie[] allCookie = request.getCookies();
+        String cookieValue = null;
+        if (allCookie != null) {
+            for (Cookie cookie : allCookie) {
+                if (&quot;autoLoginCookie&quot;.equals(cookie.getName())) {
+                    cookieValue = cookie.getValue();
+                    break;// 一旦查询到了就跳出循环,提升性能
+                }
+            }
+        }
+
+        // 3.没有cookie信息
+        if (cookieValue == null) {
+            filterChain.doFilter(request,response);
+            return;
+        }
+
+        // 4.查询到cookie信息,获得用户数据
+        String username = URLDecoder.decode(cookieValue.split(&quot;&amp;&quot;)[0],&quot;UTF-8&quot;);
+        String password = URLDecoder.decode(cookieValue.split(&quot;&amp;&quot;)[1],&quot;UTF-8&quot;);
+        Customer customer = new Customer(username,password);
+
+        // 5.查询用户信息
+        CustomerServeice customerServeice = new CustomerServiceImpl();
+        loginCustomer = customerServeice.login(customer);
+
+        // 6.没有查询到用户信息----例如:密码修改
+        if (loginCustomer == null) {
+            filterChain.doFilter(request,response);
+            // 应该删除cookie
+            Cookie cookie = new Cookie(&quot;autoLoginCookie&quot;,&quot;&quot;);
+            cookie.setMaxAge(0);// 删除
+            cookie.setPath(&quot;/&quot;);// 保存的时候写的路径要和这里一样
+            response.addCookie(cookie);
+            return;
+        }
+
+        // 7.查询到用户信息,执行自动登录
+        request.getSession().setAttribute(&quot;loginCustomer&quot;,loginCustomer);
+
+        // 放行
+        filterChain.doFilter(request,response);
+    }
+    @Override
+    public void destroy() {
+
+    }
+}</code></pre><h2 id="案例四-GET-POST中文乱码统一处理"><a href="#案例四-GET-POST中文乱码统一处理" class="headerlink" title="案例四 : GET/POST中文乱码统一处理"></a>案例四 : GET/POST中文乱码统一处理</h2><p>1.旧的处理方式:</p>
+<pre><code>public class GetPostServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        /*
+        String username = request.getParameter(&quot;username&quot;);
+        String password = request.getParameter(&quot;password&quot;);
+
+        //处理编码
+        username = new String(username.getBytes(&quot;ISO8859-1&quot;),&quot;UTF-8&quot;);
+        password = new String(password.getBytes(&quot;ISO8859-1&quot;),&quot;UTF-8&quot;);
+
+        System.out.println(&quot;get:&quot;);
+        System.out.println(username);
+        System.out.println(password);
+        */
+        this.doPost(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //post请求乱码
+        //request.setCharacterEncoding(&quot;UTF-8&quot;);
+
+        String username = request.getParameter(&quot;username&quot;);
+        String password = request.getParameter(&quot;password&quot;);
+
+        System.out.println(&quot;post:&quot;);
+        System.out.println(username);
+        System.out.println(password);
+    }
+}</code></pre><p>2.使用过滤器+装饰着模式的处理方式:</p>
+<pre><code>/**
+ * 处理Get/Post请求乱码的过滤器
+ * Created by lujiahao on 2016/7/27.
+ */
+public class GetPostEncodingFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        //编码设置 另一个filter编写   这个只能解决POST乱码的问题
+        request.setCharacterEncoding(&quot;UTF-8&quot;);
+
+        // 这个里面有处理GET乱码
+        // 使用装饰者模式增强的request
+        MyRequest myRequest = new MyRequest(request);
+        // 放行
+        filterChain.doFilter(myRequest,response);
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+}
+
+/**
+ * 使用装饰者设计模式
+ * HttpServletRequestWrapper是系统为我们准备好的装饰者的父类,已经完成了相应的工作
+ * Created by lujiahao on 2016/7/27.
+ */
+public class MyRequest extends HttpServletRequestWrapper {
+    private boolean isEncoding = false;// 默认是没有编码的
+    private HttpServletRequest request;
+    public MyRequest(HttpServletRequest request) {
+        super(request);// 将tomcat的request传入父类,提供给不需要增强的方法使用
+        this.request = request;
+    }
+
+    // 需要增强的方法直接覆写父类方法就好了
+
+    // 通过名称获得第一个值
+    @Override
+    public String getParameter(String name) {
+        String[] parameterValues = this.getParameterValues(name);
+        if (parameterValues == null) {
+            return null;
+        }
+        return parameterValues[0];
+    }
+
+    // 通过名称获得所有的值
+    @Override
+    public String[] getParameterValues(String name) {
+        return this.getParameterMap().get(name);
+    }
+
+    @Override
+    public Map&lt;String, String[]&gt; getParameterMap() {
+        // 1.获得tomcat原始数据
+        Map&lt;String, String[]&gt; map = request.getParameterMap();
+        // 2.处理get请求的乱码
+        if (&quot;GET&quot;.equals(request.getMethod()) &amp;&amp; !isEncoding) {
+            // 3.遍历map
+            for(Map.Entry&lt;String,String[]&gt; entry : map.entrySet()){
+                // 4.获得所有value数据
+                String[] value = entry.getValue();
+                // 处理所有乱码
+                for (int i = 0; i &lt; value.length; i++) {
+                    try {
+                        value[i] = new String(value[i].getBytes(&quot;ISO-8859-1&quot;),&quot;UTF-8&quot;);
+                    } catch (UnsupportedEncodingException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            isEncoding = true;// 已经解决完乱码就不要再次解决了
+        }
+        return map;
+    }
+}</code></pre><h2 id="案例五-页面静态化-amp-全栈压缩"><a href="#案例五-页面静态化-amp-全栈压缩" class="headerlink" title="案例五 : 页面静态化 &amp; 全栈压缩"></a>案例五 : 页面静态化 &amp; 全栈压缩</h2><p>页面静态化原理图:<br><img src="https://ooo.0o0.ooo/2016/07/28/57999a3a4ed25.png" alt="QQ截图20160728133730.png"><br>1.装饰者模式增强HttpServletResponse</p>
+<pre><code>public class MyResponse extends HttpServletResponseWrapper{
+
+    private HttpServletResponse response;
+
+    //提供自定义缓存
+    private ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+    private PrintWriter pw = null;
+    public MyResponse(HttpServletResponse response) {
+        super(response);
+        this.response = response;
+    }
+
+    @Override
+    public PrintWriter getWriter() throws IOException {
+        if(pw == null){
+            pw = new PrintWriter(new OutputStreamWriter(baos , &quot;UTF-8&quot; ));
+            System.out.println(&quot;执行&quot; + pw);
+        }
+        return pw;
+    }
+
+    /**
+     * 获得自定义缓存内容
+     * @return
+     */
+    public byte[] getData(){
+        return baos.toByteArray();
+    }
+
+}</code></pre><p>2.过滤器写法</p>
+<pre><code>public class PageStaticFilter implements Filter {
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
+
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse resp,
+            FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) resp;
+
+        //1 获得页面位置
+        //D:\java\tomcat\apache-tomcat-7.0.53\webapps\day19_demo\demo04\1.html
+        ServletContext sc = request.getSession().getServletContext();
+        String id= request.getParameter(&quot;id&quot;);
+        String path = &quot;/demo04/&quot;+id+&quot;.html&quot;;// 静态页面存放的位置
+        String htmlPath = sc.getRealPath(path);
+
+        //2 文件是否存在
+        File htmlFile = new File(htmlPath);
+        if(htmlFile.exists()){
+            //存在就显示
+            request.getRequestDispatcher(path).forward(request, response);
+            return;
+        }
+
+        // 自定义response 提供缓存，用于存放 发送到浏览器所有内容
+        MyResponse myResponse = new MyResponse(response);
+        //放行
+        chain.doFilter(request, myResponse);
+
+        //内容已经写入到自定义缓存
+        byte[] arrayByte = myResponse.getData();
+
+        /***写入到文件 start**/
+        //将指定的内容内容到文件
+        FileOutputStream out = new FileOutputStream(htmlFile);
+        out.write(arrayByte);
+        out.close();
+
+        //手动写入到浏览器
+        response.getOutputStream().write(arrayByte);
+        /***写入到文件 end**/
+
+        /**全站压缩 ， 将需要发送的数据，压缩之后再发给浏览器，节省流量
+            全站压缩和页面静态化是冲突的,需要一个一个来测试**/
+        /*
+        // 设置发送的数据位压缩数据
+        response.setHeader(&quot;content-encoding&quot;, &quot;gzip&quot;);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(); //存放压缩后的结果
+        GZIPOutputStream gzipOut = new GZIPOutputStream(baos); //压缩的位置
+        gzipOut.write(arrayByte); //需要压缩的原始数据
+        gzipOut.close();
+
+        response.getOutputStream().write(baos.toByteArray());
+        */
+    }
+
+    @Override
+    public void destroy() {
+    }
+}</code></pre><h2 id="扩展-装饰者设计模式"><a href="#扩展-装饰者设计模式" class="headerlink" title="扩展:装饰者设计模式"></a>扩展:装饰者设计模式</h2><p>乱码解决的十几分钟的时候讲了这个东西</p>
+<h2 id="jar包和war包的区别"><a href="#jar包和war包的区别" class="headerlink" title="jar包和war包的区别"></a>jar包和war包的区别</h2><p>java项目 压缩 ：jar包<br>web项目 压缩：war包 。 当war添加到tomcat/webapps下将自动解压<br>    jar包和war包压缩格式都是 zip</p>
+<h2 id="升级订制版HttpFilter"><a href="#升级订制版HttpFilter" class="headerlink" title="升级订制版HttpFilter"></a>升级订制版HttpFilter</h2><p>这个非常好,用到的思想和Servlet中的service()方法非常类似,好好总结一下<br><a href="http://www.cnblogs.com/jianjianyang/p/5001471.html">http://www.cnblogs.com/jianjianyang/p/5001471.html</a></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-12-12T12:37:52.000Z" title="2016-12-12T12:37:52.000Z">2016-12-12</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">11 分钟 读完 (大约 1593 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/169ffca8.html">11-JavaWeb基础-EL-JSTL</a></h1><div class="content"><h2 id="EL表达式"><a href="#EL表达式" class="headerlink" title="EL表达式"></a>EL表达式</h2><h3 id="EL介绍"><a href="#EL介绍" class="headerlink" title="EL介绍"></a>EL介绍</h3><p>EL（Expression Language） 目的：为了使JSP写起来更加简单。表达式语言的灵感来自于 ECMAScript 和 XPath 表达式语言，它提供了在 JSP 中简化表达式的方法，让Jsp的代码更加简化。</p></div><a class="article-more button is-small size-small" href="/p/169ffca8.html#more">阅读更多</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-12-05T17:52:14.000Z" title="2016-12-05T17:52:14.000Z">2016-12-05</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">10 分钟 读完 (大约 1469 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/fd25bde8.html">10-JavaWeb基础-JSP笔记</a></h1><div class="content"><h2 id="什么是JSP"><a href="#什么是JSP" class="headerlink" title="什么是JSP"></a>什么是JSP</h2><ul>
+<li>tomcat安装目录下的<code>work</code>目录就是tomcat处理jsp的工作目录</li>
+<li>JSP是以Java语言为基础的动态网页开发技术(Servlet也是动态网页开发技术)</li>
+<li>二者特点<ul>
+<li>servlet特点:在java代码中嵌入html代码</li>
+<li>jsp特点:在html代码中嵌入java代码</li>
+</ul>
+</li>
+</ul></div><a class="article-more button is-small size-small" href="/p/fd25bde8.html#more">阅读更多</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-11-28T17:28:17.000Z" title="2016-11-28T17:28:17.000Z">2016-11-28</time><span class="level-item">14 分钟 读完 (大约 2160 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/896fbfe9.html">09.JavaWeb基础-cookie-session</a></h1><div class="content"><h2 id="1-会话技术"><a href="#1-会话技术" class="headerlink" title="1.会话技术"></a>1.会话技术</h2><blockquote>
+<p>会话可简单理解为：用户开一个浏览器，点击多个超链接（多次请求），访问服务器多个web资源，然后关闭浏览器，整个过程称之为一个会话。</p>
+</blockquote>
+<p>会话技术：</p>
+<pre><code>cookie：浏览器端会话技术
+session：服务器端会话技术
+目的：在一次会话中（多次请求）共享数据。</code></pre><p><img src="https://ooo.0o0.ooo/2016/11/28/583bfb14174c1.png" alt="aaa.png">     </p>
+<p>3    cookie技术<br>    cookie技术不局限java，其他语言也支持。例如：php、javascript等<br>    JavaEE 规范提供工具类对Cookie进行操作。javax.servlet.http.Cookie类<br>    cookie 是什么<br>    1. servlet创建cookie，保存少量数据，发送浏览器。<br>    2. 浏览器获得服务器发送的cookie数据，将自动的保存到浏览器端。<br>    3. 下次访问时，浏览器将自动携带cookie数据发送给服务器。<br>    cookie操作<br>    1.创建cookie：new Cookie(name,value)<br>    2.发送cookie到浏览器：HttpServletResponse.addCookie(Cookie)<br>    3.servlet接收cookie：HttpServletRequest.getCookies()  浏览器发送的所有cookie<br>    cookie特点<br>    每一个cookie文件大小：4kb ， 如果超过4kb浏览器不识别<br>    一个web站点（web项目）：发送20个<br>    一个浏览器保存总大小：300个<br>    cookie 不安全，可能泄露用户信息。浏览器支持禁用cookie操作。<br>    默认情况生命周期：与浏览器会话一样，当浏览器关闭时cookie销毁的。—临时cookie</p>
+<p>    cookie api<br>    getName() 获得名称<br>    getValue() 获得值</p>
+<pre><code>setValue(java.lang.String newValue)  设置内容
+setMaxAge(int expiry) 设置有效时间【】
+setPath(java.lang.String uri)  设置路径【】
+setDomain(java.lang.String pattern) 设置域名 , 一般无效，有浏览器自动设置，setDomain(&quot;.itheima.com&quot;)
+    www.itheima.com / bbs.itheima.com 都可以访问
+    a.b.itheima.com无法访问
+isHttpOnly()  是否只是http协议使用。只能servlet的通过getCookies()获得，javascript不能获得。
+
+setComment(java.lang.String purpose) (了解)
+setSecure(boolean flag) (了解)
+setVersion(int v) (了解)</code></pre><p>3.1    路径<br>    cookie默认路径：当前访问的servlet 父路径<br>    例如：<a href="http://localhost:8080/day09/a/b/c/SendCookieServlet">http://localhost:8080/day09/a/b/c/SendCookieServlet</a><br>    默认路径： /day09/a/b/c/<br>    通过 setPath 修改cookie访问路径，一般使用：setPath(“/“)  –web站点的根（没有项目名）<br>        设置路径与servlet访问无关。servlet 去获得cookie有关。<br>    如果编写一个servlet 获得cookie  GetCookiesServlet –&gt; getCookies()<br>    <a href="http://localhost:8080/day09/a/b/c/SendCookieServlet1">http://localhost:8080/day09/a/b/c/SendCookieServlet1</a>  –》/day09/a/b/c/<br>    <a href="http://localhost:8080/day09/a/b/SendCookieServlet2">http://localhost:8080/day09/a/b/SendCookieServlet2</a>   –》/day09/a/b/<br>    <a href="http://localhost:8080/day09/a/SendCookieServlet3">http://localhost:8080/day09/a/SendCookieServlet3</a>    –》/day09/a/<br>    <a href="http://localhost:8080/day09/d/SendCookieServlet4">http://localhost:8080/day09/d/SendCookieServlet4</a>    –》/day09/d</p>
+<pre><code>如果此获得cookie 访问路径
+    http://localhost:8080/day09/a/b/c/ ，使用项目之后内容&quot;/day09/a/b/c/&quot;.startWith(....)
+            访问的servlet路径，必须与cookie本地设置路径 判断。
+    通过getCookies()获得 cookie1/cookie2/cookie3
+通常使用setPath(&quot;/&quot;) 其他servlet &quot;/day09&quot;.startWith(&quot;/&quot;) 肯定都是/开头。所以可以访问
+    通途：保证在tomcat下所有的web项目可以共享相同的cookie    
+    例如：tieba , wenku , beike 多个项目共享数据。例如用户名。</code></pre><p>    当前项目访问：setPath(“/day09/“)<br>3.2    有效时间<br>    默认情况：cookie临时，当浏览器关闭销毁的。<br>    setMaxAge 可以修改cookie被浏览器保存的时间。浏览器将cookie信息将保存cookie文件，浏览器关闭后文件仍然存在，直到设置时间过期将被浏览器自动删除。单位：秒  – 持久化cookie（保存文件）<br>    删除cookie：保证域名、路径和cookie名称一致情况下，设置 setMaxAge(0) 将删除。</p>
+<p>    cookie唯一标识：域名、路径、名称<br>            localhost        /      demo03_cookie_key<br>            baidu.com        /      mk<br>            localhost        /day09/a/        cookie_key<br>3.3    发送中文数据<br>    cookie 使用http协议请求头和响应头，http协议不支持中文，cookie本身不支持中文的。<br>    如果cookie value设置中文，服务器将抛异常。<br>    如果cookie需要写入中文，必须手动编码（发送），将编码后结果发送浏览器，之后浏览器返回给服务器仍然编码后的结果，还需要手动解码（获取）。<br>    JDK提供工具，进行编码<br>    URLEncoder：编码<br>    URLDecoder：解码<br>//编码<br>        String str = URLEncoder.encode(“屌中屌”, “UTF-8”);<br>        System.out.println(str);  //%E5%B1%8C%E4%B8%AD%E5%B1%8C<br>        //解码<br>        String value = URLDecoder.decode(str, “UTF-8”);<br>        System.out.println(value);</p>
+<p>3.4    cookie案例1：记住用户名</p>
+<ol>
+<li>表单可以提交（文本框、复选框） —下次浏览时，如果曾经记录应该将记录用户名显示到文本框中。<br> 表单必须是servlet输出，不能是html页面，否则文本框不能显示记录数据。（除非jsp）</li>
+<li>点击提交，编写servlet处理（是否勾选）</li>
+<li>如果勾选，记录用户名（记录数据下次还可以访问，所以cookie，持久cookie setMaxAge(….)）</li>
+<li>如果没有勾选，删除cookie，注意：唯一标识（域名、路径、名称），cookie必须再次发送到浏览器。</li>
+</ol>
+<p>扩展：将UrlEncoder 和 UrlDecoder 结合使用（解决中文用户名）</p>
+<p>3.5    cookie案例2：历史记录</p>
+<ol>
+<li>点击查询所有商品</li>
+<li>通过id查询商品详情 – 应该记录浏览记录</li>
+<li>查询所有的浏览记录，显示记录数据</li>
+</ol>
+<p>4    session<br>    经典应用：用户登录、JD购物车等<br>    一次会话中，服务器用于共享数据技术。<br>    默认情况：session需要基于cookie使用。及没有cookie session无效。<br>    当第一次调用 request.getSession() ，tomcat将创建一个session对象，并将session对象id值，以cookie方式发送给浏览器，之后浏览器再次请求时，将session id 发送服务器，服务器通过request.getSession() 就可以获取之前已经创建好的session对象。<br>    JavaEE规范提供接口：javax.servlet.http.HttpSession 用于描述session对象。<br>    获得session<br>    request.getSession()  获得session，如果没有将创建一个新的。等效request.getSession(true)<br>    request.getSession(boolean) 获得session，true：没有将创建，false：没有将返回null<br>    session属性操作：xxxAttribute<br>    session 也是 servlet 域对象。（3个servlet域对象：ServletRequest、HttpSession、ServletContext）<br>    session生命周期<br>    创建：第一次调用 getSession()时创建<br>    销毁：<br>        1. 超时，默认30分钟。<br>            web.xml 中配置<br>            <session-config><br>                    <session-timeout>30</session-timeout>   单位：分钟<br>            </session-config><br>        2.执行api<br>            invalidate() 将session对象销毁了。<br>            setMaxInactiveInterval(int interval) 设置有效时间，单位秒<br>        3.服务器非正常关闭。（自杀，将JVM马上关闭）<br>            如果正常关闭，session将被持久化（写入到文件中）<br>                D:\java\tomcat\apache-tomcat-7.0.53\work\Catalina\localhost\day09\SESSIONS.ser<br>            当tomcat重新启动的时候这个文件就会被删除</p>
+<p>4.1    URL重写<br>    当浏览器将cookie禁用，基于cookie的session将不能正常工作，每次使用request.getSession() 都将创建一个new session。只需要将session id 传递给服务器session就可以工作的。<br>    通过URL将session id 传递给服务器：URL重写<br>    手动方式： url;jsessionid=….<br>    api方式：<br>        encodeURL(java.lang.String url) 进行所有URL重写<br>        encodeRedirectURL(java.lang.String url) 进行重定向 URL重写<br>            如果参数url为空字符不同，其他都一样。<br>            如果浏览器禁用cooke，api将自动追加session id ，如果没有禁用，api将不进行任何修改。<br>    注意：如果浏览器禁用cookie，web项目的所有url都需手动重写。否则session将不能正常工作。</p>
+<p>5    总结<br>cookie<br>    浏览器会话技术，用于在浏览器缓存内容，达到数据共享的目的<br>    使用<br>        1.服务器创建对象，添加数据<br>        2.服务器将cookie发送给浏览器<br>        3.浏览器自动携带cookie数据，服务器获得数据。<br>            浏览器携带数据，根据cookie路径设置。<br>    api<br>        setMaxAge 有效时间，0删除，必须保证路径匹配<br>        setPath 设置访问路径<br>        唯一标识：域名、路径、名称<br>session<br>    服务器端会话技术，用于在服务器共享数据。<br>    session必须使用cookie传递session id，保证多次请求，浏览器可以共享 服务器一个session对象。<br>    如果浏览器禁用cookie，必须进行URL重写。<br>    session生命周期：</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-11-21T11:22:52.000Z" title="2016-11-21T11:22:52.000Z">2016-11-21</time><span class="level-item">12 分钟 读完 (大约 1846 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/81aadbc5.html">08.JavaWeb基础-Response-Request</a></h1><div class="content"><h1 id="1-Response"><a href="#1-Response" class="headerlink" title="1.Response"></a>1.Response</h1><h2 id="1-1-响应行"><a href="#1-1-响应行" class="headerlink" title="1.1 响应行"></a>1.1 响应行</h2><pre><code>setStatus(int status);// 设置状态码</code></pre><h2 id="1-2-响应头"><a href="#1-2-响应头" class="headerlink" title="1.2 响应头"></a>1.2 响应头</h2><pre><code>setHeader(String name, String value) 设置指定的头，一般常用。
+    例如：setHeader(&quot;location&quot;,&quot;http://www.itheima.com&quot;);
+setDateHeader(String name, long date) 设置时间的
+    这里使用long的原因是因为 : new Date().getTime()的返回值是long
+setIntHeader(String name, int value) 设置整型
+    例如：setIntHeader(&quot;expires&quot;, 1000) 设置过期时间的(缓存页面时间)。0表示不缓存现代浏览器不好使</code></pre></div><a class="article-more button is-small size-small" href="/p/81aadbc5.html#more">阅读更多</a></article></div><nav class="pagination is-centered mt-4" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/8/">上一页</a></div><div class="pagination-next"><a href="/page/10/">下一页</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/8/">8</a></li><li><a class="pagination-link is-current" href="/page/9/">9</a></li><li><a class="pagination-link" href="/page/10/">10</a></li><li><a class="pagination-link" href="/page/11/">11</a></li><li><a class="pagination-link" href="/page/12/">12</a></li></ul></nav></div><!--!--><div class="column column-right is-3-tablet is-3-desktop is-3-widescreen  order-3"><!--!--><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="is-rounded" src="/img/avatar.png" alt="后端小哥"></figure><p class="title is-size-4 is-block line-height-inherit">后端小哥</p><p class="is-size-6 is-block">Coder</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shijiazhuang, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">111</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">20</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">67</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lujiahao0708" target="_blank" rel="noopener">关注我</a></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://juejin.im/user/59239002570c350069c5f0bb" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">掘金</span></span><span class="level-right"><span class="level-item tag">juejin.im</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://blog.csdn.net/xinruodingshui" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">CSDN</span></span><span class="level-right"><span class="level-item tag">blog.csdn.net</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://space.bilibili.com/302086424/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">B站</span></span><span class="level-right"><span class="level-item tag">space.bilibili.com</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Chrome/"><span class="level-start"><span class="level-item">Chrome</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Docker/"><span class="level-start"><span class="level-item">Docker</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Flutter/"><span class="level-start"><span class="level-item">Flutter</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JVM/"><span class="level-start"><span class="level-item">JVM</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">17</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JavaEE/"><span class="level-start"><span class="level-item">JavaEE</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"><span class="level-start"><span class="level-item">MySQL必知必会</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Shiro/"><span class="level-start"><span class="level-item">Shiro</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Simpleblog%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"><span class="level-start"><span class="level-item">Simpleblog博客系统</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/SpringCloud/"><span class="level-start"><span class="level-item">SpringCloud</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">工具教程</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B9%B6%E5%8F%91/"><span class="level-start"><span class="level-item">并发</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"><span class="level-start"><span class="level-item">持续集成</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%97%A5%E5%BF%97/"><span class="level-start"><span class="level-item">日志</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-07T20:40:52.000Z">2020-05-07</time></p><p class="title is-6"><a class="link-muted" href="/p/43930bbd.html">Redis 系列（三）Redis 常用命令</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-04T20:40:52.000Z">2020-05-04</time></p><p class="title is-6"><a class="link-muted" href="/p/fe744d5a.html">Redis 系列（二）Redis 安装</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-01T17:40:52.000Z">2020-05-01</time></p><p class="title is-6"><a class="link-muted" href="/p/c8bef241.html">Redis 系列（一）NoSQL 简介</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-21T22:03:59.000Z">2020-04-21</time></p><p class="title is-6"><a class="link-muted" href="/p/29174125.html">Hexo 生成永久文章链接</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Hexo/">Hexo</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-20T10:40:52.000Z">2020-04-20</time></p><p class="title is-6"><a class="link-muted" href="/p/5c6f02af.html">Mac 多 Git 账户配置</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Mac/">Mac</a></p></div></article></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a><p class="size-small"><span>&copy; 2020 后端小哥</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://lujiahao0708.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

@@ -1,0 +1,1127 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>后端小哥博客</title><meta description="一个 Java 程序猿"><meta property="og:type" content="blog"><meta property="og:title" content="后端小哥博客"><meta property="og:url" content="http://lujiahao0708.github.io/"><meta property="og:site_name" content="后端小哥博客"><meta property="og:description" content="一个 Java 程序猿"><meta property="og:locale" content="zh_CN"><meta property="article:author" content="后端小哥"><meta property="article:tag" content="博客"><meta property="article:tag" content="技术博客"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="http://lujiahao0708.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lujiahao0708.github.io"},"headline":"后端小哥博客","image":["http://lujiahao0708.github.io/img/og_image.png"],"author":{"@type":"Person","name":"后端小哥"},"description":"一个 Java 程序猿"}</script><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?cdef3b7efc8748063e32969cc0b8dedc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/categories/Redis">Redis</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-07-04T17:28:41.000Z" title="2016-07-04T17:28:41.000Z">2016-07-04</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">16 分钟 读完 (大约 2367 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/bf6544ad.html">JDBC笔记一</a></h1><div class="content"><h2 id="1-JDBC简单应用"><a href="#1-JDBC简单应用" class="headerlink" title="1. JDBC简单应用"></a>1. JDBC简单应用</h2><pre><code>public class FirstJDBC {
+    public static void main(String[] args) throws Exception {
+        // 0.准备变量
+        String driver = &quot;com.mysql.jdbc.Driver&quot;;// mysql驱动实现类
+        String url = &quot;jdbc:mysql://localhost:3306/day15_db&quot;;// 确定数据库服务器地址,端口号,使用数据库
+        String user = &quot;root&quot;;// 登录名称
+        String password = &quot;1234&quot;;// 登录密码
+        // 1.注册驱动
+        Class.forName(driver);
+        // 2.获得链接
+        Connection conn = DriverManager.getConnection(url, user, password);
+        // 3.获得语句执行者
+        Statement st = conn.createStatement();
+        // 4.发送sql语句,查询  结果相当于一个set集合,每一个成员表示数据库表中一条记录
+        ResultSet rs = st.executeQuery(&quot;select * from t_user &quot;);
+        // 5.处理结果
+        rs.next();// 移动到第一行
+        // getXxx获取某一行的指定列或字段值  getXxx(int 列数),getXxx(String 字段名)
+        int id = rs.getInt(&quot;id&quot;);
+        String username = rs.getString(&quot;username&quot;);
+        String userPassword = rs.getString(&quot;password&quot;);
+        System.out.printf(&quot;id:&quot;+id+&quot; username:&quot;+username+&quot; password:&quot;+password);
+        // 6.释放资源,优先关闭最后使用的
+        rs.close();
+        st.close();
+        conn.close();
+    }
+}</code></pre><h2 id="2-Junit-测试"><a href="#2-Junit-测试" class="headerlink" title="2. Junit 测试"></a>2. Junit 测试</h2><p>1.需要导入两个jar包<br><code>junit.jar</code><br><code>hamcrest-core.jar</code><br>放入libs目录下即可<br>2.类名alt+enter,然后选择需要添加测试的方法即可</p>
+<p>测试用例方法，公共 没有返回值 非静态  方法名自定义 没有参数列表<br>方法名建议：test方法名()</p>
+<pre><code>public class DemoTest {
+    private Demo demo;
+
+    @Before  //测试方法执行前
+    public void myBefore(){
+        System.out.println(&quot;之前&quot;);
+        demo = new Demo();
+        //初始化数据
+    }
+    @After   //测试方法执行后
+    public void myAfter(){
+        System.out.println(&quot;之后&quot;);
+        //方法资源
+    }
+    @Test(timeout=1000)  //timeout 设置测试时间，如果超时性能有问题
+    public void testAdd() {
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+        }
+
+        int sum = demo.add(1, 2);
+        //断言
+        Assert.assertEquals(3, sum);
+        assertEquals(3, sum);  //使用静态导入的结果
+    }
+    @Test
+    public void testMul() {
+        int sum = demo.mul(1, 2);
+    }
+    @BeforeClass
+    public static void myBeforeClass(){
+        System.out.println(&quot;类之前&quot;);
+
+    }
+    @AfterClass
+    public static void myAfterClass(){
+        System.out.println(&quot;类之后&quot;);
+    }
+}</code></pre><h2 id="3-JDBC工具类"><a href="#3-JDBC工具类" class="headerlink" title="3. JDBC工具类"></a>3. JDBC工具类</h2><pre><code>public class JdbcUtils {
+    private static String url;
+    private static String user;
+    private static String password;
+
+    // 这些配置文件的东西只用加载一次就可以了,写在静态代码块中
+    static {
+        try {
+            // 参数配置应该放在配置文件中
+            // 1. 加载properties文件
+            // 方式1:使用ClassLoader加载资源
+            //InputStream is = JdbcUtils.class.getClassLoader().getResourceAsStream(&quot;jdbcInfo.properties&quot;);
+            // 方式2:使用Class对象加载,必须加上/,表示src
+            InputStream is = JdbcUtils.class.getResourceAsStream(&quot;/jdbcInfo.properties&quot;);
+            // 2. 解析配置文件
+            Properties properties = new Properties();
+            properties.load(is);
+            // 3. 获得配置文件中的数据
+            String driver = properties.getProperty(&quot;driver&quot;);
+            url = properties.getProperty(&quot;url&quot;);
+            user = properties.getProperty(&quot;user&quot;);
+            password = properties.getProperty(&quot;password&quot;);
+            // 4. 注册驱动
+            Class.forName(driver);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 获得连接
+     */
+    public static Connection getConnection(){
+        try {
+            Connection conn = DriverManager.getConnection(url, user, password);
+            return conn;
+        } catch (Exception e){
+            // 将编译时异常转换成运行时异常,开发中常见运行时异常
+            // throw new RuntimeException(e);
+            // 此处可以使用自定义异常
+            // 类与类之间进行数据交换时可以使用return返回数据.
+            // 也可以使用自定义异常返回值，调用者try{} catch(e){ e.getMessage() 获得需要的数据}
+            throw new MyConnectionException(e);
+        }
+    }
+
+    /**
+     * 释放资源
+     */
+    public static void closeResource(Connection conn, Statement st, ResultSet rs){
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (st != null) {
+                    st.close();
+                }
+            } catch (Exception e){
+                throw new RuntimeException(e);
+            } finally {
+                try {
+                    if (conn != null) {
+                        conn.close();
+                    }
+                } catch (Exception e){
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+}</code></pre><h2 id="4-自定义异常"><a href="#4-自定义异常" class="headerlink" title="4. 自定义异常"></a>4. 自定义异常</h2><p>继承RuntimeException  覆写方法<br>将编译时异常转换成运行时异常,开发中常见运行时异常<br>throw new RuntimeException(e);<br>类与类之间进行数据交换时可以使用return返回数据.<br>也可以使用自定义异常返回值，调用者try{} catch(e){ e.getMessage() 获得需要的数据}</p>
+<h2 id="5-模板代码"><a href="#5-模板代码" class="headerlink" title="5. 模板代码"></a>5. 模板代码</h2><pre><code>public void demo1(){
+    Connection conn = null;
+    Statement st = null;
+    ResultSet rs = null;
+
+    try {
+        conn = JdbcUtils.getConnection();
+        // ....
+    } catch (Exception e){
+        throw new RuntimeException(e);
+    } finally {
+        // 释放资源
+        JdbcUtils.closeResource(conn,st,rs);
+    }
+}</code></pre><h2 id="6-Api详解"><a href="#6-Api详解" class="headerlink" title="6. Api详解"></a>6. Api详解</h2><h3 id="6-1-注册驱动"><a href="#6-1-注册驱动" class="headerlink" title="6.1 注册驱动"></a>6.1 注册驱动</h3><pre><code>1.0 所有的驱动实现类必须实现规范接口，java.sql.Driver接口
+1.1 原始编写方式：DriverManager.registerDriver(new Driver());
+    特点：必须导包  import com.mysql.jdbc.Driver; 
+        硬编程，内容写死的，无法扩展，不易于数据变迁(更换)
+    源码：public class com.mysql.jdbc.Driver implements java.sql.Driver
+
+1.2 建议编写方式：Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
+    特点：指定类如果有static{} 里面的内容将自动执行。
+    源码：
+        static {
+            try {
+                java.sql.DriverManager.registerDriver(new Driver());
+            } catch (SQLException E) {
+                throw new RuntimeException(&quot;Can&apos;t register driver!&quot;);
+            }
+        }
+        mysql Driver实现类，将自己进行注册。
+    优点：使用字符串方法加载到内容（注册），之后可以将驱动配置到配置文件中，之后只需要修改配置文件，数据库就更改。
+1.3 此行代码可省略，建议不要省略。
+    mysql驱动 高版本，将自动加载驱动并注册。
+        文件：mysql-connector-java-5.1.22-bin.jar/META-INF/services/java.sql.Driver
+        内容：com.mysql.jdbc.Driver 
+1.4 错误总结
+    * ClassNotFoundException ，是否导入jar包？驱动名称是否正确？
+    * java.lang.NoClassDefFoundError   如果配置文件放置位置错误就会报这个异常
+1.5 mysql  com.mysql.jdbc.Driver 子类  org.gjt.mm.mysql.Driver
+    源码：public class Driver extends com.mysql.jdbc.Driver</code></pre><h3 id="6-2-获得连接"><a href="#6-2-获得连接" class="headerlink" title="6.2 获得连接"></a>6.2 获得连接</h3><pre><code>2.1 介绍
+    使用连接接口：java.sql.Connection,只有获得连接才可以操作数据库。
+    通过DriverManager 驱动管理者类获得连接。getConnection(url,user,password)
+2.2 url 确定访问数据库位置
+    格式#   协议:子协议:子名称
+        协议  固定值 --&gt;  jdbc
+        子协议  --&gt; 确定数据，例如：mysql、oracle 等
+        子名称  --&gt; localhost主机，3306端口，day15_db数据库名称
+        参数  --&gt; jdbc:mysql://localhost:3306/day15_db?useUnicode=true&amp;characterEncoding=UTF-8
+            设置请求编码，安装如果指定UTF-8，不需要设置的。如果安装时设置的编码为ISO8859-1编码，中文乱码需要如上处理。
+    主机默认localhost，端口默认3306
+        简写方式 --&gt;  jdbc:mysql:///day15_db
+2.3 错误总结
+    * Unknown database &apos;day15_db2&apos; , 表示数据库不存在。
+    * Access denied for user &apos;root&apos;@&apos;localhost&apos; (using password: YES)  ， 账号和密码不匹配</code></pre><h3 id="6-3-Connection提供的不同的操作对象"><a href="#6-3-Connection提供的不同的操作对象" class="headerlink" title="6.3 Connection提供的不同的操作对象"></a>6.3 Connection提供的不同的操作对象</h3><pre><code>3.1 操作对象
+        * Statement ， 语句执行者，获得方式 conn.createStatement()【】
+        * PreparedStatement , 预处理对象，获得方法  conn.prepareStatement(sql)【】
+        * 必须先提供sql语句，进行预先处理。
+        * CallableStatement 存储过程，  prepareCall(String sql)，将sql语句编写数据库，相当于数据库函数，执行时    只需要传递实际参数
+3.2 Statement
+    int executeUpdate(sql) 执行DDL/DML语句，返回影响的行数。【】
+    ResultSet  executeQuery(sql) 执行DQL语句，返回结果集（相当于一个表）【】
+    boolean execute(sql) 
+        返回值true，表示执行DQL语句，必须通过  getResultSet() 获得结果集
+        返回值false，表示执行DML/DDL语句，必须通过  getUpdateCount() 获得影响行数 
+3.3 滚动结果集 （了解）
+    * jdbc规范 默认结果集forward ，只能向前的结果集。
+    * 滚动结果集：可以向前，也可以向后。mysql 直接支持滚动
+    * ResultSet api
+        next() 下一个（向前）
+        previous() 上一个（向后）
+    * 结果集ResultSet要滚动，前提Statement必须设置支持的。 
+    * 使用方法：createStatement(int resultSetType, int resultSetConcurrency)
+        resultSetType - 结果集类型，
+                ResultSet.TYPE_FORWARD_ONLY，仅仅只能向前
+                ResultSet.TYPE_SCROLL_INSENSITIVE，可以滚动，不敏感。滚动中，数据库发生改变，结果集内容不改变的。
+                    数据库的数据是否同步到结果集ResultSet中。
+                ResultSet.TYPE_SCROLL_SENSITIVE，可以滚动，敏感。滚动中，数据库数据发生改变，结果集内容改变。
+        resultSetConcurrency - 并发类型
+            ResultSet.CONCUR_READ_ONLY ，结果集只能读，不能改。
+            ResultSet.CONCUR_UPDATABLE，结果集可以更新，数据一并更改。
+                结果集数据同步到数据库
+    * 操作
+        获得  getXxx(int)获得指定列号的内容，  getXxx(String)获得指定列名(字段)的内容
+        例如：getString(4) 获得第4列，  getString(&quot;username&quot;)  获得字段名称username的值</code></pre><h2 id="7-SQL注入"><a href="#7-SQL注入" class="headerlink" title="7.SQL注入"></a>7.SQL注入</h2><p>sql注入 ：用户输入实际参数，作为了sql语句语法的一部分，数据库编译在执行时生效的。<br>    select * from t_user where username = ‘jack’ or 1=1 or 1=’’ and password = ‘12345’<br>    select * from t_user where username = ‘jack’ –’ and password = ‘12345’<br>解决方案：<br>    1. 手动方式：\转义单引号<br>    2. 使用预处理对象，防止sql注入<br>        1) 先提供sql语句，将实际参数使用占位符?替换。<br>            例如：select * from t_user where username = ? and password = ?<br>        2) 获得预处理对象，获得对象时必须提供sql语句，让sql语句预先进行编译。<br>        3) 设置实际参数<br>            PreparedStatement 提供 setXxx(int , Object)<br>                参数1：int表示 ?位置，从1开始。<br>                参数2：Object具体类型，如果字符串String等。<br>    3. PreparedStatement 接口 是 Statement接口的子接口。<br>        但是execute(sql) 父类方法，子类使用抛异常。使用的没有参数。</p>
+<h2 id="8-预处理对象PreparedStatement"><a href="#8-预处理对象PreparedStatement" class="headerlink" title="8.预处理对象PreparedStatement"></a>8.预处理对象PreparedStatement</h2><pre><code>特点：
+    sql 易于编写，更佳清晰
+    提高性能，编译一次，可以执行多次。
+编写步骤：
+    1.提供sql语句，并将实际参数使用？占位符
+    2.获得预处理对象，注意提供sql语句
+    3.设置实际参数，将?替换回来
+    4.执行，注意：不能设置sql语句。
+Statement  和 PreparedStatement  对比：
+    一般情况使用PreparedStatement，之后学习框架DbUtils底层使用PreparedStatement，hibernate底层使用也是。
+    如果使用Statement，必须保证sql都是自己编写，实际参数都是自己传递的。
+PreparedStatement 应用场景
+    1.防sql注入
+    2.大数据
+        大数据类型：blob 字节 、text 字符
+    3.批处理</code></pre></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-06-30T10:01:06.000Z" title="2016-06-30T10:01:06.000Z">2016-06-30</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">17 分钟 读完 (大约 2610 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/cb940dd7.html">MySql笔记</a></h1><div class="content"><h2 id="1-数据库知识"><a href="#1-数据库知识" class="headerlink" title="1.数据库知识"></a>1.数据库知识</h2><p>分类:</p>
+<ol>
+<li>网状型数据库</li>
+<li>层次型数据库</li>
+<li>关系型数据库<ul>
+<li>Oracle ： 甲骨文，oracle公司，大型数据，收费</li>
+<li>db2 ： IBM，大型数据，收费</li>
+<li>Sql server ： 微软，中性数据，收费。(access office 小型)</li>
+<li>Mysql ： 免费。小型。（开源） –oracle </li>
+</ul>
+</li>
+</ol>
+<h2 id="2-Mysql安装"><a href="#2-Mysql安装" class="headerlink" title="2.Mysql安装"></a>2.Mysql安装</h2><ol>
+<li><p>设置数据库存放目录<br><img src="https://ooo.0o0.ooo/2016/06/30/5774def7033f8.png" alt="QQ截图20160630165126.png"></p>
+</li>
+<li><p>选择配置类型   <img src="https://ooo.0o0.ooo/2016/06/30/5774e07246de2.png" alt="QQ截图20160630165743.png"></p>
+</li>
+<li><p>选择服务类型   <img src="https://ooo.0o0.ooo/2016/06/30/5774e09946abe.png" alt="QQ截图20160630165834.png"></p>
+</li>
+<li><p>选择数据库类型  <img src="https://ooo.0o0.ooo/2016/06/30/5774e0c7adeb1.png" alt="QQ截图20160630165920.png"></p>
+</li>
+<li><p>设置并发连接数  <img src="https://ooo.0o0.ooo/2016/06/30/5774e0f110a4f.png" alt="QQ截图20160630170001.png"></p>
+</li>
+<li><p>配置网络参数    <img src="https://ooo.0o0.ooo/2016/06/30/5774e131a2591.png" alt="QQ截图20160630170103.png"></p>
+</li>
+<li><p>设置字符集      <img src="https://ooo.0o0.ooo/2016/06/30/5774e14d9aaaf.png" alt="QQ截图20160630170134.png"></p>
+</li>
+<li><p>设置服务和环境静变量 <img src="https://ooo.0o0.ooo/2016/06/30/5774e1a4e7024.png" alt="QQ截图20160630170302.png"></p>
+</li>
+<li><p>设置数据库密码  <img src="https://ooo.0o0.ooo/2016/06/30/5774e1cab29f8.png" alt="QQ截图20160630170328.png"></p>
+</li>
+<li><p>测试</p>
+<pre><code>C:\Users\xxxxx&gt;mysql --version
+mysql  Ver 14.14 Distrib 5.5.27, for Win64 (x86)</code></pre></li>
+</ol>
+<h2 id="3-Mysql登录-amp-修改数据库密码"><a href="#3-Mysql登录-amp-修改数据库密码" class="headerlink" title="3.Mysql登录&amp;修改数据库密码"></a>3.Mysql登录&amp;修改数据库密码</h2><pre><code>mysql -h 主机(ip地址) -u 账号 -p 密码
+
+use mysql;
+update user set password=password(&apos;1234&apos;) where user=&apos;root&apos;;</code></pre><h2 id="4-常用命令"><a href="#4-常用命令" class="headerlink" title="4.常用命令"></a>4.常用命令</h2><ul>
+<li>显示当前数据库服务器中的数据库列表 : <code>show databases;</code></li>
+<li>使用数据库 : <code>use 数据库名;</code></li>
+<li>显示数据库中的数据表 : <code>show tables;</code></li>
+<li>显示当前所使用的数据库名称 : <code>select database();</code></li>
+<li>显示当前数据库的状态 : <code>status;</code></li>
+<li>显示某个表的表结构 : <code>desc 表名;</code></li>
+<li>显示所有支持的字符集 : <code>show character set;</code></li>
+<li>查看创建表的sql语句 : <code>show create table 表名;</code></li>
+</ul>
+<h2 id="5-SQL语句"><a href="#5-SQL语句" class="headerlink" title="5.SQL语句"></a>5.SQL语句</h2><h3 id="5-1-DDL数据定义语言-了解"><a href="#5-1-DDL数据定义语言-了解" class="headerlink" title="5.1 DDL数据定义语言(了解)"></a>5.1 DDL数据定义语言(了解)</h3><pre><code>&gt; 操作数据库或表结构</code></pre><h4 id="5-1-1-数据库操作"><a href="#5-1-1-数据库操作" class="headerlink" title="5.1.1 数据库操作"></a>5.1.1 数据库操作</h4><ul>
+<li>创建数据库 : <code>create database 数据库名称;</code></li>
+<li>查询数据库创建语句 : <code>show create database 数据库名称;</code></li>
+<li>删除数据库 : <code>drop database [if exists] 数据库名称;</code></li>
+<li>修改数据 : <code>alter database 数据库名  character set 字符集 collate 比较方式</code>不建议修改。</li>
+</ul>
+<h4 id="5-1-2-表结构"><a href="#5-1-2-表结构" class="headerlink" title="5.1.2 表结构"></a>5.1.2 表结构</h4><pre><code>&gt; 操作表之前,必须先切换数据库.</code></pre><ul>
+<li><p>创建表 : <code>create table 表名(字段描述,字段描述,...);</code></p>
+<pre><code>create table users(
+    id varchar(32),
+    name varchar(50),
+    age int
+);</code></pre></li>
+<li><p>删除表 : <code>drop table 表名;</code></p>
+</li>
+<li><p>修改字段类型 : <code>alter table 表名 modify 字段名称 新类型;</code></p>
+</li>
+<li><p>修改字段名称 : <code>alter table 表名 change 旧字段 新字段 新字段类型;</code></p>
+</li>
+<li><p>添加字段 : <code>alter table 表名 add column 字段名称 字段类型;</code></p>
+</li>
+<li><p>删除字段 : <code>alter table 表名 drop column 字段名称;</code></p>
+</li>
+<li><p>重命名表名 : <code>alter table 表名 rename [to] 新表明;</code></p>
+</li>
+</ul>
+<h4 id="5-1-3-数据类型"><a href="#5-1-3-数据类型" class="headerlink" title="5.1.3 数据类型"></a>5.1.3 数据类型</h4><p>字符串</p>
+<pre><code>char(n) 固定字符串，例如：char(5) 表示可以存放5个字符，且必须是5个。
+    如果插入 “abc”,结果“abc  ”  右边自动添加空格。
+varchar(n) 可变长字符串，例如：varchar(5),表示最多存放5个字符，如果不够就原样存放。
+    如果插入“abc”，结果“abc”</code></pre><p>数字</p>
+<pre><code>bit            比特
+tinyint        byte
+mediumint    short
+int            int        【】
+bigint        long
+float            float
+double(m,d)    double 【】 --m数字长度，d精度及小数位
+numeric        Number    所有数字
+    例如：double(5,2) 5表示整个数字为5位，2表示小数位2个。最大值。999.99</code></pre><p>时间日期</p>
+<pre><code>** 之后使用java日期时间类型：java.util.Date 。如果要使用java.sql..类型，只能存放dao层
+date 日期                java.sql.Date
+datetime 日期时间            ---
+time 时间                java.sql.Time
+timestamp 时间戳            java.sql.Timestamp
+
+    sql转util ： java.util.Date date = new java.sql.Date(long);
+    util转sql ： new java.sql.Date(  new java.util.Date().getTime()  )</code></pre><p>大数据</p>
+<pre><code>字节：存放二进制  （java.sql.Blob ：Binary Large Object 二进制大对象）
+    TINYBLOB  255
+    blob        64k
+    longblob    4G
+字符：存放文本 （java.sql.Clob ：Character Large Object 字符大对象）
+    TINYTEXT    255
+    text        64k
+    longtext 4G</code></pre><h3 id="5-2-DML数据操作语言-掌握"><a href="#5-2-DML数据操作语言-掌握" class="headerlink" title="5.2 DML数据操作语言(掌握)"></a>5.2 DML数据操作语言(掌握)</h3><pre><code>&gt; 对表中的数据进行增删改的操作</code></pre><h4 id="5-2-1-插入数据"><a href="#5-2-1-插入数据" class="headerlink" title="5.2.1 插入数据"></a>5.2.1 插入数据</h4><pre><code>insert into 表名(字段列表) values(字段对应值);</code></pre><p>注意:</p>
+<pre><code>多个字段之间使用逗号分隔
+字段值必须使用引号(建议单引号),如果是整形数据引号可以省略
+字段默认值为null</code></pre><h4 id="5-2-2-更新数据"><a href="#5-2-2-更新数据" class="headerlink" title="5.2.2 更新数据"></a>5.2.2 更新数据</h4><pre><code>update 表名 set 字段名=字段值,字段名=字段值,...;
+update 表名 set 字段名=字段值,字段名=字段值,...where 条件;</code></pre><h4 id="5-2-3-删除数据"><a href="#5-2-3-删除数据" class="headerlink" title="5.2.3 删除数据"></a>5.2.3 删除数据</h4><pre><code>delete from 表名 [where 条件];</code></pre><p>注意:</p>
+<pre><code>delete from users; 删除表中的所有数据.进行删除操作留心,一般情况应用系统不进行数据删除,提供一个标记字段,逻辑删除(0表示已删除,1表示没有删除).</code></pre><h3 id="5-3-约束"><a href="#5-3-约束" class="headerlink" title="5.3 约束"></a>5.3 约束</h3><blockquote>
+<p>给字段添加规则，约定内容编写。最终作用保证数据的完整性，一致性等。</p>
+</blockquote>
+<h4 id="5-3-1-主键约束"><a href="#5-3-1-主键约束" class="headerlink" title="5.3.1 主键约束"></a>5.3.1 主键约束</h4><pre><code>关键字:primary key
+要求:数据唯一,不能为null.</code></pre><p>1.定义表:声明字段时,定义主键.(primary key)只能修饰一个字段.<br>    create table pk01(<br>      id varchar(32) primary key ,<br>      content varchar(50)<br>    );<br>2.定义表，声明字段之后，在约束区域定义主键。—特点  constraint primary key (字段1,字段2,….) 可以设置多个字段<br>    create table pk02(<br>      id varchar(32),<br>      content varchar(50),<br>      constraint primary key (id)<br>    );<br>3.定义表，声明字段，表创建之后。修改表结构添加约束。–特点：也可以设置多个字段，更灵活。<br>    create table pk03(<br>      id varchar(32),<br>      content varchar(50)<br>    );<br>    alter table pk03 add constraint primary key (id);</p>
+<h4 id="5-3-2-唯一约束"><a href="#5-3-2-唯一约束" class="headerlink" title="5.3.2 唯一约束"></a>5.3.2 唯一约束</h4><pre><code>关键字:unique
+要求:被修饰的字段不能重复</code></pre><p>1.定义表，声明字段时，定义唯一约束。— 特点：unique只能修饰一个字段<br>    create table un01(<br>      id varchar(32),<br>      content varchar(50) unique<br>    );<br>2.定义表，声明字段之后，在约束区域定义唯一约束。—特点  constraintunique (字段1,字段2,….) 可以设置多个字段<br>    create table un02(<br>      id varchar(32),<br>      content varchar(50),<br>      constraint unique (content)<br>    );<br>3.定义表，声明字段，表创建之后。修改表结构添加唯一约束。–特点：也可以设置多个字段，更灵活。<br>    create table un03(<br>      id varchar(32),<br>      content varchar(50)<br>    );<br>    alter table un03 add constraint unique (content);</p>
+<h4 id="5-3-3-非空约束"><a href="#5-3-3-非空约束" class="headerlink" title="5.3.3 非空约束"></a>5.3.3 非空约束</h4><pre><code>关键字:not null
+要求:被修饰的字段不能为null</code></pre><p>1.定义表，声明字段时，添加约束。<br>    create table nn01(<br>      id varchar(32),<br>      content varchar(50) not null<br>    );<br>    create table nn02(<br>      id varchar(32),<br>      content varchar(50) not null default ‘dzd’<br>    );</p>
+<blockquote>
+<p>总结: 主键 = 唯一 + 非空</p>
+</blockquote>
+<h4 id="5-3-4-自动增长-mysql特有"><a href="#5-3-4-自动增长-mysql特有" class="headerlink" title="5.3.4 自动增长(mysql特有)"></a>5.3.4 自动增长(mysql特有)</h4><p>定义:<br>    关键字:auto_increment<br>    mysql特有的一个特殊的关键字,被修饰的字段将自动的累加(oracle没有,但提供徐磊sequence)<br>    注意:<br>        1.字段类型必须是整型,一般使用int<br>        2.必须是key(主键/唯一),一般使用主键primary key<br>        3.被auto_increment修饰的字段,不需要手动维护数据,mysql将自动维护<br>代码示例:<br>    create table ai01(<br>        id varchar(32) auto_increment, # 错误代码  不能用于字符串<br>        content varchar(50)<br>    );<br>    create table ai02(<br>        id int auto_increment, # 错误代码 必须是primary key<br>        content varchar(50)<br>    );<br>    create table ai03(<br>        id int primary key auto_increment, # 正确代码<br>        content varchar(50)<br>    );<br>面试题:<br>    drop table ai03;    #删除表，数据和表都不存在了。<br>    delete from ai03;   #删除所有数据，表仍然存在。表中计数器没有重置。<br>    truncate table ai03;  #清空所有数据，表中的计数器将重置归0。<br>    delete 和 truncate 对比<br>        delete 将数据删除了<br>        truncate 先删除了表，再创建表。</p>
+<h4 id="5-3-5-外键约束"><a href="#5-3-5-外键约束" class="headerlink" title="5.3.5 外键约束"></a>5.3.5 外键约束</h4><pre><code>关键字:foreign key</code></pre><h4 id="5-3-6-删除约束"><a href="#5-3-6-删除约束" class="headerlink" title="5.3.6 删除约束"></a>5.3.6 删除约束</h4><pre><code>删除主键：mysql&gt;   `alter table 表名 drop primary key;`
+删除唯一：修改列
+删除外键：mysql&gt;   `alter table 表名 drop foreign key 名称;`</code></pre><h4 id="5-3-7-cmd命令行中文乱码处理"><a href="#5-3-7-cmd命令行中文乱码处理" class="headerlink" title="5.3.7 cmd命令行中文乱码处理"></a>5.3.7 cmd命令行中文乱码处理</h4><pre><code>set names gbk;</code></pre><h3 id="5-4-DQL数据查询语言-掌握"><a href="#5-4-DQL数据查询语言-掌握" class="headerlink" title="5.4 DQL数据查询语言(掌握)"></a>5.4 DQL数据查询语言(掌握)</h3><h4 id="5-4-1-无条件查询"><a href="#5-4-1-无条件查询" class="headerlink" title="5.4.1 无条件查询"></a>5.4.1 无条件查询</h4><p>查询所有:</p>
+<pre><code>select * from users;
+select id,name,age from user;</code></pre><p>查询部分字段:</p>
+<pre><code>select id,name from user;</code></pre><p>合并查询条件:</p>
+<pre><code>select id,concat(firstname,secondname),age from users;</code></pre><p>字段别名:</p>
+<pre><code>select id,concat(firstname,secondname) as `姓名`,age from users;</code></pre><p>特殊字符或者关键字使用重音符 ``</p>
+<h4 id="5-4-2-带条件查询"><a href="#5-4-2-带条件查询" class="headerlink" title="5.4.2 带条件查询"></a>5.4.2 带条件查询</h4><p>查询分数等于60的:</p>
+<pre><code>select * from users where count=&apos;60&apos;;</code></pre><p>查询年龄大于18的学生:</p>
+<pre><code>select * from users where age &gt; 18;</code></pre><p>查询分数在60-80之间:</p>
+<pre><code>select * from users where count &gt;= 60 and count &lt;= 80;
+select * from users where count between 60 and 80;</code></pre><p>查询年龄是18或20的学生:</p>
+<pre><code>select * from users where age = 18 or age = 20;</code></pre><p>模糊查询,不完全匹配:</p>
+<pre><code>字段:like
+符号:    
+    %匹配多个数据
+        &apos;云&apos; 只能匹配一个云
+        &apos;%云&apos; 匹配以云结尾的
+        &apos;云%&apos; 匹配以云开头的
+        &apos;%云%&apos; 包含云
+    _匹配一个数据</code></pre><p>查询分数等于60 或者  分数大于90并且年龄大于23</p>
+<pre><code>select * from users where count = 60 or count &gt; 90 and age &gt; 23;
+select * from users where count = 60 or (count &gt; 90 and age &gt; 23);
+### 运算符优先级  and 优先 or</code></pre><p>查询没有考试的学生</p>
+<pre><code>select * from users where count is null;</code></pre><p>查询所有考试的学生</p>
+<pre><code>select * from users where count is not null;</code></pre><p>运算符 不相等   !=   &lt;&gt;    </p>
+<h4 id="5-4-3-聚合函数"><a href="#5-4-3-聚合函数" class="headerlink" title="5.4.3 聚合函数"></a>5.4.3 聚合函数</h4><p>聚合函数：对表中的数据进行统计，显示一个数据（一行一列的数据）</p>
+<pre><code>聚合函数不统计 null值。</code></pre><p>有多少条记录  count(* | 字段)</p>
+<pre><code>select count(*) from users;
+select count(id) from users;    #7
+select count(count) from users;    #6</code></pre><p>平均成绩  avg</p>
+<pre><code>select avg(count) from users;    #不精准（没有null）
+select sum(count)/count(id) from users; #精准（计算null）</code></pre><p>最高成绩  max</p>
+<pre><code>select max(count) from users;</code></pre><p>最小年龄  min</p>
+<pre><code>select min(age) from users;</code></pre><p>班级总成绩 sum</p>
+<pre><code>select sum(count) from users;</code></pre><p>查询所有的年龄数(排序)</p>
+<pre><code>去重复 distinct
+排序 select..... order by 字段1 关键字, 字段2 关键字,....
+### 关键字 asc 升序 ， desc 降序
+select distinct age from users order by age desc;   # age asc 等效 age [asc] </code></pre><h4 id="5-4-4-分组查询"><a href="#5-4-4-分组查询" class="headerlink" title="5.4.4 分组查询"></a>5.4.4 分组查询</h4><p>添加班级字段（classes）  </p>
+<pre><code>alter table users add column classes varchar(3);
+update users set classes = 1;
+update users set classes = 2 where id=&apos;u005&apos; or id =&apos;u006&apos; or id =&apos;u007&apos;;
+update users set classes = 2 where id in (&apos;u005&apos;,&apos;u006&apos;,&apos;u007&apos;);</code></pre><p>查询1班和2班的平均成绩</p>
+<pre><code>分组  select ... group by 分组字段;
+select classes,avg(count) from users group by classes;
+select classes,sum(count)/count(id) from users group by classes;</code></pre><p>查询班级，平均成绩不及格的，班级成员信息</p>
+<pre><code>(查询2班，成员信息)
+select * from users where classes = 2;</code></pre><h3 id="多表操作"><a href="#多表操作" class="headerlink" title="多表操作"></a>多表操作</h3><p>select * from A,B where A.classes = B.classes and avg &lt; 60;</p>
+<h4 id="表的别名"><a href="#表的别名" class="headerlink" title="表的别名"></a>表的别名</h4><pre><code>select ... from 表名 [as] 别名</code></pre><h3 id="子查询，一条select语句，作为另一个select一部分。"><a href="#子查询，一条select语句，作为另一个select一部分。" class="headerlink" title="子查询，一条select语句，作为另一个select一部分。"></a>子查询，一条select语句，作为另一个select一部分。</h3><p>select * from users,(<br>    select classes,sum(count)/count(id) as cavg from users group by classes) as B<br>where users.classes = B.classes and cavg &lt; 60;</p>
+<h4 id="子查询特点"><a href="#子查询特点" class="headerlink" title="子查询特点"></a>子查询特点</h4><pre><code>#查询结果一行一列，可以使用
+    select id,(xxx) from
+    select ... from ... where id= (xxxx)
+#查询结果一行多列(查询多个值)，使用关键字 in ，all 等
+#查询结果多行多列，可以当另一个表使用</code></pre></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-06-27T16:58:34.000Z" title="2016-06-27T16:58:34.000Z">2016-06-27</time><span class="level-item"><a class="link-muted" href="/categories/Android/">Android</a></span><span class="level-item">4 分钟 读完 (大约 635 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/6aaba340.html">Android Studio导出并使用aar和jar</a></h1><div class="content"><p>今天想往项目中导入Zxing,不知道怎么就想到不使用library的方式而使用包的方式来导入,然后就有了下面的东西了.</p>
+<h2 id="AAR"><a href="#AAR" class="headerlink" title="AAR"></a>AAR</h2><p>AAR是Android Library的一种新的二进制分发格式，它把资源也一起打包，这样一来图片和布局资源文件也能够被同时分发。同时AAR还可以包含jar包.</p>
+<h3 id="1-生成AAR"><a href="#1-生成AAR" class="headerlink" title="1.生成AAR"></a>1.生成AAR</h3><p>当我们运行工程后,该工程的/build/outputs/arr下包含Android Studio自动打包的AAR文件</p>
+<p><img src="https://ooo.0o0.ooo/2016/06/27/5770ed996110e.png" alt="QQ截图20160627170457.png"></p>
+<h3 id="2-使用AAR"><a href="#2-使用AAR" class="headerlink" title="2.使用AAR"></a>2.使用AAR</h3><p>将AAR文件拷贝到项目的libs目录下,然后在项目的build.gradle文件中配置即可</p>
+<pre><code>apply plugin: &apos;com.android.application&apos;
+android {
+    compileSdkVersion 23
+    buildToolsVersion &quot;23.0.3&quot;
+
+    defaultConfig {
+        applicationId &quot;com.qtparking.btool_as&quot;
+        minSdkVersion 11
+        targetSdkVersion 23
+        versionCode 1
+        versionName &quot;1.0&quot;
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;
+        }
+    }
+}
+
+// 添加arr文件的引用  还要在dependencies里面添加引用
+repositories {
+    flatDir {
+        dirs &apos;libs&apos;
+    }
+}
+
+dependencies {
+    compile fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])
+    testCompile &apos;junit:junit:4.12&apos;
+    compile &apos;com.android.support:appcompat-v7:23.3.0&apos;
+    compile &apos;com.android.support:design:23.3.0&apos;
+    // 添加AAR文件的引用,文件名字为zxing,类型为aar
+    compile(name:&apos;zxing&apos;, ext:&apos;aar&apos;)
+}</code></pre><h2 id="Jar"><a href="#Jar" class="headerlink" title="Jar"></a>Jar</h2><p>Jar包应该不陌生了,但是如何使用Android Studio导出jar包呢?</p>
+<h3 id="1-配置gradle任务"><a href="#1-配置gradle任务" class="headerlink" title="1.配置gradle任务"></a>1.配置gradle任务</h3><p>在需要打包成jar包的项目的build.gradle添加gradle任务:</p>
+<pre><code>apply plugin: &apos;com.android.library&apos;
+android {
+    compileSdkVersion 21
+    buildToolsVersion &quot;21.1.2&quot;
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 21
+        testApplicationId &quot;com.android.volley.tests&quot;
+        testInstrumentationRunner &quot;android.test.InstrumentationTestRunner&quot;
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.txt&apos;
+        }
+    }
+}
+
+task makeJar(type: Copy) {
+    delete &apos;build/libs/lfVolley.jar&apos;    //删除旧的jar包
+    from(&apos;build/intermediates/bundles/release/&apos;)    // 文件来自哪里
+    into(&apos;build/libs/&apos;)        // 生成的jar包存放目录
+    include(&apos;classes.jar&apos;)
+    rename (&apos;classes.jar&apos;, &apos;lfVolley.jar&apos;)    // 重命名成我们的jar包
+}
+makeJar.dependsOn(build)
+
+dependencies {
+    compile &apos;com.android.support:support-v4:21.0.3&apos;
+}</code></pre><h3 id="2-执行gradle任务"><a href="#2-执行gradle任务" class="headerlink" title="2.执行gradle任务"></a>2.执行gradle任务</h3><p>有的文章中推荐我们执行:<code>./gradview makeJar</code>.但是,我个人测试是无法成功的.<br>可以通过Android Studio来执行gradle任务:</p>
+<h4 id="2-1在Gradle-projects中寻找需要打包的Module"><a href="#2-1在Gradle-projects中寻找需要打包的Module" class="headerlink" title="2.1在Gradle projects中寻找需要打包的Module:"></a>2.1在Gradle projects中寻找需要打包的Module:</h4><p><img src="https://ooo.0o0.ooo/2016/06/27/5770efb6a04b6.png" alt="QQ截图20160627171318.png"></p>
+<h4 id="2-2找到makeJar的gradle任务并双击执行"><a href="#2-2找到makeJar的gradle任务并双击执行" class="headerlink" title="2.2找到makeJar的gradle任务并双击执行:"></a>2.2找到makeJar的gradle任务并双击执行:</h4><p><img src="https://ooo.0o0.ooo/2016/06/27/5770efb697f2a.png" alt="QQ截图20160627171331.png"></p>
+<h4 id="2-3gradle任务执行完成后显示如下"><a href="#2-3gradle任务执行完成后显示如下" class="headerlink" title="2.3gradle任务执行完成后显示如下:"></a>2.3gradle任务执行完成后显示如下:</h4><p><img src="https://ooo.0o0.ooo/2016/06/27/5770efb6b688f.png" alt="QQ截图20160627171348.png"></p>
+<p>至此,就完成了jar包的生成,可以直接拷贝到其他项目中使用了.</p>
+<p>TODO:<br>1.有一个小想法,这个是不是和插件化有点关系呢,从来没有了解过插件化,还不知道怎么弄呢.后面有时间再说吧.<br>2.后面研究下如何导出混淆的aar和jar,现在没有时间研究呢还.</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-06-24T16:59:01.000Z" title="2016-06-24T16:59:01.000Z">2016-06-24</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">7 分钟 读完 (大约 999 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/5d93e1da.html">MVC介绍&amp;用户管理系统</a></h1><div class="content"><h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><h3 id="MVC基本定义"><a href="#MVC基本定义" class="headerlink" title="MVC基本定义"></a>MVC基本定义</h3><p>一种软件设计模式，B/S架构都支持。例如：java、.net、php等<br>思想：业务逻辑处理与数据显示相分离。</p>
+<pre><code>Model：模型，用于封装数据
+View：视图，用于显示数据
+Controller：控制器，用于控制正常执行。</code></pre><p><img src="https://ooo.0o0.ooo/2016/06/24/576d03c2d854d.png" alt="mvc.png"></p>
+<h3 id="Web项目分包结构"><a href="#Web项目分包结构" class="headerlink" title="Web项目分包结构"></a>Web项目分包结构</h3><p><img src="https://ooo.0o0.ooo/2016/06/24/576d0418855c2.png" alt="QQ截图20160624175200.png"></p>
+<h3 id="面向接口编程"><a href="#面向接口编程" class="headerlink" title="面向接口编程"></a>面向接口编程</h3><p><img src="https://ooo.0o0.ooo/2016/06/24/576d043eba06b.png" alt="QQ截图20160624175227.png"></p>
+<h2 id="用户管理系统"><a href="#用户管理系统" class="headerlink" title="用户管理系统"></a>用户管理系统</h2><h3 id="功能分析"><a href="#功能分析" class="headerlink" title="功能分析"></a>功能分析</h3><ul>
+<li>注册</li>
+<li>登录</li>
+<li>查询所有用户</li>
+<li>查询详情</li>
+<li>修改用户</li>
+<li>删除用户</li>
+</ul>
+<h3 id="技术分析"><a href="#技术分析" class="headerlink" title="技术分析"></a>技术分析</h3><ul>
+<li>MVC三层架构</li>
+<li>xml/dom4j</li>
+<li>servlet/jsp/javabean</li>
+</ul>
+<h3 id="导入需要的jar包"><a href="#导入需要的jar包" class="headerlink" title="导入需要的jar包"></a>导入需要的jar包</h3><p>解析xml需要</p>
+<p><img src="https://ooo.0o0.ooo/2016/06/24/576d0012a356f.png" alt="QQ截图20160624173426.png"></p>
+<h3 id="包结构"><a href="#包结构" class="headerlink" title="包结构"></a>包结构</h3><pre><code>com.lujiahao.web.servlet    web层
+com.lujiahao.service        service层
+com.lujiahao.dao            dao层
+com.lujiahao.domain            javabean
+com.lujiahao.utils            工具包</code></pre><h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p>暂定使用xml</p>
+<p>xml内容:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;users&gt;
+    &lt;user id=&quot;u001&quot;&gt;
+        &lt;username&gt;jack&lt;/username&gt;
+        &lt;password&gt;1234&lt;/password&gt;
+        &lt;gender&gt;男&lt;/gender&gt;
+        &lt;age&gt;18&lt;/age&gt;
+    &lt;/user&gt;
+&lt;/users&gt;</code></pre><h3 id="JavaBean"><a href="#JavaBean" class="headerlink" title="JavaBean"></a>JavaBean</h3><p>数据库定义完成之后就开始编写JavaBean</p>
+<h3 id="dao层实现"><a href="#dao层实现" class="headerlink" title="dao层实现"></a>dao层实现</h3><p>随便写点数据的增删改查功能</p>
+<h2 id="数据校验"><a href="#数据校验" class="headerlink" title="数据校验"></a>数据校验</h2><h3 id="表单校验Bean-UserFormBean"><a href="#表单校验Bean-UserFormBean" class="headerlink" title="表单校验Bean - UserFormBean"></a>表单校验Bean - UserFormBean</h3><p>一般都是写在和servlet同级的包里面<br>这种类型的bean里面所有的字段都是字符串<br>用于获得浏览器发送的数据,并对数据的有效性进行校验</p>
+<ol>
+<li>提供校验validate()</li>
+<li>记录每一项的校验结果</li>
+</ol>
+<p>具体代码实现:</p>
+<pre><code>public class UserFormBean {
+    private String id;
+    private String username;
+    private String password;
+    private String repassword;
+    private String gender;
+    private String age;// 因为服务器传过来的数据都是string类型的
+
+    public UserFormBean() {}
+
+    public UserFormBean(String id, String username, String password, String repassword, String gender, String age) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.repassword = repassword;
+        this.gender = gender;
+        this.age = age;
+    }
+
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public String getRepassword() {
+        return repassword;
+    }
+    public void setRepassword(String repassword) {
+        this.repassword = repassword;
+    }
+    public String getGender() {
+        return gender;
+    }
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+    public String getAge() {
+        return age;
+    }
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    // 记录错误信息 key:对应字段  value:提示信息
+    private Map&lt;String,String&gt; errorMsg = new HashMap&lt;&gt;();
+    /**
+     * 校验方法
+     */
+    public boolean validate() {
+        boolean temp = true;
+        // 用户名不能为空
+        if (username == null || &quot;&quot;.equals(username)) {
+            errorMsg.put(&quot;usernameMsg&quot;,&quot;用户名不能为空&quot;);
+            temp = false;
+        }
+        if (password == null || &quot;&quot;.equals(password)) {
+            errorMsg.put(&quot;passwordMsg&quot;,&quot;密码不能为空&quot;);
+            temp = false;
+        } else if (! password.equals(repassword)){
+            errorMsg.put(&quot;repasswordMsg&quot;,&quot;确认密码和密码不一致&quot;);
+            temp = false;
+        }
+        return temp;
+    }
+    public Map&lt;String, String&gt; getErrorMsg() {
+        return errorMsg;
+    }
+}</code></pre><h2 id="使用接口"><a href="#使用接口" class="headerlink" title="使用接口"></a>使用接口</h2><p>三层结构每一层都应该是有接口和具体的实现类</p>
+<p><img src="https://ooo.0o0.ooo/2016/06/29/57739e0d7619d.png" alt="QQ截图20160629180224.png"></p>
+<p>使用Intellj重构代码</p>
+<p><img src="https://ooo.0o0.ooo/2016/06/29/57739db07fb87.png" alt="QQ截图20160629180029.png"></p>
+<h2 id="BeanUtils"><a href="#BeanUtils" class="headerlink" title="BeanUtils"></a>BeanUtils</h2><blockquote>
+<p>通过封装的类来简化参数的自动封装<br>使用了反射和内省</p>
+</blockquote>
+<p>初始代码:</p>
+<pre><code>// 1.获取请求参数
+String id = request.getParameter(&quot;id&quot;);
+String username = request.getParameter(&quot;username&quot;);
+String password = request.getParameter(&quot;password&quot;);
+String repassword = request.getParameter(&quot;repassword&quot;);
+String gender = request.getParameter(&quot;gender&quot;);
+String age = request.getParameter(&quot;age&quot;);
+
+/**
+ * 数据校验
+ */
+UserFormBean userFormBean = new UserFormBean(id,username,password,repassword,gender,age);</code></pre><p>封装后的代码:</p>
+<pre><code>UserFormBean userFormBean = MyBeanUtils.populate(UserFormBean.class,request.getParameterMap());</code></pre><p>BeanUtils详细代码:</p>
+<pre><code>public class MyBeanUtils {
+
+    /**
+     * 创建JavaBean实例,并自动将对应的参数进行封装
+     * @param beanClass
+     * @param parameterMap
+     * @param &lt;T&gt;
+     * @return
+     */
+    public static &lt;T&gt; T populate(Class&lt;T&gt; beanClass, Map&lt;String,String[]&gt; parameterMap){
+        try {
+            // 1.使用反射创建javabean实例
+            T bean = beanClass.newInstance();
+            // 2.获得javabean属性(property username--&gt;setUsername()--&gt;执行set方法,数据来自map
+            // 2.1获得所有属性--使用内省(java.beans.Introspector):jdk提供工具类,用于操作javabean
+            // BeanInfo jdk提供用于对javabean进行描述(封装)对象
+            BeanInfo beanInfo = Introspector.getBeanInfo(beanClass, Object.class);
+            // 2.2 获得所有的属性描述对象
+            PropertyDescriptor[] allPd = beanInfo.getPropertyDescriptors();
+            for (PropertyDescriptor pd : allPd) {
+                // 2.3 获得属性名称
+                String propName = pd.getName();
+                // 2.4 获得表单中对应的数据
+                String[] allValue = parameterMap.get(propName);
+                if (allValue == null) {
+                    continue;// 当没有值的时候就跳过这个字段
+                }
+                String propValue = allValue[0];
+                // 2.5 如果有值,将执行set方法
+                if (propValue != null &amp;&amp; !&quot;&quot;.equals(propValue)) {
+                    Method writeMethod = pd.getWriteMethod();// 相当于set方法    getReadMethod--相当于get方法
+                    if (writeMethod != null) {
+                        writeMethod.invoke(bean,propValue);
+                    }
+                }
+            }
+            return bean;
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+}</code></pre></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-06-22T18:24:36.000Z" title="2016-06-22T18:24:36.000Z">2016-06-22</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">几秒 读完 (大约 34 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/a728b827.html">IntellJ创建Web项目</a></h1><div class="content"><p>照着他们的教程就行了</p>
+<p><a href="http://blog.csdn.net/guyue35/article/details/50551305">http://blog.csdn.net/guyue35/article/details/50551305</a></p>
+<p><a href="http://blog.csdn.net/wo541075754/article/details/46348135">http://blog.csdn.net/wo541075754/article/details/46348135</a></p>
+<p>其实第一个教程比价好</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-05-23T14:42:23.000Z" title="2016-05-23T14:42:23.000Z">2016-05-23</time><span class="level-item"><a class="link-muted" href="/categories/Android/">Android</a></span><span class="level-item">2 分钟 读完 (大约 287 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/ec364bdb.html">Volley学习第三篇-网络线程</a></h1><div class="content"><h2 id="前文概要"><a href="#前文概要" class="headerlink" title="前文概要"></a>前文概要</h2><p>其实<code>NetworkDispatcher</code>和<code>CacheDispatcher</code>是很相像的.感觉看<code>NetworkDispatcher</code>要比<code>CacheDispatcher</code>要简单.</p>
+<p>因为它不需要进行判断缓存的过期时间和新鲜时间,仅仅是执行请求,然后在缓存响应结果,所以要简单些.</p>
+<h2 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h2><blockquote>
+<p>同样的继承Thread,只看<code>run()</code>方法里面的就好了</p>
+<p>同样的死循环,队列无内容时阻塞</p>
+</blockquote>
+<ul>
+<li><p>1.首先从队列中取出Request请求</p>
+<pre><code>request = mQueue.take();</code></pre></li>
+<li><p>2.判断请求是否取消</p>
+<pre><code>if (request.isCanceled()) {
+    request.finish(&quot;network-discard-cancelled&quot;);
+    continue;
+}</code></pre></li>
+<li><p>3.请求未取消,执行网络请求并得到NetworkResponse对象</p>
+<pre><code>NetworkResponse networkResponse = mNetwork.performRequest(request);</code></pre><p>具体的网络请求还是需要看Network接口的实现类中是如何操作的.</p>
+</li>
+<li><p>4.判断服务器返回码是否是304(资源未更新)</p>
+<pre><code>if (networkResponse.notModified &amp;&amp; request.hasHadResponseDelivered()) {
+    request.finish(&quot;not-modified&quot;);
+    continue;
+}</code></pre></li>
+<li><p>5.是否缓存请求的响应</p>
+<pre><code>if (request.shouldCache() &amp;&amp; response.cacheEntry != null) {
+    mCache.put(request.getCacheKey(), response.cacheEntry);
+    request.addMarker(&quot;network-cache-written&quot;);
+}</code></pre></li>
+<li><p>6.分发</p>
+<pre><code>mDelivery.postResponse(request, response);</code></pre></li>
+</ul>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>其实看明白先前的缓存线程之后,理解网络线程也不是难事了.</p>
+<p>明天详细解释下具体响应的转化和分发流程.</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-05-23T11:14:42.000Z" title="2016-05-23T11:14:42.000Z">2016-05-23</time><span class="level-item"><a class="link-muted" href="/categories/Android/">Android</a></span><span class="level-item">8 分钟 读完 (大约 1162 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/e1a23cf6.html">Volley学习第二篇-缓存流程</a></h1><div class="content"><h2 id="前文概要"><a href="#前文概要" class="headerlink" title="前文概要"></a>前文概要</h2><blockquote>
+<p>上篇说道Volley初始化的时候需要创建一个RequestQueue消息队列,下面就来看看这个RequestQueue.</p>
+</blockquote>
+<h2 id="RequestQueue"><a href="#RequestQueue" class="headerlink" title="RequestQueue"></a>RequestQueue</h2><blockquote>
+<p>是一个队列管理器,里面维护了两个队列—<code>CacheQueue</code>和<code>NetowrkQueue</code>.</p>
+</blockquote>
+<p>Volley类里面的newRequestQueue方法中调用了队列的start()方法,就从这个方法入手.</p>
+<pre><code>public void start() {
+    stop();  // Make sure any currently running dispatchers are stopped.
+    // Create the cache dispatcher and start it.
+    mCacheDispatcher = new CacheDispatcher(mCacheQueue, mNetworkQueue, mCache, mDelivery);
+    mCacheDispatcher.start();
+
+    // 这里默认创建4个线程
+    // Create network dispatchers (and corresponding threads) up to the pool size.
+    for (int i = 0; i &lt; mDispatchers.length; i++) {
+        NetworkDispatcher networkDispatcher = new NetworkDispatcher(mNetworkQueue, mNetwork,
+                mCache, mDelivery);
+        mDispatchers[i] = networkDispatcher;
+        networkDispatcher.start();
+    }
+}</code></pre><p>这里创建了1个<code>CacheDispatcher</code>和4个<code>NetworkDispatcher</code>.<code>CacheDispatcher</code>和4个<code>NetworkDispatcher</code>都是继承了Thread的两个线程,一个是缓存线程,另一个是网络线程.</p>
+<p>其中<code>DEFAULT_NETWORK_THREAD_POOL_SIZE</code>中定义了网络线程的个数,可以根据不同的cpu核数来自定义开多少个网络线程<code>(线程数 = cpu核数 * 2 + 1)</code>.</p>
+<h2 id="CacheDispatcher缓存线程的流程"><a href="#CacheDispatcher缓存线程的流程" class="headerlink" title="CacheDispatcher缓存线程的流程"></a>CacheDispatcher缓存线程的流程</h2><p>它继承了Thread,所以只需要看它的<code>run()</code>方法就好了.</p>
+<pre><code>while (true) {
+    try {
+        // Get a request from the cache triage queue, blocking until
+        // at least one is available.从缓存队列中不停的取出request,直到队列中只有一个请求的时候阻塞
+        final Request request = mCacheQueue.take();
+        request.addMarker(&quot;cache-queue-take&quot;);
+
+        // If the request has been canceled, don&apos;t bother dispatching it.
+        if (request.isCanceled()) {
+            request.finish(&quot;cache-discard-canceled&quot;);
+            continue;// 请求取消就不读缓存了
+        }
+
+        // Attempt to retrieve this item from cache. 从缓存中获取缓存信息的实体
+        Cache.Entry entry = mCache.get(request.getCacheKey());
+        if (entry == null) {
+            request.addMarker(&quot;cache-miss&quot;);
+            // Cache miss; send off to the network dispatcher.
+            mNetworkQueue.put(request);// 缓存木有,将请求添加到网络请求队列
+            continue;
+        }
+
+        // If it is completely expired 过期, just send it to the network.
+        if (entry.isExpired()) {
+            request.addMarker(&quot;cache-hit-expired&quot;);
+            request.setCacheEntry(entry);
+            mNetworkQueue.put(request);// 缓存过期,添加到网络请求队列
+            continue;
+        }
+
+        // We have a cache hit; parse its data for delivery back to the request.
+        request.addMarker(&quot;cache-hit&quot;);
+        // 解析网络数据  这个是由请求对象request来解析的
+        // 文档中说道:request对象负责请求和解析网络请求
+        Response&lt;?&gt; response = request.parseNetworkResponse(
+                new NetworkResponse(entry.data, entry.responseHeaders));
+        request.addMarker(&quot;cache-hit-parsed&quot;);
+
+        if (!entry.refreshNeeded()) {// 缓存是否需要刷新
+            // Completely unexpired cache hit. Just deliver the response.
+            mDelivery.postResponse(request, response);// 无需刷新,直接分发
+        } else {
+            // Soft-expired cache hit. We can deliver the cached response,
+            // but we need to also send the request to the network for
+            // refreshing.
+            request.addMarker(&quot;cache-hit-refresh-needed&quot;);
+            request.setCacheEntry(entry);// 更新缓存
+
+            // Mark the response as intermediate.// 中间  媒介
+            response.intermediate = true;
+
+            // Post the intermediate response back to the user and have
+            // the delivery then forward the request along to the network.
+            mDelivery.postResponse(request, response, new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        mNetworkQueue.put(request);
+                    } catch (InterruptedException e) {
+                        // Not much we can do about this.
+                    }
+                }
+            });
+        }
+
+    } catch (InterruptedException e) {
+        // We may have been interrupted because it was time to quit.
+        if (mQuit) {
+            return;
+        }
+        continue;
+    }
+}</code></pre><p>缓存的主体流程就在这个死循环里面,Volley的dispatcher的原理和Handler里面的looper的原理非常相似.</p>
+<h2 id="读取缓存分发到主线程"><a href="#读取缓存分发到主线程" class="headerlink" title="读取缓存分发到主线程"></a>读取缓存分发到主线程</h2><pre><code>Response&lt;?&gt; response = request.parseNetworkResponse(new NetworkResponse(entry.data, entry.responseHeaders));
+request.addMarker(&quot;cache-hit-parsed&quot;);
+
+if (!entry.refreshNeeded()) {
+    // Completely unexpired cache hit. Just deliver the response.
+    mDelivery.postResponse(request, response);
+} else {
+    // Soft-expired cache hit. We can deliver the cached response,
+    // but we need to also send the request to the network for
+    // refreshing.
+    request.addMarker(&quot;cache-hit-refresh-needed&quot;);
+    request.setCacheEntry(entry);
+
+    // Mark the response as intermediate.// 中间  媒介
+    response.intermediate = true;
+
+    // Post the intermediate response back to the user and have
+    // the delivery then forward the request along to the network.
+    mDelivery.postResponse(request, response, new Runnable() {
+        @Override
+        public void run() {
+            try {
+                mNetworkQueue.put(request);
+            } catch (InterruptedException e) {
+                // Not much we can do about this.
+            }
+        }
+    });
+}</code></pre><h3 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h3><pre><code>request.parseNetworkResponse(new NetworkResponse(entry.data, entry.responseHeaders));`</code></pre><p><code>entry.data</code>是缓存的原始的<code>byte数组</code>,将<code>byte数组</code>和<code>响应头</code>封装成一个<code>NetworkResponse对象</code>(Volley里面的网络响应的统一对象).<br><code>parseNetworkResponse()</code>方法将<code>NetworkResponse对象</code>解析成<code>Response</code>供各种泛型的转换.</p>
+<pre><code>mDelivery.postResponse(request, response);</code></pre><p><code>mDelivery</code>对象时在<code>CacheDispatcher</code>的构造方法的时候赋值的,往上找找<code>RequestQueue</code>中的<code>start()</code>方法中<code>mCacheDispatcher = new CacheDispatcher(mCacheQueue, mNetworkQueue, mCache, mDelivery);</code></p>
+<p>继续找</p>
+<pre><code>public RequestQueue(Cache cache, Network network, int threadPoolSize,ResponseDelivery delivery) {
+    mCache = cache;
+    mNetwork = network;
+    mDispatchers = new NetworkDispatcher[threadPoolSize];
+    mDelivery = delivery;
+}</code></pre><p>还找</p>
+<pre><code>public RequestQueue(Cache cache, Network network, int threadPoolSize) {
+    this(cache, network, threadPoolSize,
+            new ExecutorDelivery(new Handler(Looper.getMainLooper())));
+}</code></pre><p>看mDelivery就是<code>new ExecutorDelivery(new Handler(Looper.getMainLooper()))</code></p>
+<p>ExecutorDelivery中构造方法中有一个非常重要的一行</p>
+<pre><code>public ExecutorDelivery(final Handler handler) {
+    // Make an Executor that just wraps the handler.
+    mResponsePoster = new Executor() {
+        @Override
+        public void execute(Runnable command) {
+            handler.post(command);
+        }
+    };
+}</code></pre><p><code>handler</code>将<code>runnable对象</code>post出去,而handler是通过<code>Looper.getMainLooper</code>创建的,这样就是通过我们用主线程创建的Handler将响应发送到主线程中了.</p>
+<p>至此,Volley缓存的读取/分发就完成了.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="http://img.blog.csdn.net/20140511114837375?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3VvbGluX2Jsb2c=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""><br>官方图解中的绿色的那部分—缓存线程的流程就结束了.</p>
+<p>后面我会慢慢肥西网络线程相关的东西.</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-05-21T19:00:29.000Z" title="2016-05-21T19:00:29.000Z">2016-05-21</time><span class="level-item"><a class="link-muted" href="/categories/Android/">Android</a></span><span class="level-item">4 分钟 读完 (大约 577 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/108a631c.html">Volley学习第一篇-框架入口.md</a></h1><div class="content"><h2 id="前文概要"><a href="#前文概要" class="headerlink" title="前文概要"></a>前文概要</h2><p>这是我的Volley学习第一篇的笔记.<br>看了一个星期的各类教程之后的总结,准备把Volley的整体流程都总结一遍,同时会对Volley进行一些扩展,最后会跟着大神的脚步模仿一个Volley出来.</p>
+<p>水平有限,望多指教.</p>
+<h2 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h2><ul>
+<li><a href="http://blog.csdn.net/guolin_blog/article/details/17656437">郭霖大神的博客</a></li>
+<li><a href="http://a.codekk.com/blogs/detail/54cfab086c4761e5001b2542">codeKK Volley源码解析</a></li>
+<li><a href="https://android.googlesource.com/platform/frameworks/volley/">Volley源码</a></li>
+</ul>
+<h2 id="创建全局的RequestQueue"><a href="#创建全局的RequestQueue" class="headerlink" title="创建全局的RequestQueue"></a>创建全局的RequestQueue</h2><p>使用Volley的时候会创建一个全局的RequestQueue,一般会在自定义的Application类里面创建.</p>
+<pre><code>RequestQueue requestQueue = Volley.newRequestQueue(appContext);</code></pre><h2 id="Volley框架的入口点"><a href="#Volley框架的入口点" class="headerlink" title="Volley框架的入口点"></a>Volley框架的入口点</h2><p>这里我们就发现原来Volley的入口是Volley类里面的一个静态方法<code>newRequestQueue()</code></p>
+<pre><code>public static RequestQueue newRequestQueue(Context context) {
+    return newRequestQueue(context, null);
+}</code></pre><h2 id="Volley框架的真正的入口"><a href="#Volley框架的真正的入口" class="headerlink" title="Volley框架的真正的入口"></a>Volley框架的真正的入口</h2><p>这是一个参数的方法,会调用两个参数的newRequestQueue方法,传入一个默认的null.</p>
+<pre><code>public static RequestQueue newRequestQueue(Context context, HttpStack stack) {
+
+    File cacheDir = new File(context.getCacheDir(), DEFAULT_CACHE_DIR);
+
+    String userAgent = &quot;volley/0&quot;;
+    try {
+        String packageName = context.getPackageName();
+        PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
+        userAgent = packageName + &quot;/&quot; + info.versionCode;
+    } catch (NameNotFoundException e) {
+    }
+
+    if (stack == null) {
+        if (Build.VERSION.SDK_INT &gt;= 9) {
+            stack = new HurlStack();
+        } else {
+            // Prior to Gingerbread, HttpUrlConnection was unreliable.
+            // See: http://android-developers.blogspot.com/2011/09/androids-http-clients.html
+            stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
+        }
+    }
+
+    Network network = new BasicNetwork(stack);
+
+    RequestQueue queue = new RequestQueue(new DiskBasedCache(cacheDir), network);
+    queue.start();
+
+    return queue;
+}</code></pre><p>这里才是真正的创建RequestQueue的地方,因为传入的第二个参数是null,所以stack== null是成立的,这是就会根据不同的系统版本创建不同的HttpStack子类的实例对象,然后将它包装成BasicNetwork对象.</p>
+<p>同时第一行的时候就创建了Volley的缓存目录(当然你可以根据你的需求随意更改缓存目录的位置),并将缓存目录包装成一个DiskBasedCache对象.</p>
+<p>至此,RequestQueue需要的缓存和网络请求对象就创建成功了,然后我们的RequestQueue请求队列就创建成功了.</p>
+<p>通过<code>start()</code>方法就启动了我们的请求队列.</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>两个<code>newRequestQueue</code>方法使用的这种方式其实非常巧妙,以前我看到这种方式就叫他重载调用(不知道叫的对不对,哈哈).</p>
+<p>这是我的Volley系列的第一篇,好的开始,加油↖(^ω^)↗!</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-05-18T15:40:12.000Z" title="2016-05-18T15:40:12.000Z">2016-05-18</time><span class="level-item"><a class="link-muted" href="/categories/Android/">Android</a></span><span class="level-item">7 分钟 读完 (大约 1001 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/fc00fc77.html">Android网络层二次封装</a></h1><div class="content"><h2 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h2><p>对Volley进行二次封装，方便使用和扩展。主要是学习封装的思想。</p>
+<blockquote>
+<p>该示例主体代码来自传智的某位Android讲师，具体不清楚。</p>
+</blockquote>
+<h2 id="网络层封装示意图"><a href="#网络层封装示意图" class="headerlink" title="网络层封装示意图"></a>网络层封装示意图</h2><p><img src="https://ooo.0o0.ooo/2016/05/18/573c1e3de1315.png" alt="网络层二次封装示意图.png"><br><img src="https://ooo.0o0.ooo/2016/05/18/573c1e3def867.png" alt="网络层二次封装具体流程.png"></p>
+<hr/>
+
+<h2 id="接下来前期准备"><a href="#接下来前期准备" class="headerlink" title="接下来前期准备"></a>接下来前期准备</h2><pre><code>public class App extends Application {
+    public static Context application;
+    public static HttpLoader HL;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        application = this;
+
+        // 初始化网络请求相关的核心类
+        HL = HttpLoader.getInstance(this);
+    }
+}</code></pre><p>不用我介绍了吧，记得在AndroidManiFest文件中添加name属性&amp;&amp;&amp;&amp;&amp;&amp;&amp;<font color=red>联网权限</font></p>
+<h3 id="1-Activity实现HttpListener接口"><a href="#1-Activity实现HttpListener接口" class="headerlink" title="1.Activity实现HttpListener接口"></a>1.Activity实现HttpListener接口</h3><p>HttpListener是我们连接网络层和UI层的桥梁，记得重写接口中的成功和失败的方法。</p>
+<h3 id="2-创建Protocol类发起网络请求"><a href="#2-创建Protocol类发起网络请求" class="headerlink" title="2.创建Protocol类发起网络请求"></a>2.创建Protocol类发起网络请求</h3><pre><code>new MainProtocol(MainActivity.this,&quot;15613566958&quot;).doRequest(this);</code></pre><p>这样我们就发起了一个网络请求，感觉简单了好多。</p>
+<p>具体<code>MainProtocol</code>的具体实现</p>
+<pre><code>public class MainProtocol extends BaseProtrocol {
+    private String phone;
+    private Context actContext;
+    // 传入必备参数
+    public MainProtocol(Context actContext,String phone) {
+        this.actContext = actContext;
+        this.phone = phone;
+    }
+
+    @Override
+    public void doRequest(HttpLoader loader, HttpLoader.HttpListener listener) {
+        HttpParams params = new HttpParams().put(&quot;phone&quot;, phone);
+        // 发起GET请求
+        loader.get(actContext, AppConstants.URL_COUPONS, params, AppConstants.REQUEST_CODE_COUPONS, listener);
+    }
+}</code></pre><h3 id="3-HttpLoader–网络请求类"><a href="#3-HttpLoader–网络请求类" class="headerlink" title="3.HttpLoader–网络请求类"></a>3.HttpLoader–网络请求类</h3><p>单例类，不要问我为什么，这是网络请求的类啊，能不单利吗！！！！</p>
+<p>其中<code>mRequestQueue</code>是保存请求队列的，<code>mInFlightRequests</code>是用来保存已经等待的请求，同时具有过滤重复请求的功能。</p>
+<p><code>get</code>方法会调用<code>request</code>方法，这里才是请求的主体，<code>request</code>方法在发起请求前会通过<code>tryLoadCacheResponse</code>方法首先读取缓存，然后在进行访问网络的操作。然后根据返回结果的不同，分别调用HttpListener的不同的回调方法，这样就把服务器的结果返回到UI层了。</p>
+<pre><code>/**
+ * ResponseListener，封装了Volley的错误和成功的回调监听，并执行一些默认处理，同时会将事件通过HttpListener分发到UI层
+ */
+private class ResponseListener implements Response.ErrorListener, Response.Listener&lt;String&gt; {
+    private HttpListener listener;
+    private int requestCode;
+
+    public ResponseListener(int requestCode, HttpListener listener) {
+        this.listener = listener;
+        this.requestCode = requestCode;
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        LLog.w(&quot;Request error from network!&quot;);
+        volleyError.printStackTrace();
+        mInFlightRequests.remove(requestCode);// 请求错误，从请求集合中删除该请求
+        if (listener != null) {
+            listener.onGetResponseError(requestCode, volleyError);
+        }
+    }
+
+    @Override
+    public void onResponse(String response) {
+        mInFlightRequests.remove(requestCode);// 请求成功，从请求集合中删除该请求
+        if (response != null) {
+            //SystemClock.sleep(2000);
+            LLog.i(&quot;Request success from network!&quot;);
+            try {
+                JSONObject jsonObject = new JSONObject(response);// 处理分发数据---解析json
+                String status = jsonObject.getString(&quot;status&quot;);
+                if (listener != null &amp;&amp; response != null) {// 分发数据
+                    if ((&quot;success&quot;.equals(status) || &quot;ok&quot;.equals(status))) {
+                        String data = null;
+                        try {
+                            data = jsonObject.getString(&quot;data&quot;);
+                            listener.onGetResponseSuccess(requestCode, data);
+                        } catch (Exception e) {
+                            // 不是标准格式的时候就把原始数据传回去
+                            listener.onGetResponseSuccess(requestCode, response);
+                        }
+                    } else if ((&quot;fail&quot;.equals(status) || &quot;error&quot;.equals(status))) {
+                        String errMsg = null;
+                        try {
+                            errMsg = jsonObject.getString(&quot;msg&quot;);
+                        } catch (Exception e) {
+                            errMsg = jsonObject.getString(&quot;message&quot;);
+                        } finally {
+                            listener.onGetResponseError(requestCode, new VolleyError(errMsg));
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                listener.onGetResponseError(requestCode, new VolleyError(&quot;解析问题&quot;));
+            }
+        }
+    }
+}</code></pre><p>这之中ResponseListener是关键，他关联了三方框架的回调方法和HttpListener的回调方法。然后不要问我为嘛onResponse里面写了这么多，你是为了健壮性更好吗？</p>
+<p><img src="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-05-13-7615e8bba1d0d8199c492a1eecbcfde0.png" alt="">我能骂街吗？<br>后台返回数据是乱七八糟的好不？<img src="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-05-18-61e99217174057ace5ae7b498d6804cd.gif" alt=""></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>好了，到了这里你肯定还没有看懂，废话，我才写了几篇文章，哪有那么快就写的让你看懂。<br>如果你还没有看懂的话就看我的代码去吧，<a href="https://github.com/chiahaolu/Arsenal/tree/master/volleydemo">我不是链接</a></p>
+<p>还是看不懂？<br><img src="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-05-11-5b3011df1e27d254986292b1233eca38.png" alt=""></p>
+<p>找我要视频啊~</p>
+<p>看完了再看这几篇文章就好了  多搞搞就好了</p>
+<p><img src="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-04-20-eb05adccee2519e22b635dce85669ce7.jpg" alt=""></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-04-12T15:06:41.000Z" title="2016-04-12T15:06:41.000Z">2016-04-12</time><span class="level-item"><a class="link-muted" href="/categories/Android/">Android</a></span><span class="level-item">5 分钟 读完 (大约 733 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/p/3ec27523.html">微信支付</a></h1><div class="content"><h2 id="写在前面的话"><a href="#写在前面的话" class="headerlink" title="写在前面的话"></a>写在前面的话</h2><blockquote>
+<p>小豪从来都是一个认认真真写总结的人(●’◡’●)</p>
+</blockquote>
+<h2 id="微信支付"><a href="#微信支付" class="headerlink" title="微信支付"></a>微信支付</h2><ol>
+<li><a href="https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_5">APP端开发步骤说明</a></li>
+<li><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=1417751808&token=&lang=zh_CN">Android接入指南</a></li>
+<li><a href="https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=11_1#">demo下载</a></li>
+</ol>
+<h2 id="第一个坑"><a href="#第一个坑" class="headerlink" title="第一个坑"></a>第一个坑</h2><p>好像修改了应用签名的时候需要等着它审核。</p>
+<h2 id="Android集成微信支付正确姿势"><a href="#Android集成微信支付正确姿势" class="headerlink" title="Android集成微信支付正确姿势"></a>Android集成微信支付正确姿势</h2><ol>
+<li><p>引入微信的jar包</p>
+</li>
+<li><p>初始化注册到微信</p>
+<pre><code>IWXAPI msgApi = WXAPIFactory.createWXAPI(this,Constants.APP_ID, true);// 第二个参数是是否校验签名，坑！！！
+msgApi.registerApp(Constants.APP_ID);        
+官方的什么鬼，不要理他，第三个参数记得要填true！</code></pre></li>
+<li><p>解析后台传入的订单信息</p>
+<pre><code>就是逐个解析，但是，为什么不用Gson呢？
+{
+     &quot;appId&quot;: &quot;你的APPID&quot;,
+     &quot;money&quot;: 4,
+     &quot;nonceStr&quot;: &quot;d33JjYv6I8a8DmPG&quot;,
+     &quot;partnerId&quot;: &quot;1264518301&quot;,
+     &quot;paySign&quot;: &quot;1ADA353C0A710E144B77804F3B1A525F&quot;,
+     &quot;prepay_id&quot;: &quot;wx2016041117561365055d7bd30985662433&quot;,
+     &quot;timeStamp&quot;: &quot;1460368573&quot;,
+     &quot;wxPackage&quot;: &quot;Sign=WXPay&quot;
+}</code></pre></li>
+<li><p>将订单信息传入请求，调起微信支付</p>
+<pre><code>PayReq request = new PayReq();
+request.appId = wx.getAppId();
+request.partnerId = wx.getPartnerId();
+request.prepayId = wx.getPrepay_id();
+request.nonceStr = wx.getNonceStr();
+request.timeStamp = wx.getTimeStamp();
+request.packageValue = wx.getWxPackage();
+request.sign = wx.getPaySign();
+//request.extData = &quot;app data&quot;; // optional
+msgApi.sendReq(request);// 调起微信支付</code></pre><p> 此时，你以为就可以成功调起微信支付了。</p>
+<p> <img src="https://ooo.0o0.ooo/2016/04/12/570c9b7a77ca6.jpg" alt="zhuangbi.info.jpg"></p>
+<p> <img src="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-04-01-72b17d1ef42c19a55558c5c5b6c7e649.jpg" alt=""></p>
+</li>
+<li><p>支付结果的回调</p>
+<p> 想要成功回调，还需要编写WXPayEntryActivity类(包名或类名不一致会造成无法回调)</p>
+<p> <strong>必须放在wxapi包下，且这个包必须是在根目录下 不能放在其他包下</strong></p>
+<p> 应该是这样的结构：</p>
+<p> <img src="https://ooo.0o0.ooo/2016/04/12/570c987ebede9.png" alt="QQ截图20160412143624.png"></p>
+<p> 清单文件应该是这样的：</p>
+<pre><code>&lt;activity
+    android:name=&quot;.wxapi.WXPayEntryActivity&quot;
+    android:exported=&quot;true&quot;
+    android:launchMode=&quot;singleTop&quot; /&gt;</code></pre><p> 必须这样写！！！回调的Activity必须是：你的包名（微信demo里是：net.sourceforge.simcpux）+.wxapi.WXPayEntryActivity.java<br>你就不！好，那你就别想回调成功。</p>
+<p> 我仿佛看到了这样的嘴脸</p>
+<p> <img src="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-03-07-0dda3bb6d9de0ff7c966357b2f2bf061.jpg" alt=""></p>
+<p> 这一切文档里没有，demo里写错的！</p>
+<p> <img src="http://7xjzdd.com1.z0.glb.clouddn.com/i/2015-12-18-ac531e0d52f36748ae00ee1f55cd0a1c.jpg" alt=""><br> <img src="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-03-25-7ca31971292ba60aa49e85f4e9597617.jpg" alt=""></p>
+</li>
+</ol>
+<h2 id="需要注意-如果errorCode总是为-1"><a href="#需要注意-如果errorCode总是为-1" class="headerlink" title="需要注意,如果errorCode总是为 -1"></a>需要注意,如果errorCode总是为 -1</h2><p>请尝试通过下面方法解决： </p>
+<ol>
+<li>用提交的签名的keystore文件打包 </li>
+<li>清理微信的缓存 </li>
+<li>看上面再来一遍</li>
+</ol>
+<h2 id="其他人的总结"><a href="#其他人的总结" class="headerlink" title="其他人的总结"></a>其他人的总结</h2><ol>
+<li><a href="http://www.cnblogs.com/liuyu0529/p/5358302.html">Android常用第三方支付</a></li>
+<li><a href="http://blog.csdn.net/janice0529/article/details/38051987">移动应用<App>微信支付集成小结</a></li>
+<li><a href="http://www.th7.cn/Program/Android/201501/351050.shtml">http://www.th7.cn/Program/Android/201501/351050.shtml</a></li>
+<li><a href="http://www.tqcto.com/article/mobile/57931.html">http://www.tqcto.com/article/mobile/57931.html</a></li>
+</ol>
+<h2 id="最后的提醒"><a href="#最后的提醒" class="headerlink" title="最后的提醒"></a>最后的提醒</h2><p>看完这篇如果还没有成功，那你就去骂腾讯吧</p>
+<p><img src="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-03-15-6c64503faa7552d226338dcea930c7a1.jpg" alt=""></p>
+</div></article></div><nav class="pagination is-centered mt-4" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/10/">上一页</a></div><div class="pagination-next"><a href="/page/12/">下一页</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/10/">10</a></li><li><a class="pagination-link is-current" href="/page/11/">11</a></li><li><a class="pagination-link" href="/page/12/">12</a></li></ul></nav></div><!--!--><div class="column column-right is-3-tablet is-3-desktop is-3-widescreen  order-3"><!--!--><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="is-rounded" src="/img/avatar.png" alt="后端小哥"></figure><p class="title is-size-4 is-block line-height-inherit">后端小哥</p><p class="is-size-6 is-block">Coder</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shijiazhuang, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">111</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">20</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">67</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lujiahao0708" target="_blank" rel="noopener">关注我</a></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://juejin.im/user/59239002570c350069c5f0bb" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">掘金</span></span><span class="level-right"><span class="level-item tag">juejin.im</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://blog.csdn.net/xinruodingshui" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">CSDN</span></span><span class="level-right"><span class="level-item tag">blog.csdn.net</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://space.bilibili.com/302086424/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">B站</span></span><span class="level-right"><span class="level-item tag">space.bilibili.com</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Chrome/"><span class="level-start"><span class="level-item">Chrome</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Docker/"><span class="level-start"><span class="level-item">Docker</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Flutter/"><span class="level-start"><span class="level-item">Flutter</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JVM/"><span class="level-start"><span class="level-item">JVM</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">17</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JavaEE/"><span class="level-start"><span class="level-item">JavaEE</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"><span class="level-start"><span class="level-item">MySQL必知必会</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Shiro/"><span class="level-start"><span class="level-item">Shiro</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Simpleblog%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"><span class="level-start"><span class="level-item">Simpleblog博客系统</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/SpringCloud/"><span class="level-start"><span class="level-item">SpringCloud</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">工具教程</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B9%B6%E5%8F%91/"><span class="level-start"><span class="level-item">并发</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"><span class="level-start"><span class="level-item">持续集成</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%97%A5%E5%BF%97/"><span class="level-start"><span class="level-item">日志</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-07T20:40:52.000Z">2020-05-07</time></p><p class="title is-6"><a class="link-muted" href="/p/43930bbd.html">Redis 系列（三）Redis 常用命令</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-04T20:40:52.000Z">2020-05-04</time></p><p class="title is-6"><a class="link-muted" href="/p/fe744d5a.html">Redis 系列（二）Redis 安装</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-01T17:40:52.000Z">2020-05-01</time></p><p class="title is-6"><a class="link-muted" href="/p/c8bef241.html">Redis 系列（一）NoSQL 简介</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-21T22:03:59.000Z">2020-04-21</time></p><p class="title is-6"><a class="link-muted" href="/p/29174125.html">Hexo 生成永久文章链接</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Hexo/">Hexo</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-20T10:40:52.000Z">2020-04-20</time></p><p class="title is-6"><a class="link-muted" href="/p/5c6f02af.html">Mac 多 Git 账户配置</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Mac/">Mac</a></p></div></article></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a><p class="size-small"><span>&copy; 2020 后端小哥</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://lujiahao0708.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

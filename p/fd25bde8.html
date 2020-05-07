@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>10-JavaWeb基础-JSP笔记 - 后端小哥博客</title><meta description="什么是JSP tomcat安装目录下的work目录就是tomcat处理jsp的工作目录 JSP是以Java语言为基础的动态网页开发技术(Servlet也是动态网页开发技术) 二者特点 servlet特点:在java代码中嵌入html代码 jsp特点:在html代码中嵌入java代码"><meta property="og:type" content="blog"><meta property="og:title" content="10-JavaWeb基础-JSP笔记"><meta property="og:url" content="http://lujiahao0708.github.io/"><meta property="og:site_name" content="后端小哥博客"><meta property="og:description" content="什么是JSP tomcat安装目录下的work目录就是tomcat处理jsp的工作目录 JSP是以Java语言为基础的动态网页开发技术(Servlet也是动态网页开发技术) 二者特点 servlet特点:在java代码中嵌入html代码 jsp特点:在html代码中嵌入java代码"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://ooo.0o0.ooo/2016/06/21/576a00c1b0513.png"><meta property="og:image" content="https://ooo.0o0.ooo/2016/06/22/576a357f616e9.jpg"><meta property="article:published_time" content="2016-12-05T17:52:14.000Z"><meta property="article:modified_time" content="2020-05-07T13:46:12.718Z"><meta property="article:author" content="后端小哥"><meta property="article:tag" content="JavaEE"><meta property="article:tag" content="后台"><meta property="article:tag" content="JSP"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://ooo.0o0.ooo/2016/06/21/576a00c1b0513.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lujiahao0708.github.io/p/fd25bde8.html"},"headline":"后端小哥博客","image":["https://ooo.0o0.ooo/2016/06/21/576a00c1b0513.png","https://ooo.0o0.ooo/2016/06/22/576a357f616e9.jpg"],"datePublished":"2016-12-05T17:52:14.000Z","dateModified":"2020-05-07T13:46:12.718Z","author":{"@type":"Person","name":"后端小哥"},"description":"什么是JSP tomcat安装目录下的work目录就是tomcat处理jsp的工作目录 JSP是以Java语言为基础的动态网页开发技术(Servlet也是动态网页开发技术) 二者特点 servlet特点:在java代码中嵌入html代码 jsp特点:在html代码中嵌入java代码"}</script><link rel="canonical" href="http://lujiahao0708.github.io/p/fd25bde8.html"><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?cdef3b7efc8748063e32969cc0b8dedc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/categories/Redis">Redis</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-12-05T17:52:14.000Z" title="2016-12-05T17:52:14.000Z">2016-12-05</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">10 分钟 读完 (大约 1469 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">10-JavaWeb基础-JSP笔记</h1><div class="content"><h2 id="什么是JSP"><a href="#什么是JSP" class="headerlink" title="什么是JSP"></a>什么是JSP</h2><ul>
+<li>tomcat安装目录下的<code>work</code>目录就是tomcat处理jsp的工作目录</li>
+<li>JSP是以Java语言为基础的动态网页开发技术(Servlet也是动态网页开发技术)</li>
+<li>二者特点<ul>
+<li>servlet特点:在java代码中嵌入html代码</li>
+<li>jsp特点:在html代码中嵌入java代码</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="JSP本质上就是servlet"><a href="#JSP本质上就是servlet" class="headerlink" title="JSP本质上就是servlet"></a>JSP本质上就是servlet</h2><ol>
+<li><p>tomcat获得jsp文件后,将jsp转化成servlet,会产生<code>xxx_jsp.java</code>(servlet源码)</p>
+<pre><code>D:\java\tomcat\apache-tomcat-7.0.53\work\Catalina\localhost\day10\org\apache\jsp\b_005fdemo_jsp.java
+        tomcat安装目录                     引擎          主机       项目   固定包名        jsp文件对应servle</code></pre></li>
+<li><p>tomcat将java文件编译产生class文件</p>
+</li>
+<li><p>tomcat运行class文件,并将结果输出到浏览器</p>
+</li>
+</ol>
+<p>源码分析:</p>
+<pre><code>public final class xxx_jsp extends org.apache.jasper.runtime.HttpJspBase
+public abstract class HttpJspBase extends HttpServlet</code></pre><blockquote>
+<p>注意:jsp生成java代码,默认是第一次生成,之后直接执行,除非内容修改</p>
+</blockquote>
+<h2 id="JSP脚本元素"><a href="#JSP脚本元素" class="headerlink" title="JSP脚本元素"></a>JSP脚本元素</h2><ul>
+<li>表达式:<code>&lt;%= 表达式 %&gt;</code><ul>
+<li>将表达式结果输出到浏览器,底层解析使用<code>out.print(表达式);</code></li>
+</ul>
+</li>
+<li>代码片段:<code>&lt;% java代码 %&gt;</code><ul>
+<li>将”java代码”完整复制到service方法体中</li>
+</ul>
+</li>
+<li>脚本声明:<code>&lt;%! 声明内容 %&gt;</code><ul>
+<li>将”声明内容”完整复制到class类中(成员变量or成员方法)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>注意:脚本不能嵌套</p>
+</blockquote>
+<h2 id="JSP注释"><a href="#JSP注释" class="headerlink" title="JSP注释"></a>JSP注释</h2><p>JSP注释将jsp源码内容注释掉,tomcat生成java源码中将没有注释掉的内容</p>
+<pre><code>&lt;%-- 注释内容  --%&gt;</code></pre><h2 id="JSP指令"><a href="#JSP指令" class="headerlink" title="JSP指令"></a>JSP指令</h2><pre><code>配置给tomcat,tomcat将jsp生成java源码(servlet)依据.
+格式:`&lt;%@ 指令名称 属性=值 属性=值 ...%&gt;`
+指令包括:page/include/taglib</code></pre><h3 id="page指令"><a href="#page指令" class="headerlink" title="page指令"></a>page指令</h3><ol>
+<li><p>编码[*]</p>
+<pre><code>pageEncoding:当前页面的编码
+contentType:jsp生成servlet响应给浏览器编码
+注意:一般一致
+对比:
+    如果只有pageEncoding,设置当前页面编码,也可以设置响应编码
+    如果只有contentType,可以设置响应编码,也可以设置当前页面编码</code></pre></li>
+<li><p>jsp缓存机制</p>
+<pre><code>buffer:设置缓存大小,默认8Kb
+autoFlash:缓存如果溢出,将自动刷新
+    如果设置为false可能异常:java.io.IOException:Error:JSP Buffer overflow</code></pre></li>
+<li><p>jsp错误处理机制</p>
+<pre><code>errorPage:设置错误页面. 当前jsp页面出现异常,将显示错误界面(友好界面).
+isErrorPage:指定当前页面发生错误时的错误处理页,可以捕获异常信息.
+思考：当页面过多时如何配置错误页面? 
+    使用统一管理，给整个web项目配置友好页面。web.xml
+    Element : error-page  需要使用&lt;error-page&gt;标签指定
+    Content Model : ((error-code | exception-type), location)
+        &lt;error-code&gt; 错误码（状态码）：500、404等
+        &lt;exception-type&gt; java异常类型：java.lang.RuntimeException
+        &lt;location&gt; 出现指定错误时，指定的显示页面</code></pre></li>
+<li><p>常用</p>
+<pre><code>session:表示当前jsp页面是否可以使用session内置对象.
+        true:可以在jsp脚本(表达式/代码块)中使用session
+import:jsp使用其他类，进行导包。【】
+    分别导入：java.util.List
+    一次性导入：java.util.List,java.util.ArrayList
+    星号：java.util.*
+language :表示jsp支持嵌入语言(java)
+info : 使用在servlet接口第5个方法，getServletInfo()</code></pre></li>
+<li><p>指令的使用注意</p>
+<pre><code>一个指令可以编写多个属性
+一个指令可以多次使用
+指令可以使用在jsp页面任何位置
+大部分指令只能使用一次,但是`import`可以使用多次.</code></pre></li>
+</ol>
+<h3 id="include指令"><a href="#include指令" class="headerlink" title="include指令"></a>include指令</h3><p>格式:<code>&lt;%@include file=&quot;&quot;%&gt;</code></p>
+<p>分类:</p>
+<p><img src="https://ooo.0o0.ooo/2016/06/21/576a00c1b0513.png" alt="QQ截图20160622105838.png"></p>
+<h3 id="taglib指令"><a href="#taglib指令" class="headerlink" title="taglib指令"></a>taglib指令</h3><p>具体请参看EL&amp;JSTL笔记.</p>
+<h2 id="JSP九大内置对象"><a href="#JSP九大内置对象" class="headerlink" title="JSP九大内置对象[***]"></a>JSP九大内置对象[***]</h2><p>可以在jsp表达式脚本<code>&lt;%= &amp;&gt;</code>和代码片段脚本<code>&lt;% %&gt;</code>可以使用的变量.都在<code>service()</code>方法中,及<code>service()</code>方法提供的变量.</p>
+<ul>
+<li>page —–&gt; 表示当前页面.就是this引用</li>
+<li>config —–&gt; 表示servlet配置.类型是:ServletConfig</li>
+<li>application —–&gt; 表示web应用的上下文.类型是:ServeltContext</li>
+<li>request —–&gt; 表示一次请求.类型:HttpServletRequest</li>
+<li>response —–&gt; 表示一次响应.类型:HttpServletResponse</li>
+<li>session —–&gt; 表示一次会话.类型:HttpSession</li>
+<li>out —–&gt; 表示输出响应体.类型:JspWriter</li>
+<li>exception —–&gt; 表示异常.类型:Throwable</li>
+<li>pageContext —–&gt; 表示jsp页面的上下文(jsp管理者).类型:PageContext</li>
+</ul>
+<h3 id="JSP四个作用域"><a href="#JSP四个作用域" class="headerlink" title="JSP四个作用域"></a>JSP四个作用域</h3><ul>
+<li>page —–&gt; 当前页面(一个页面)</li>
+<li>request —–&gt; 一次请求(默认就一个页面,如果使用请求转发可以多个页面)</li>
+<li>session —–&gt; 一次会话(可以有多次请求)</li>
+<li>application —–&gt; 一个应用(可以多次会话)</li>
+</ul>
+<h3 id="JSP输出"><a href="#JSP输出" class="headerlink" title="JSP输出"></a>JSP输出</h3><ul>
+<li><p>输出类型:JspWriter</p>
+</li>
+<li><p>jsp输出底层使用的是<code>response.getWriter()</code></p>
+<pre><code>private void initOut() throws IOException {
+    if(out == null){
+        out = response.getWriter();
+    }
+}</code></pre></li>
+<li><p>下面代码输出情况:</p>
+<pre><code>&lt;%
+    out.print(&quot;aaa&quot;);
+    response.getWriter().print(&quot;bbb&quot;);
+    out.print(&quot;ccc&quot;);
+%&gt;
+输出结果:bbbaaaccc
+
+原理解析:jsp和servlet各自都有自己的缓存,jsp首先写入到jsp自己的缓存中(JspWriter),
+然后再刷新到servlet缓存(response.getWriter();)</code></pre><p>  <img src="https://ooo.0o0.ooo/2016/06/22/576a357f616e9.jpg" alt="新建位图图像.jpg"></p>
+</li>
+</ul>
+<blockquote>
+<p>小知识点:<br>如果在jsp片段中使用<code>response.getOutputStream().print(&quot;abc&quot;);</code>的话会报错<code>java.lang.IllegalStateException</code><br>原因是因为jsp底层使用了<code>getWriter()</code>,不能和<code>getOutputStream()</code>混合使用.</p>
+</blockquote>
+<h2 id="JSP动作标签"><a href="#JSP动作标签" class="headerlink" title="JSP动作标签"></a>JSP动作标签</h2><p>JSP 内置标签，可以取代 jsp脚本。</p>
+<p>格式： <code>&lt;jsp:标签名 /&gt;</code></p>
+<pre><code>&lt;jsp:include page=&quot;&quot; /&gt;  动态包含
+&lt;jsp:forward /&gt;  转发
+    &lt;jsp:param/&gt;  处理请求参数的 ， 可以将中文内容进行 URL编码，
+                       类似  &lt;form enctype=&quot;application/x-www-form-urlencoded&quot;&gt;
+
+    &lt;jsp:include page=&quot;/error.jsp&quot;&gt;
+        &lt;jsp:param value=&quot;屌丝&quot; name=&quot;username&quot;/&gt;
+    &lt;/jsp:include&gt;
+
+    &lt;jsp:useBean id=&quot;user&quot; class=&quot;com.itheima.User&quot;&gt;&lt;/jsp:useBean&gt;  
+    &lt;%-- User user = new User();  pageContext.setAttribute(&quot;user&quot;,user)--%&gt;
+
+    &lt;jsp:setProperty property=&quot;username&quot; name=&quot;user&quot; value=&quot;jack&quot;/&gt;
+    &lt;%--  user.setUsername(&quot;jack&quot;) --%&gt;
+
+    &lt;jsp:getProperty property=&quot;username&quot; name=&quot;user&quot;/&gt;
+    &lt;%-- user.getUsername() --%&gt;</code></pre><h2 id="JavaBean属性"><a href="#JavaBean属性" class="headerlink" title="JavaBean属性"></a>JavaBean属性</h2><pre><code>public class User{
+    private String id2;// 字段(Field)
+    public String getId(){
+        return id2;
+    }
+    public void setId(String id){
+        this.id2 = id;
+    }
+    // javabean属性(property) --&gt; 由setter或getter方法获得  --&gt; setId --&gt; Id  --&gt; id
+    // 这个bean的属性叫id
+}</code></pre><h2 id="用户登录案例"><a href="#用户登录案例" class="headerlink" title="用户登录案例"></a>用户登录案例</h2><pre><code>// 登录处理
+if (userLogin != null) {
+    // 登录成功   session保存用户信息 重定向到成功界面
+    request.getSession().setAttribute(&quot;userLogin&quot;,userLogin);
+    // 重定向
+    String url = request.getContextPath() + &quot;/login_success.jsp&quot;;
+    response.sendRedirect(url);
+} else {
+    // 登录失败   request设置错误,请求转发,在登录页面显示提示信息
+    // request作用域保存错误信息
+    request.setAttribute(&quot;msg&quot;,&quot;用户名和密码不匹配&quot;);
+    request.setAttribute(&quot;username&quot;,username);
+    // 使用请求转发(一次请求涉及到多个页面)
+    request.getRequestDispatcher(&quot;/login.jsp&quot;).forward(request,response);
+}</code></pre></div><div class="article-tags size-small is-uppercase mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/JavaEE/">JavaEE</a><a class="link-muted mr-2" rel="tag" href="/tags/%E5%90%8E%E5%8F%B0/">后台</a><a class="link-muted mr-2" rel="tag" href="/tags/JSP/">JSP</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button is-info donate"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpeg" alt="支付宝"></span></a><a class="button is-success donate"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat_pay.jpeg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/p/169ffca8.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">11-JavaWeb基础-EL-JSTL</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/p/896fbfe9.html"><span class="level-item">09.JavaWeb基础-cookie-session</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><!--!--><div class="column column-right is-3-tablet is-3-desktop is-3-widescreen  order-3"><!--!--><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="is-rounded" src="/img/avatar.png" alt="后端小哥"></figure><p class="title is-size-4 is-block line-height-inherit">后端小哥</p><p class="is-size-6 is-block">Coder</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shijiazhuang, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">111</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">20</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">67</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lujiahao0708" target="_blank" rel="noopener">关注我</a></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://juejin.im/user/59239002570c350069c5f0bb" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">掘金</span></span><span class="level-right"><span class="level-item tag">juejin.im</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://blog.csdn.net/xinruodingshui" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">CSDN</span></span><span class="level-right"><span class="level-item tag">blog.csdn.net</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://space.bilibili.com/302086424/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">B站</span></span><span class="level-right"><span class="level-item tag">space.bilibili.com</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Chrome/"><span class="level-start"><span class="level-item">Chrome</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Docker/"><span class="level-start"><span class="level-item">Docker</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Flutter/"><span class="level-start"><span class="level-item">Flutter</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JVM/"><span class="level-start"><span class="level-item">JVM</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">17</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JavaEE/"><span class="level-start"><span class="level-item">JavaEE</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"><span class="level-start"><span class="level-item">MySQL必知必会</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Shiro/"><span class="level-start"><span class="level-item">Shiro</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Simpleblog%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"><span class="level-start"><span class="level-item">Simpleblog博客系统</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/SpringCloud/"><span class="level-start"><span class="level-item">SpringCloud</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">工具教程</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B9%B6%E5%8F%91/"><span class="level-start"><span class="level-item">并发</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"><span class="level-start"><span class="level-item">持续集成</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%97%A5%E5%BF%97/"><span class="level-start"><span class="level-item">日志</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-07T20:40:52.000Z">2020-05-07</time></p><p class="title is-6"><a class="link-muted" href="/p/43930bbd.html">Redis 系列（三）Redis 常用命令</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-04T20:40:52.000Z">2020-05-04</time></p><p class="title is-6"><a class="link-muted" href="/p/fe744d5a.html">Redis 系列（二）Redis 安装</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-01T17:40:52.000Z">2020-05-01</time></p><p class="title is-6"><a class="link-muted" href="/p/c8bef241.html">Redis 系列（一）NoSQL 简介</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-21T22:03:59.000Z">2020-04-21</time></p><p class="title is-6"><a class="link-muted" href="/p/29174125.html">Hexo 生成永久文章链接</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Hexo/">Hexo</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-20T10:40:52.000Z">2020-04-20</time></p><p class="title is-6"><a class="link-muted" href="/p/5c6f02af.html">Mac 多 Git 账户配置</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Mac/">Mac</a></p></div></article></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a><p class="size-small"><span>&copy; 2020 后端小哥</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://lujiahao0708.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

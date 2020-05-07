@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Android网络层二次封装 - 后端小哥博客</title><meta description="Android网络层二次封装"><meta property="og:type" content="blog"><meta property="og:title" content="Android网络层二次封装"><meta property="og:url" content="http://lujiahao0708.github.io/"><meta property="og:site_name" content="后端小哥博客"><meta property="og:description" content="Android网络层二次封装"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://ooo.0o0.ooo/2016/05/18/573c1e3de1315.png"><meta property="og:image" content="https://ooo.0o0.ooo/2016/05/18/573c1e3def867.png"><meta property="og:image" content="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-05-13-7615e8bba1d0d8199c492a1eecbcfde0.png"><meta property="og:image" content="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-05-18-61e99217174057ace5ae7b498d6804cd.gif"><meta property="og:image" content="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-05-11-5b3011df1e27d254986292b1233eca38.png"><meta property="og:image" content="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-04-20-eb05adccee2519e22b635dce85669ce7.jpg"><meta property="article:published_time" content="2016-05-18T15:40:12.000Z"><meta property="article:modified_time" content="2020-05-07T13:46:12.714Z"><meta property="article:author" content="后端小哥"><meta property="article:tag" content="Http"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://ooo.0o0.ooo/2016/05/18/573c1e3de1315.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lujiahao0708.github.io/p/fc00fc77.html"},"headline":"后端小哥博客","image":["https://ooo.0o0.ooo/2016/05/18/573c1e3de1315.png","https://ooo.0o0.ooo/2016/05/18/573c1e3def867.png","http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-05-13-7615e8bba1d0d8199c492a1eecbcfde0.png","http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-05-18-61e99217174057ace5ae7b498d6804cd.gif","http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-05-11-5b3011df1e27d254986292b1233eca38.png","http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-04-20-eb05adccee2519e22b635dce85669ce7.jpg"],"datePublished":"2016-05-18T15:40:12.000Z","dateModified":"2020-05-07T13:46:12.714Z","author":{"@type":"Person","name":"后端小哥"},"description":"Android网络层二次封装"}</script><link rel="canonical" href="http://lujiahao0708.github.io/p/fc00fc77.html"><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?cdef3b7efc8748063e32969cc0b8dedc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/categories/Redis">Redis</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-05-18T15:40:12.000Z" title="2016-05-18T15:40:12.000Z">2016-05-18</time><span class="level-item"><a class="link-muted" href="/categories/Android/">Android</a></span><span class="level-item">7 分钟 读完 (大约 1001 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">Android网络层二次封装</h1><div class="content"><h2 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h2><p>对Volley进行二次封装，方便使用和扩展。主要是学习封装的思想。</p>
+<blockquote>
+<p>该示例主体代码来自传智的某位Android讲师，具体不清楚。</p>
+</blockquote>
+<h2 id="网络层封装示意图"><a href="#网络层封装示意图" class="headerlink" title="网络层封装示意图"></a>网络层封装示意图</h2><p><img src="https://ooo.0o0.ooo/2016/05/18/573c1e3de1315.png" alt="网络层二次封装示意图.png"><br><img src="https://ooo.0o0.ooo/2016/05/18/573c1e3def867.png" alt="网络层二次封装具体流程.png"></p>
+<hr/>
+
+<h2 id="接下来前期准备"><a href="#接下来前期准备" class="headerlink" title="接下来前期准备"></a>接下来前期准备</h2><pre><code>public class App extends Application {
+    public static Context application;
+    public static HttpLoader HL;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        application = this;
+
+        // 初始化网络请求相关的核心类
+        HL = HttpLoader.getInstance(this);
+    }
+}</code></pre><p>不用我介绍了吧，记得在AndroidManiFest文件中添加name属性&amp;&amp;&amp;&amp;&amp;&amp;&amp;<font color=red>联网权限</font></p>
+<h3 id="1-Activity实现HttpListener接口"><a href="#1-Activity实现HttpListener接口" class="headerlink" title="1.Activity实现HttpListener接口"></a>1.Activity实现HttpListener接口</h3><p>HttpListener是我们连接网络层和UI层的桥梁，记得重写接口中的成功和失败的方法。</p>
+<h3 id="2-创建Protocol类发起网络请求"><a href="#2-创建Protocol类发起网络请求" class="headerlink" title="2.创建Protocol类发起网络请求"></a>2.创建Protocol类发起网络请求</h3><pre><code>new MainProtocol(MainActivity.this,&quot;15613566958&quot;).doRequest(this);</code></pre><p>这样我们就发起了一个网络请求，感觉简单了好多。</p>
+<p>具体<code>MainProtocol</code>的具体实现</p>
+<pre><code>public class MainProtocol extends BaseProtrocol {
+    private String phone;
+    private Context actContext;
+    // 传入必备参数
+    public MainProtocol(Context actContext,String phone) {
+        this.actContext = actContext;
+        this.phone = phone;
+    }
+
+    @Override
+    public void doRequest(HttpLoader loader, HttpLoader.HttpListener listener) {
+        HttpParams params = new HttpParams().put(&quot;phone&quot;, phone);
+        // 发起GET请求
+        loader.get(actContext, AppConstants.URL_COUPONS, params, AppConstants.REQUEST_CODE_COUPONS, listener);
+    }
+}</code></pre><h3 id="3-HttpLoader–网络请求类"><a href="#3-HttpLoader–网络请求类" class="headerlink" title="3.HttpLoader–网络请求类"></a>3.HttpLoader–网络请求类</h3><p>单例类，不要问我为什么，这是网络请求的类啊，能不单利吗！！！！</p>
+<p>其中<code>mRequestQueue</code>是保存请求队列的，<code>mInFlightRequests</code>是用来保存已经等待的请求，同时具有过滤重复请求的功能。</p>
+<p><code>get</code>方法会调用<code>request</code>方法，这里才是请求的主体，<code>request</code>方法在发起请求前会通过<code>tryLoadCacheResponse</code>方法首先读取缓存，然后在进行访问网络的操作。然后根据返回结果的不同，分别调用HttpListener的不同的回调方法，这样就把服务器的结果返回到UI层了。</p>
+<pre><code>/**
+ * ResponseListener，封装了Volley的错误和成功的回调监听，并执行一些默认处理，同时会将事件通过HttpListener分发到UI层
+ */
+private class ResponseListener implements Response.ErrorListener, Response.Listener&lt;String&gt; {
+    private HttpListener listener;
+    private int requestCode;
+
+    public ResponseListener(int requestCode, HttpListener listener) {
+        this.listener = listener;
+        this.requestCode = requestCode;
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        LLog.w(&quot;Request error from network!&quot;);
+        volleyError.printStackTrace();
+        mInFlightRequests.remove(requestCode);// 请求错误，从请求集合中删除该请求
+        if (listener != null) {
+            listener.onGetResponseError(requestCode, volleyError);
+        }
+    }
+
+    @Override
+    public void onResponse(String response) {
+        mInFlightRequests.remove(requestCode);// 请求成功，从请求集合中删除该请求
+        if (response != null) {
+            //SystemClock.sleep(2000);
+            LLog.i(&quot;Request success from network!&quot;);
+            try {
+                JSONObject jsonObject = new JSONObject(response);// 处理分发数据---解析json
+                String status = jsonObject.getString(&quot;status&quot;);
+                if (listener != null &amp;&amp; response != null) {// 分发数据
+                    if ((&quot;success&quot;.equals(status) || &quot;ok&quot;.equals(status))) {
+                        String data = null;
+                        try {
+                            data = jsonObject.getString(&quot;data&quot;);
+                            listener.onGetResponseSuccess(requestCode, data);
+                        } catch (Exception e) {
+                            // 不是标准格式的时候就把原始数据传回去
+                            listener.onGetResponseSuccess(requestCode, response);
+                        }
+                    } else if ((&quot;fail&quot;.equals(status) || &quot;error&quot;.equals(status))) {
+                        String errMsg = null;
+                        try {
+                            errMsg = jsonObject.getString(&quot;msg&quot;);
+                        } catch (Exception e) {
+                            errMsg = jsonObject.getString(&quot;message&quot;);
+                        } finally {
+                            listener.onGetResponseError(requestCode, new VolleyError(errMsg));
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                listener.onGetResponseError(requestCode, new VolleyError(&quot;解析问题&quot;));
+            }
+        }
+    }
+}</code></pre><p>这之中ResponseListener是关键，他关联了三方框架的回调方法和HttpListener的回调方法。然后不要问我为嘛onResponse里面写了这么多，你是为了健壮性更好吗？</p>
+<p><img src="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-05-13-7615e8bba1d0d8199c492a1eecbcfde0.png" alt="">我能骂街吗？<br>后台返回数据是乱七八糟的好不？<img src="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-05-18-61e99217174057ace5ae7b498d6804cd.gif" alt=""></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>好了，到了这里你肯定还没有看懂，废话，我才写了几篇文章，哪有那么快就写的让你看懂。<br>如果你还没有看懂的话就看我的代码去吧，<a href="https://github.com/chiahaolu/Arsenal/tree/master/volleydemo">我不是链接</a></p>
+<p>还是看不懂？<br><img src="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-05-11-5b3011df1e27d254986292b1233eca38.png" alt=""></p>
+<p>找我要视频啊~</p>
+<p>看完了再看这几篇文章就好了  多搞搞就好了</p>
+<p><img src="http://7xjzdd.com1.z0.glb.clouddn.com/i/2016-04-20-eb05adccee2519e22b635dce85669ce7.jpg" alt=""></p>
+</div><div class="article-tags size-small is-uppercase mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Http/">Http</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button is-info donate"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpeg" alt="支付宝"></span></a><a class="button is-success donate"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat_pay.jpeg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/p/108a631c.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Volley学习第一篇-框架入口.md</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/p/3ec27523.html"><span class="level-item">微信支付</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><!--!--><div class="column column-right is-3-tablet is-3-desktop is-3-widescreen  order-3"><!--!--><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="is-rounded" src="/img/avatar.png" alt="后端小哥"></figure><p class="title is-size-4 is-block line-height-inherit">后端小哥</p><p class="is-size-6 is-block">Coder</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shijiazhuang, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">111</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">20</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">67</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lujiahao0708" target="_blank" rel="noopener">关注我</a></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://juejin.im/user/59239002570c350069c5f0bb" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">掘金</span></span><span class="level-right"><span class="level-item tag">juejin.im</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://blog.csdn.net/xinruodingshui" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">CSDN</span></span><span class="level-right"><span class="level-item tag">blog.csdn.net</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://space.bilibili.com/302086424/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">B站</span></span><span class="level-right"><span class="level-item tag">space.bilibili.com</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Chrome/"><span class="level-start"><span class="level-item">Chrome</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Docker/"><span class="level-start"><span class="level-item">Docker</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Flutter/"><span class="level-start"><span class="level-item">Flutter</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JVM/"><span class="level-start"><span class="level-item">JVM</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">17</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JavaEE/"><span class="level-start"><span class="level-item">JavaEE</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"><span class="level-start"><span class="level-item">MySQL必知必会</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Shiro/"><span class="level-start"><span class="level-item">Shiro</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Simpleblog%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"><span class="level-start"><span class="level-item">Simpleblog博客系统</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/SpringCloud/"><span class="level-start"><span class="level-item">SpringCloud</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">工具教程</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B9%B6%E5%8F%91/"><span class="level-start"><span class="level-item">并发</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"><span class="level-start"><span class="level-item">持续集成</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%97%A5%E5%BF%97/"><span class="level-start"><span class="level-item">日志</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-07T20:40:52.000Z">2020-05-07</time></p><p class="title is-6"><a class="link-muted" href="/p/43930bbd.html">Redis 系列（三）Redis 常用命令</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-04T20:40:52.000Z">2020-05-04</time></p><p class="title is-6"><a class="link-muted" href="/p/fe744d5a.html">Redis 系列（二）Redis 安装</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-01T17:40:52.000Z">2020-05-01</time></p><p class="title is-6"><a class="link-muted" href="/p/c8bef241.html">Redis 系列（一）NoSQL 简介</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-21T22:03:59.000Z">2020-04-21</time></p><p class="title is-6"><a class="link-muted" href="/p/29174125.html">Hexo 生成永久文章链接</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Hexo/">Hexo</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-20T10:40:52.000Z">2020-04-20</time></p><p class="title is-6"><a class="link-muted" href="/p/5c6f02af.html">Mac 多 Git 账户配置</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Mac/">Mac</a></p></div></article></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a><p class="size-small"><span>&copy; 2020 后端小哥</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://lujiahao0708.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

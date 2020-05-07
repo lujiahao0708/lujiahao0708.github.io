@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>基础加强--框架加强 - 后端小哥博客</title><meta description="学习框架之前的Java基础加强"><meta property="og:type" content="blog"><meta property="og:title" content="基础加强--框架加强"><meta property="og:url" content="http://lujiahao0708.github.io/"><meta property="og:site_name" content="后端小哥博客"><meta property="og:description" content="学习框架之前的Java基础加强"><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2016-07-29T15:12:30.000Z"><meta property="article:modified_time" content="2020-05-07T13:46:12.718Z"><meta property="article:author" content="后端小哥"><meta property="article:tag" content="JavaEE"><meta property="article:tag" content="后台"><meta property="article:tag" content="Java基础"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="http://lujiahao0708.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lujiahao0708.github.io/p/643f0c57.html"},"headline":"后端小哥博客","image":["http://lujiahao0708.github.io/img/og_image.png"],"datePublished":"2016-07-29T15:12:30.000Z","dateModified":"2020-05-07T13:46:12.718Z","author":{"@type":"Person","name":"后端小哥"},"description":"学习框架之前的Java基础加强"}</script><link rel="canonical" href="http://lujiahao0708.github.io/p/643f0c57.html"><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?cdef3b7efc8748063e32969cc0b8dedc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/categories/Redis">Redis</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2016-07-29T15:12:30.000Z" title="2016-07-29T15:12:30.000Z">2016-07-29</time><span class="level-item"><a class="link-muted" href="/categories/JavaEE/">JavaEE</a></span><span class="level-item">6 分钟 读完 (大约 841 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">基础加强--框架加强</h1><div class="content"><h2 id="新特性"><a href="#新特性" class="headerlink" title="新特性"></a>新特性</h2><p>Static Import : 静态导入，当前类中可以直接使用静态资源（字段|方法）</p>
+<pre><code>格式：import static java.lang.Math.*;</code></pre><p>Varargs ：可变参数</p>
+<pre><code>public void demo(String... args){ 当成数组使用 }</code></pre><p>Autoboxing/Unboxing 自动装箱、自动拆箱（基本类型 &lt;–&gt; 包装类）</p>
+<pre><code>装箱：基本类型 --&gt; 包装类。例如：Integer i = 10;  --&gt; Integer m = new Integer(10);
+拆箱：包装类 --&gt; 基本类型。例如：int j = i;  --&gt; int n = m.intValue();</code></pre><p>Enhanced for Loop 增强for循环</p>
+<pre><code>for(类型 变量 : 容器){}   --&gt; 容器：数组、Iterable接口（iterator方法）</code></pre><p>Typesafe Enums 枚举</p>
+<pre><code>public class Hello {}
+public enum Color {}</code></pre><h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><p>特点</p>
+<pre><code>1.将运行时的问题提升到编译时
+2.方法级别的泛型定义主要是用在工具类中的
+    public class TestGeneric2 {
+        public void demo(){
+            int m = 10;
+            String s = init(&quot;abc&quot;);
+            Integer i = init(123);
+        }
+        //方法级别的定义  MyBeanUtils
+        public &lt;T&gt; T init(T obj){
+            //算法
+            System.out.println(obj);
+            return obj;
+        }
+    }</code></pre><p>泛型擦除</p>
+<pre><code>以下两个方法不能同时存在
+public void init(List&lt;String&gt; list){}
+public void init(List&lt;Integer&gt; list){}
+类型擦除之后，两个方法是完全相同</code></pre><p>反射中Class对象的三种获取方式:</p>
+<pre><code>Class.forName(&quot;全限定类名&quot;);
+String.class
+obj.getClass</code></pre><p>反射和泛型混合使用的例子:</p>
+<pre><code>public class Dao&lt;T&gt; {
+    private Session session;
+    private Class beanClass;
+    public Dao() {
+        //1 在运行时，获得当前运行类 父类中泛型的实际参数
+        //this.getClass().getSuperclass(); //jdk1.4之前，获得父类，不含泛型信息
+        // * 获得被参数化的类型  ArrayList&lt;Integer&gt; ，含有泛型信息
+        ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
+        //2 获得所有的实际参数类型。类&lt;A,B,C,D&gt; ,返回数组，获得第一个实际参数
+        Type firstType = type.getActualTypeArguments()[0];
+
+        this.beanClass = (Class) firstType;
+
+        /*
+            //回顾 反射 api
+            beanClass.getName(); //类名
+            beanClass.getMethod(name, parameterTypes)  //方法
+            beanClass.getConstructor(parameterTypes) //构造
+            beanClass.getField(name)  //字段
+        */
+        System.out.println(beanClass);
+    }
+
+    /* 泛型 ，将运行时问题 提升 编译时
+     * 泛型实参只有在运行时才可以确定，编译时 T 不能确定类型（User | Book） 只有在运行时才可以确定
+     * 思想：如何在运行时获得实际类型参数？
+     */
+    public T findById(Integer id){
+        return (T) session.get(beanClass, id);
+    }
+}</code></pre><h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><p>介绍</p>
+<pre><code>注解就是类,用于修饰对象(类/构造/字段/方法等),常用语取代xml配置.
+但是,开发中常用注解+xml混合使用</code></pre><p>JDK提供的常用注解</p>
+<pre><code>@Override
+    在jdk1.5表示子类覆写父类的方法
+    在jdk1.6表示子类实现父接口的方法
+@Deprecated
+    表示被修饰对象已经过期了,过期的方法依旧可以使用.
+    以下情况被标记过期:1.安全问题 2.有新的API
+@SuppressWarnings
+    抑制警告,如果有警告通过编辑器不进行警告
+        deprecation:如果过期不警告
+        rawtypes:没有泛型
+        unused:未使用
+        null:空指针
+        serial:序列化
+        all:所有
+    建议:尽量不使用抑制</code></pre><h2 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h2><p>注解架构</p>
+<pre><code>定义注解
+使用注解
+解析注解</code></pre><p>基本语法</p>
+<pre><code>定义注解使用关键字 : `@interface` ,和定义类class相似
+    public @interface xxx{}
+成员格式: 修饰符 返回值 属性名() [default 默认值]
+    eg: public String username();
+    注意点:
+        1.修饰符:默认值 public abstract,且只能是这两个
+        2.返回值:只能是基本类型/字符串String/Class/注解/枚举,以及以上类型的一维数组.</code></pre><p>使用注解—重点!!!</p>
+<p>注解出现的目的就是用来代替xml的</p>
+</div><div class="article-tags size-small is-uppercase mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/JavaEE/">JavaEE</a><a class="link-muted mr-2" rel="tag" href="/tags/%E5%90%8E%E5%8F%B0/">后台</a><a class="link-muted mr-2" rel="tag" href="/tags/Java%E5%9F%BA%E7%A1%80/">Java基础</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button is-info donate"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpeg" alt="支付宝"></span></a><a class="button is-success donate"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat_pay.jpeg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/p/dd159bfa.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Hibernate笔记一</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/p/fce3647f.html"><span class="level-item">AJAX笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><!--!--><div class="column column-right is-3-tablet is-3-desktop is-3-widescreen  order-3"><!--!--><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="is-rounded" src="/img/avatar.png" alt="后端小哥"></figure><p class="title is-size-4 is-block line-height-inherit">后端小哥</p><p class="is-size-6 is-block">Coder</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shijiazhuang, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">111</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">20</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">67</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lujiahao0708" target="_blank" rel="noopener">关注我</a></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://juejin.im/user/59239002570c350069c5f0bb" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">掘金</span></span><span class="level-right"><span class="level-item tag">juejin.im</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://blog.csdn.net/xinruodingshui" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">CSDN</span></span><span class="level-right"><span class="level-item tag">blog.csdn.net</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://space.bilibili.com/302086424/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">B站</span></span><span class="level-right"><span class="level-item tag">space.bilibili.com</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Chrome/"><span class="level-start"><span class="level-item">Chrome</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Docker/"><span class="level-start"><span class="level-item">Docker</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Flutter/"><span class="level-start"><span class="level-item">Flutter</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JVM/"><span class="level-start"><span class="level-item">JVM</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">17</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/JavaEE/"><span class="level-start"><span class="level-item">JavaEE</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"><span class="level-start"><span class="level-item">MySQL必知必会</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Shiro/"><span class="level-start"><span class="level-item">Shiro</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Simpleblog%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"><span class="level-start"><span class="level-item">Simpleblog博客系统</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/SpringCloud/"><span class="level-start"><span class="level-item">SpringCloud</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">工具教程</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%B9%B6%E5%8F%91/"><span class="level-start"><span class="level-item">并发</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"><span class="level-start"><span class="level-item">持续集成</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%97%A5%E5%BF%97/"><span class="level-start"><span class="level-item">日志</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-07T20:40:52.000Z">2020-05-07</time></p><p class="title is-6"><a class="link-muted" href="/p/43930bbd.html">Redis 系列（三）Redis 常用命令</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-04T20:40:52.000Z">2020-05-04</time></p><p class="title is-6"><a class="link-muted" href="/p/fe744d5a.html">Redis 系列（二）Redis 安装</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-05-01T17:40:52.000Z">2020-05-01</time></p><p class="title is-6"><a class="link-muted" href="/p/c8bef241.html">Redis 系列（一）NoSQL 简介</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Redis/">Redis</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-21T22:03:59.000Z">2020-04-21</time></p><p class="title is-6"><a class="link-muted" href="/p/29174125.html">Hexo 生成永久文章链接</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Hexo/">Hexo</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-20T10:40:52.000Z">2020-04-20</time></p><p class="title is-6"><a class="link-muted" href="/p/5c6f02af.html">Mac 多 Git 账户配置</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Mac/">Mac</a></p></div></article></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="后端小哥博客" height="28"></a><p class="size-small"><span>&copy; 2020 后端小哥</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/lujiahao0708"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://lujiahao0708.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
